@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "TestMyClassLibrary/1.0.0": {
+        "dependencies": {
+          "MyClassLibrary": "1.0.0"
+        },
+        "runtime": {
+          "TestMyClassLibrary.dll": {}
+        }
+      },
+      "MyClassLibrary/1.0.0": {
+        "runtime": {
+          "MyClassLibrary.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TestMyClassLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MyClassLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

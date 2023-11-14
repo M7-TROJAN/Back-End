@@ -1,0 +1,11 @@
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.deps.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.AssemblyInfoInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.AssemblyInfo.cs
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\refint\MyClassLibrary.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\TestMyClassLibrary\MyClassLibrary\obj\Debug\net6.0\ref\MyClassLibrary.dll
