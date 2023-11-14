@@ -1,0 +1,16 @@
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\bin\Debug\Static Properties.exe.config
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\bin\Debug\Static Properties.exe
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\bin\Debug\Static Properties.pdb
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\obj\Debug\Static Properties.csproj.AssemblyReference.cache
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\obj\Debug\Static Properties.csproj.SuggestedBindingRedirects.cache
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\obj\Debug\Static Properties.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\obj\Debug\Static Properties.exe
+C:\Users\Acer\Dropbox\Personal\Advices\2021\16 OOP C#\Projects\Static Properties\obj\Debug\Static Properties.pdb
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\bin\Debug\Static Properties.exe.config
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\bin\Debug\Static Properties.exe
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\bin\Debug\Static Properties.pdb
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\obj\Debug\Static Properties.csproj.AssemblyReference.cache
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\obj\Debug\Static Properties.csproj.SuggestedBindingRedirects.cache
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\obj\Debug\Static Properties.csproj.CoreCompileInputs.cache
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\obj\Debug\Static Properties.exe
+D:\mattar\programing\ABU_HADHOUD\16 - OOP As It Should Be In C#\5_Properties\4_Static Properties & Static Class\Static Properties\obj\Debug\Static Properties.pdb
