@@ -6,26 +6,26 @@ internal class Program
     {
         // Example 1: Object of type int
         object obj1 = 3;
-        IdentifyAndSquare(obj1);
+        Identify(obj1);
 
         // Example 2: Object of type float
         object obj2 = 3f;
-        IdentifyAndSquare(obj2);
+        Identify(obj2);
 
         // Example 3: Object of type double
         object obj3 = 3d;
-        IdentifyAndSquare(obj3);
+        Identify(obj3);
 
         // Example 4: Object of type string
         object obj4 = "Mahmoud";
-        IdentifyAndSquare(obj4);
+        Identify(obj4);
 
         // Example 5: Object of type int array
         object obj5 = new int[] { 1, 2, 3 };
-        IdentifyAndSquare(obj5);
+        Identify(obj5);
     }
 
-    static void IdentifyAndSquare(object obj)
+    static void Identify(object obj)
     {
         switch (obj)
         {
