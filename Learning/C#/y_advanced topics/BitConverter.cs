@@ -73,5 +73,16 @@ class Program
             // using the following line of code:
             // var stringValue = char.ConvertFromUtf32(value);
         }
+
+        Console.WriteLine("________________________________________________________");
+
+        // Convert hexadecimal string to integer
+        var hexa = "BE2";
+        int num = Int32.Parse(hexa, System.Globalization.NumberStyles.HexNumber);
+        
+        Console.WriteLine($"Decimal representation of hexadecimal value {hexa}:");
+        Console.WriteLine(num);
+        
+        Console.ReadLine();
     }
 }
