@@ -68,6 +68,10 @@ class Program
 
             // Print the character
             Console.WriteLine(character);
+
+            // Alternatively, you can convert the integer to a string representation of the character
+            // using the following line of code:
+            // var stringValue = char.ConvertFromUtf32(value);
         }
     }
 }
