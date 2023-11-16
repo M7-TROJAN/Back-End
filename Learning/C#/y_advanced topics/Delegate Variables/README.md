@@ -26,3 +26,11 @@ Delegate variables provide flexibility and allow for scenarios such as:
 
 - Anonymous Methods and Lambdas: Delegates facilitate the use of anonymous methods and lambda expressions, leading to more concise code.
 
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
