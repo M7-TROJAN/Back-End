@@ -33,11 +33,21 @@ namespace Main
             //initializing 2D array
             int[,] numbers = { { 12, 13 }, { 55, 77 } };
 
+            // Get the number of rows and columns using GetLength
+            // GetLength(0) returns returns the number of rows
+            // GetLength(1) returns returns the number of columns
+            int rows = numbers.GetLength(0);
+            int columns = numbers.GetLength(1);
+            
             // access first element from the first row
             Console.WriteLine("Element at index [0, 0] : " + numbers[0, 0]);
 
             // access first element from second row
             Console.WriteLine("Element at index [1, 0] : " + numbers[1, 0]);
+
+            // Print the number of rows and columns
+            Console.WriteLine($"\nNumber of Rows: {rows}");
+            Console.WriteLine($"Number of Columns: {columns}");
 
 
             Console.ReadKey();
