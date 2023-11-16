@@ -31,3 +31,11 @@ name2 = "Ali";
 In the example above, changing the value of name2 to "Ali" does not alter the original string "Mahmoud" to which name1 is pointing.
 
 Understanding the distinction between value types and reference types is essential for effective memory management and avoiding unexpected behaviors in your C# programs. Always be mindful of whether you are working with the actual data (value types) or references to data (reference types).
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
