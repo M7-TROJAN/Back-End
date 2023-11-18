@@ -1,0 +1,14 @@
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\bin\Debug\net6.0\DeleGate.exe
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\bin\Debug\net6.0\DeleGate.deps.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\bin\Debug\net6.0\DeleGate.runtimeconfig.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\bin\Debug\net6.0\DeleGate.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\bin\Debug\net6.0\DeleGate.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.AssemblyInfoInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.AssemblyInfo.cs
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.csproj.CoreCompileInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\refint\DeleGate.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\DeleGate.genruntimeconfig.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\DeleGate\DeleGate\obj\Debug\net6.0\ref\DeleGate.dll
