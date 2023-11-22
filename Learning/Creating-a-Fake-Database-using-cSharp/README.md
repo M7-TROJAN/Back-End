@@ -4,7 +4,8 @@ Bogus is a powerful and flexible fake data generator library for .NET. It allows
 
 ## Installation
 - Nuget Package [Bogus](https://www.nuget.org/packages/Bogus/)
-To install Bogus, you can use the NuGet Package Manager Console or the .NET CLI.
+  
+- To install Bogus, you can use the NuGet Package Manager Console or the .NET CLI.
 
 ### Using Package Manager Console:
 1. Open Visual Studio.
