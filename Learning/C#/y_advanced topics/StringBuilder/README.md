@@ -1,6 +1,6 @@
 # StringBuilder
 
-`StringBuilder` is a class in the .NET Framework's System.Text namespace designed to efficiently manipulate strings, particularly in scenarios involving frequent concatenation or modification. Unlike regular strings in C#, which are immutable, `StringBuilder` provides a mutable representation of a sequence of characters, allowing for in-place modifications without creating new string instances.
+`StringBuilder` is a class in the `.NET` Framework's `System.Text` namespace designed to efficiently manipulate strings, particularly in scenarios involving frequent concatenation or modification. Unlike regular strings in C#, which are immutable, `StringBuilder` provides a mutable representation of a sequence of characters, allowing for in-place modifications without creating new string instances.
 
 ## Advantages
 
