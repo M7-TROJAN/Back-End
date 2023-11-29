@@ -2,9 +2,7 @@
 
 `StringBuilder` is a class in the `.NET` Framework's `System.Text` namespace designed to efficiently manipulate strings, particularly in scenarios involving frequent concatenation or modification. Unlike regular strings in C#, which are immutable, `StringBuilder` provides a mutable representation of a sequence of characters, allowing for in-place modifications without creating new string instances.
 
-## Key Differences between Immutable and Mutable Strings
-
-### 1. **Immutability vs. Mutability:**
+### **Key Differences between Immutable and Mutable Strings**
    - **Immutable Strings (Regular Strings):** In C#, strings are immutable, meaning that once a string is created, its content cannot be changed. Any modification results in the creation of a new string, which can lead to performance and memory overhead, especially in scenarios involving frequent changes.
    
    - **Mutable Strings (`StringBuilder`):** In contrast, `StringBuilder` offers mutability, allowing modifications to the content of a string without creating new instances. This is particularly advantageous when dealing with repetitive string manipulations, as it reduces the need for constant allocation of new memory.
