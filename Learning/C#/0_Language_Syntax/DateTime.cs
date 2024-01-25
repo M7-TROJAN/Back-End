@@ -44,23 +44,40 @@ namespace Learning
             get { return DateTime.Today.Year; }
         }
 
+        public static string GetFormattedDate()
+        {
+            DateTime currentDate = DateTime.Now;
+            return currentDate.ToString("ddd dd-MM-yyyy hh:mm:ss tt");
+    
+            // ddd => abbreviated day name
+            // dd-MM-yyyy => day-month-year format
+            // hh:mm:ss => hours:minutes:seconds format
+            // tt => 12-hour clock format with AM/PM indicator
+         }
+
+    }
+
+
+    internal class Program
+    {
+        
         public static void Main(string[] args)
         {
-            // Output using the properties to display current time, day name, and date
-            Console.WriteLine("Current Time: " + DateAndTimeDetails.CurrentTime);
-            Console.WriteLine("Current Day: " + DateAndTimeDetails.CurrentDayName);
-            Console.WriteLine("Current Date: " + DateAndTimeDetails.CurrentDate);
-
-            // Accessing specific properties of the DateTime structure directly
-            Console.WriteLine("Day of the month: " + DateAndTimeDetails.DayOfMonth);
-
-            // Accessing specific properties of the DateTime structure directly
-            Console.WriteLine("Number of the month: " + DateAndTimeDetails.MonthNumber);
-
-            // Accessing specific properties of the DateTime structure directly
-            Console.WriteLine("Year: " + DateAndTimeDetails.Year);
-
-            Console.WriteLine(DateTime.Today.DayOfWeek.ToString());
+                // Output using the properties to display current time, day name, and date
+                Console.WriteLine("Current Time: " + DateAndTimeDetails.CurrentTime);
+                Console.WriteLine("Current Day: " + DateAndTimeDetails.CurrentDayName);
+                Console.WriteLine("Current Date: " + DateAndTimeDetails.CurrentDate);
+    
+                // Accessing specific properties of the DateTime structure directly
+                Console.WriteLine("Day of the month: " + DateAndTimeDetails.DayOfMonth);
+    
+                // Accessing specific properties of the DateTime structure directly
+                Console.WriteLine("Number of the month: " + DateAndTimeDetails.MonthNumber);
+    
+                // Accessing specific properties of the DateTime structure directly
+                Console.WriteLine("Year: " + DateAndTimeDetails.Year);
+    
+                Console.WriteLine(DateTime.Today.DayOfWeek.ToString());
         }
     }
 }
