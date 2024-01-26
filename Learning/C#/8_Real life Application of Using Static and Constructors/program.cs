@@ -85,3 +85,15 @@ class Program
         }
     }
 }
+
+
+
+
+// Instead of using a private constructor, we can initialize properties directly in the class and make the setters private if needed. 
+// like this:
+    // public int Id { get; private set; }
+    // public string Name { get; private set; }
+    // public int Age { get; private set; }
+    // public string UserName { get; private set; }
+    // public string Password { get; private set; }
+
