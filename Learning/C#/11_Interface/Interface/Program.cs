@@ -1,5 +1,6 @@
 ﻿using System;
 
+// In C#, an interface is similar to abstract class. However, unlike abstract classes, all methods of an interface are fully abstract (method without body).
 public interface IPerson
 {
     string FirstName { get; set; }
