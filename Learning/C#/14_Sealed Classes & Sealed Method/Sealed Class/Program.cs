@@ -1,4 +1,6 @@
-﻿using System;
+// when we don't want a class to be inherited by another class, we can declare the class as a sealed class.
+
+using System;
 namespace SealedClass
 {
     sealed  class clsA
