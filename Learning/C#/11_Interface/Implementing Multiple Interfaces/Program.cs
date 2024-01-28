@@ -116,4 +116,11 @@ public class Program
 // implementing multiple interfaces عن طريق multiple inheritance  هتلاقي مواقع كتير بتقول ان احنا نقدر نحقق ال multiple inheritance  مبتدعمش ال  c sharp ال 
 // inheritance  وده غلط انت محققتش 
 // الوراثة يعني الدرايفد كلاس يورث كل البيهيفيور والفيلدس الي في البيز كلاس 
-    
+
+// In C#, there's no direct support for something called "Multiple Inheritance." This means a class can't inherit from more than one class. However, there's a concept called "Implementing Interfaces" that is often used to achieve something similar.
+
+// When we talk about inheritance, it means a child class inherits all the behaviors and properties of its parent class. However, with implementing interfaces, it's not exactly the same thing.
+
+// When a class implements multiple interfaces, it means that class agrees to provide specific behaviors defined by those interfaces. It's like signing a contract – the class promises to have certain functionalities. But, keep in mind, this is not exactly the same as inheriting everything from another class.
+
+// So, while implementing interfaces can give a class access to behaviors declared in those interfaces, it's not the same as the full-fledged inheritance you might expect.
