@@ -1,4 +1,6 @@
-﻿using System;
+
+//During method overriding, if we don't want an overridden method to be further overridden by another class, we can declare it as a sealed method.
+using System;
 
 public class Person
 {
