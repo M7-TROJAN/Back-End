@@ -111,3 +111,9 @@ public class Program
 
     }
 }
+
+   
+// implementing multiple interfaces عن طريق multiple inheritance  هتلاقي مواقع كتير بتقول ان احنا نقدر نحقق ال multiple inheritance  مبتدعمش ال  c sharp ال 
+// inheritance  وده غلط انت محققتش 
+// الوراثة يعني الدرايفد كلاس يورث كل البيهيفيور والفيلدس الي في البيز كلاس 
+    
