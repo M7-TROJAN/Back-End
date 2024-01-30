@@ -52,8 +52,6 @@ In Visual Studio, you can set command-line arguments for your C# console applica
    - Look for a field labeled "Command line arguments."
    - Enter your desired command-line arguments in this field.
 
-   ![Visual Studio Command Line Arguments](https://i.imgur.com/GP6iLjP.png)
-
 4. **Save and Run:**
    - Click "Apply" and then "OK" to save the changes.
    - Run your program (press `F5` or use the "Start Debugging" button).
