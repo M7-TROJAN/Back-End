@@ -1,6 +1,6 @@
 # Creating a Synthetic Database using Python's Faker Library
 
-This guide illustrates how to utilize Python in conjunction with the Faker library to produce synthetic data and save it in both a CSV file and an SQLite database.
+Hello Everyone I'm Mahmoud and This guide illustrates how to utilize Python in conjunction with the Faker library to produce synthetic data and save it in both a CSV file and an SQLite database.
 
 ## Prerequisites
 1. Ensure you have Python installed on your system.
