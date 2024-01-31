@@ -11,6 +11,8 @@ Similarly, in an expression involving || (logical OR),
 if the left operand is true, the right operand won't be evaluated because the overall result is already known 
 (it will be true regardless of the right operand).
 
+// && || => يعني بيختصرو الطريق من الاخر short circuit بيعملو  
+// & | => short circuit مبيعملوش 
 */
 
 using System;
