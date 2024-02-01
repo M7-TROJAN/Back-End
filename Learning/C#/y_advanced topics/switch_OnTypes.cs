@@ -22,6 +22,20 @@ namespace Revision
                     Console.WriteLine("It's another type.");
                     break;
             }
+
+
+            var isVip = true;
+
+            switch (isVip)
+            {
+                case bool i when i == true:
+                    Console.WriteLine("Yes.");
+                    break;
+                case bool i when i == false:
+                    Console.WriteLine("No.");
+                    break;
+            }
+
         }
     }
 }
