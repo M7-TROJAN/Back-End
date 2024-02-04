@@ -45,38 +45,44 @@ namespace Indexers
 
     class IP
     {
-        private byte[] segments = new byte[4];
+        private byte[] segments;
 
         // Constructor for creating an IP instance with individual segments
         public IP(byte segment1, byte segment2, byte segment3, byte segment4)
         {
-            segments[0] = segment1;
-            segments[1] = segment2;
-            segments[2] = segment3;
-            segments[3] = segment4;
+            segments = new byte[] { segment1, segment2, segment3, segment4 };
         }
+
 
         // Constructor for creating an IP instance from a string
         public IP(string ipAddress)
         {
             var segs = ipAddress.Split('.');
-
+        
+            if (segs.Length != 4)
+            {
+                // If the IP address does not have exactly four segments, set all segments to 0
+                segments = new byte[] { 0, 0, 0, 0 };
+                return;
+            }
+        
             for (int i = 0; i < segs.Length; i++)
             {
                 // Parsing each segment from the string
-                if (!byte.TryParse(segs[i], out segments[i]))
+                if (!byte.TryParse(segs[i], out byte segment) || segment < 1 || segment > 255)
                 {
                     // Handling the case of an invalid IP by setting all segments to 0
-                    segments[0] = 0;
-                    segments[1] = 0;
-                    segments[2] = 0;
-                    segments[3] = 0;
-                    break;
-
+                    segments = new byte[] { 0, 0, 0, 0 };
+                    return;
+        
                     // Alternatively, you can throw an exception for an invalid IP
+                    // throw new ArgumentException("Invalid IP address format.");
                 }
+        
+                segments[i] = segment;
             }
         }
+
 
         // Indexer for accessing and modifying individual segments
         public byte this[byte index]
