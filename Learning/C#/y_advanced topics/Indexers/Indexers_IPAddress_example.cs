@@ -15,6 +15,15 @@ namespace Indexers
             IP ip1 = new IP(1, 255, 126, 41);
             Console.WriteLine($"IP Address: {ip1.Address}"); // Output: IP Address: 1.255.126.41
 
+            // Displaying the IP address in decimal format
+            Console.WriteLine($"IP Address (Decimal): {ip1.Address}");
+            
+            // Displaying the IP address in binary format
+            Console.WriteLine($"IP Address (Binary): {ip1.AddressBainary}");
+
+            // Displaying the IP address in Hexadecimal format
+            Console.WriteLine($"IP Address (Hexadecimal): {ip1.AddressHexadecimal}");
+
             // Modifying individual segments using the indexer
             ip1[0] = 100;
             ip1[1] = 50;
@@ -80,6 +89,8 @@ namespace Indexers
         public string Address => string.Join(".", segments);
 
         public string AddressBainary => string.Join(".", segments.Select(segment => Convert.ToString(segment, 2).PadLeft(8, '0')));
+
+        public string AddressHexadecimal => string.Join(".", segments.Select(s => s.ToString("X").PadLeft(2, '0')));
     }
 }
 
