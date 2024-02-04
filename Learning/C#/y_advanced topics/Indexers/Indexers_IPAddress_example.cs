@@ -78,6 +78,8 @@ namespace Indexers
 
         // Property for getting the formatted IP address
         public string Address => string.Join(".", segments);
+
+        public string AddressBainary => string.Join(".", segments.Select(segment => Convert.ToString(segment, 2).PadLeft(8, '0')));
     }
 }
 
