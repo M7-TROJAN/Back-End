@@ -43,13 +43,13 @@ namespace DeleGate
 
 
             // anonymous delegate
-            (بعد كدة ظهرت الطريقة دي في الدوت نت 2)
+            // (بعد كدة ظهرت الطريقة دي في الدوت نت 2)
             report.ProcessEmployee(emps, "Employees With $60,000+ Sales.", delegate (Employee emp){ return emp.TotalSales >= 60000m; });
             report.ProcessEmployee(emps, "Employees With Sales Between $30,000 And $59,999.", delegate (Employee emp) { return emp.TotalSales < 60000m && emp.TotalSales >= 30000m; });
             report.ProcessEmployee(emps, "Employees With Sales Less Than $30,000.", delegate (Employee emp) { return emp.TotalSales < 30000m; });
             
             // Lampda Expression
-            (ظهرت في الدوت نت 3)
+            // (ظهرت في الدوت نت 3)
             report.ProcessEmployee(emps, "Employees With $60,000+ Sales.",  (Employee emp) => emp.TotalSales >= 60000m);
             report.ProcessEmployee(emps, "Employees With Sales Between $30,000 And $59,999.", (Employee emp) => emp.TotalSales < 60000m && emp.TotalSales >= 30000m);
             report.ProcessEmployee(emps, "Employees With Sales Less Than $30,000.", (Employee emp) => emp.TotalSales < 30000m);
