@@ -36,17 +36,20 @@ namespace DeleGate
 
             var report = new Report();
 
+            //  لحد الدوت نت فريم ورك 2 كان هي دي الطريقة الي بتستخدم بتخلي الديليجيت يشير لميثود 
             report.ProcessEmployee(emps, "Employees With $60,000+ Sales.", IsGreaterThanOrEqual60000);
             report.ProcessEmployee(emps, "Employees With Sales Between $30,000 And $59,999.", IsBetween30000And59999);
             report.ProcessEmployee(emps, "Employees With Sales Less Than $30,000.", IsLessThan30000);
 
 
             // anonymous delegate
+            (بعد كدة ظهرت الطريقة دي في الدوت نت 2)
             report.ProcessEmployee(emps, "Employees With $60,000+ Sales.", delegate (Employee emp){ return emp.TotalSales >= 60000m; });
             report.ProcessEmployee(emps, "Employees With Sales Between $30,000 And $59,999.", delegate (Employee emp) { return emp.TotalSales < 60000m && emp.TotalSales >= 30000m; });
             report.ProcessEmployee(emps, "Employees With Sales Less Than $30,000.", delegate (Employee emp) { return emp.TotalSales < 30000m; });
             
             // Lampda Expression
+            (ظهرت في الدوت نت 3)
             report.ProcessEmployee(emps, "Employees With $60,000+ Sales.",  (Employee emp) => emp.TotalSales >= 60000m);
             report.ProcessEmployee(emps, "Employees With Sales Between $30,000 And $59,999.", (Employee emp) => emp.TotalSales < 60000m && emp.TotalSales >= 30000m);
             report.ProcessEmployee(emps, "Employees With Sales Less Than $30,000.", (Employee emp) => emp.TotalSales < 30000m);
