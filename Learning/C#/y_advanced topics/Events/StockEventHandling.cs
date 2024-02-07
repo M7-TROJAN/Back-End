@@ -128,6 +128,12 @@ namespace Events
 
             // Check if there are subscribers before invoking the event
             // Notify subscribers about the price change
+            
+            // Using Explicit Null Check: This approach was commonly used before .NET 6.
+            //if (OnPriceChanged != null)
+            //    OnPriceChanged(this, oldPrice);
+            
+            // Using Null-Conditional Operator: Introduced in .NET 6, it simplifies null checks.
             OnPriceChanged?.Invoke(this, oldPrice);
         }
     }
