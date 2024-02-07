@@ -36,6 +36,9 @@ namespace Events
             // Display stock information and price change direction
             Console.WriteLine($"{stock.Name}: ${stock.Price} - {priceChangeDirection}");
 
+            // Write the information to a text file
+            WritePriceChangeToTextFile(stock.Name, oldPrice, stock.Price);
+
             // Reset console color to default
             Console.ResetColor();
         }
@@ -59,6 +62,20 @@ namespace Events
                 return "No Change";
             }
         }
+
+        // Write the price change information to a text file
+        private static void WritePriceChangeToTextFile(string stockName, decimal oldPrice, decimal newPrice)
+        {
+            string filePath = "PriceChanges.txt";
+            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string status = newPrice > oldPrice ? "Increase" : (newPrice < oldPrice ? "Decrease" : "No Change");
+
+            using (StreamWriter writer = File.AppendText(filePath))
+            {
+                writer.WriteLine($"Stock: {stockName}, Old Price: {oldPrice}, New Price: {newPrice}, Status: {status}, Date/Time: {timeStamp}");
+            }
+        }
+
     }
 
     // Delegate type for the Stock OnPriceChanged event
@@ -89,7 +106,7 @@ namespace Events
             set
             {
                 decimal oldPrice = this.price;
-                this.price = value;
+                this.price = Math.Round(value, 2);
 
                 // Notify subscribers about the price change
                 OnPriceChanged?.Invoke(this, oldPrice);
@@ -99,6 +116,12 @@ namespace Events
         // Method to change the stock price by a given percentage
         public void ChangePriceBy(decimal percent)
         {
+            // Convert percent to a value between 0 and 1 if it's greater than or equal to 1 or it's a negative number
+            if (percent >= 1 || percent <= -1)
+            {
+                percent = percent / 100;
+            }
+
             // Calculate the new price
             decimal oldPrice = this.price;
             this.price += Math.Round(this.Price * percent, 2);
