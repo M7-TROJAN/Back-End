@@ -47,3 +47,9 @@ Garbage collection is the process by which the .NET runtime reclaims memory occu
 in use. When you call GC.Collect(), you're requesting the runtime to reclaim memory
 immediately rather than waiting for it to occur automatically.
 */
+
+/*
+the `GC.GetTotalMemory(bool forceFullCollection)`: This method returns the total number of bytes allocated in managed memory.
+By default, it returns an approximation of the managed memory usage, and if `forceFullCollection` is set to `true`,
+it forces a full garbage collection before reporting the memory usage. 
+*/
