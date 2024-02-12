@@ -72,6 +72,7 @@ namespace StructVsClass
 
 
 // Immutable objects mean that once the constructor for an object has completed its execution that instance  can't be alerted.
+// struct should be Immutable
 /*
 Class:
 - A class is a reference type. It's a blueprint for creating objects that can contain fields, 
