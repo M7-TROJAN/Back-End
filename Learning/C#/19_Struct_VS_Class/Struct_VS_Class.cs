@@ -87,7 +87,7 @@ Struct:
   finalization. Instances of structs are typically allocated on the stack or inline in containing types, and 
   variables of struct types hold the actual data rather than references.
 - Supports user-defined types, constructors, fields, properties, methods, events, indexers, operator overloading, 
-  but does not support parameterless constructors, field initializer, finalizers, inheritance, and does not 
+  but does not support field initializer, finalizers, inheritance, and does not 
   implicitly inherit from the Object class.
 - Has value semantics, meaning variables of struct types hold the actual data directly.
 - The new() keyword is not required when creating new instances.
