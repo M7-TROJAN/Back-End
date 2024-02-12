@@ -1,3 +1,5 @@
+// Immutable objects mean that once the constructor for an object has completed its execution that instance  can't be alerted.
+
 Immutable objects in programming refer to objects whose state (i.e., data) cannot be changed after they are created. Once an immutable object is constructed, its state remains constant throughout its lifetime.
 
 This means that once the constructor for an immutable object has completed its execution and initialized all of its fields or properties, those fields or properties cannot be altered or modified. Any attempt to modify the object's state would result in creating a new instance of the object with the desired changes rather than altering the existing one.
