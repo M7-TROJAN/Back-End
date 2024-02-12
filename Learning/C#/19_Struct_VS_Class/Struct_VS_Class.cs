@@ -96,9 +96,8 @@ Struct:
                                               class                              struct
 user defined type                             True                               true
 constructer                                   true                               true
-Paramertless constructor                      true                               false
 support fields                                true                               true
-field initializer (تدي الفيلد قيمة ابتدائية)  true                               false
+field initializer (تدي الفيلد قيمة ابتدائية)            true                               false
 support Properties                            true                               true
 support Method                                true                               true
 support event                                 true                               true
