@@ -49,3 +49,9 @@ class Program
         Console.ReadKey();
     }
 }
+
+// In C#, when you use the `override` keyword to redefine a method in a derived class, it indicates that the method overrides a virtual method in the base class. 
+// This means that the method in the derived class will be called instead of the method in the base class when called through a reference to the derived class.
+// In contrast, when you use the `new` keyword to redefine a method in a derived class, it indicates that the method is hiding the base class method, rather than overriding it. 
+// This means that the method in the derived class will be called when called through a reference to the derived class, 
+// but the method in the base class will still be called when called through a reference to the base class.
