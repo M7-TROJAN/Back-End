@@ -1,6 +1,11 @@
 // loose coupling example 
 // TIGHT COUPLING MEANS ONE CLASS IS DEPENDENT ON ANOTHER GLASS
 // LOOSE COUPLING MEANS ONE CLASS IS DEPENDENT ON INTERFACE RATHER THAN CLASS
+
+// Tight coupling means that one class is dependent on another class directly, often resulting in dependencies that are difficult to change or maintain. 
+// On the other hand, loose coupling means that one class is dependent on an interface, 
+// allowing for greater flexibility and easier substitution of implementations without affecting the code that uses those implementations. 
+// This makes the code more modular, easier to extend, and simpler to maintain in the long run.
 using System;
 
 namespace InterfaceExample
