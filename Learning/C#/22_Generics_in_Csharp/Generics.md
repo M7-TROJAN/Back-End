@@ -194,7 +194,7 @@ Here's the improved markdown file with additional explanations and annotations:
 ```markdown
 # Generics in C#
 
-Generics in C# is a powerful feature that allows you to define classes, interfaces, methods, and delegates with placeholder types. These placeholder types can then be replaced with actual types when instances of those classes, interfaces, methods, or delegates are created or used. Generics provide flexibility and type safety, enabling you to write reusable and efficient code that can work with different types without sacrificing type safety.
+Generics in C# is a powerful feature that allows you to define classes, interfaces, methods, and delegates with placeholder types. These placeholder types can then be replaced with actual types when instances of those classes, interfaces, methods, or delegates are created or used. Generics provide flexibility and type safety, enabling you to write reusable and efficient code that can work with different types without sacrificing type safety. (without sacrificing means => دون التضحية)
 
 ## Key Points
 
