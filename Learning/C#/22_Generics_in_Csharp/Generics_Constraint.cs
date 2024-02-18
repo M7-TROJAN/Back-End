@@ -2,6 +2,12 @@
 // IT WILL GIVE A COMPILE-TIME ERROR IF YOU TRY TO INSTANTIATE A GENERIC TYPE USING A TYPE THAT IS NOT ALLOWED BY THE SPECIFIED CONSTRAINTS
 
 // syntax: where T: Constraint1, Constraint2, Constraint3, .........
+// For example, you could use:
+
+// - `where T : struct` to constrain `T` to value types.
+// - `where T : class` to constrain `T` to reference types.
+// - `where T : SomeInterface` to constrain `T` to types that implement `SomeInterface`.
+// - `where T : SomeBaseClass` to constrain `T` to types that inherit from `SomeBaseClass`.
 
 using System;
 
