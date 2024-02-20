@@ -54,20 +54,17 @@ namespace Generics
         public string Name { get; set; }
         public int Id { get; set; }
 
-        // Default constructor
         public Person()
         {
             this.Name = string.Empty;
         }
 
-        // Parameterized constructor
         public Person(int id, string name)
         {
             this.Name = name;
             this.Id = id;
         }
 
-        // Override ToString method to display ID and Name
         public override string ToString()
         {
             return $"ID: {Id}, Name: {Name}";
