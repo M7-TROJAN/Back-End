@@ -42,4 +42,57 @@ In C#, `Predicate`, `Func`, and `Action` are three different types of delegates 
      log("Hello, world!"); // Prints: Hello, world!
      ```
 
+**Full Example**
+a full example that demonstrates the use of `Predicate`, `Func`, and `Action`:
+```csharp
+using System;
+using System.Collections.Generic;
+
+namespace DelegateExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Example 1: Predicate
+            Predicate<int> isEven = (num) => num % 2 == 0;
+            Console.WriteLine("Using Predicate:");
+            Console.WriteLine($"Is 5 even? {isEven(5)}"); // false
+            Console.WriteLine($"Is 10 even? {isEven(10)}"); // true
+            Console.WriteLine();
+
+            // Example 2: Func
+            Func<int, int, int> add = (x, y) => x + y;
+            Console.WriteLine("Using Func:");
+            Console.WriteLine($"Adding 5 and 10: {add(5, 10)}"); // 15
+            Console.WriteLine();
+
+            // Example 3: Action
+            Action<string> greet = (name) => Console.WriteLine($"Hello, {name}!");
+            Console.WriteLine("Using Action:");
+            greet("John"); // Hello, John!
+            Console.WriteLine();
+
+            // Using Predicate in a List
+            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            Console.WriteLine("Filtering even numbers using Predicate:");
+            List<int> evenNumbers = numbers.FindAll(isEven);
+            foreach (var num in evenNumbers)
+            {
+                Console.Write($"{num} ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+```
+In the above example:
+1. We define a `Predicate<int>` delegate named `isEven` to check if a given integer is even.
+2. We define a `Func<int, int, int>` delegate named `add` to add two integers.
+3. We define an `Action<string>` delegate named `greet` to print a greeting message.
+4. We demonstrate each delegate's usage with examples.
+5. We use the `Predicate` delegate in a `List<int>` to filter even numbers.
+This example showcases how `Predicate`, `Func`, and `Action` delegates can be used for various purposes, including conditional checks, method composition, and side-effect operations.
+
+
 In summary, `Predicate` is used for conditions and filtering, `Func` is used for methods with return values, and `Action` is used for methods without return values. These delegate types provide flexibility and enable functional programming paradigms in C#.
