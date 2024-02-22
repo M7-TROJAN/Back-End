@@ -61,6 +61,16 @@ namespace DelegateExample
             Console.WriteLine($"Is 10 even? {isEven(10)}"); // true
             Console.WriteLine();
 
+            // Using Predicate in a List
+            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            Console.WriteLine("Filtering even numbers using Predicate:");
+            List<int> evenNumbers = numbers.FindAll(isEven);
+            foreach (var num in evenNumbers)
+            {
+                Console.Write($"{num} ");
+            }
+            Console.WriteLine();
+
             // Example 2: Func
             Func<int, int, int> add = (x, y) => x + y;
             Console.WriteLine("Using Func:");
@@ -73,15 +83,6 @@ namespace DelegateExample
             greet("John"); // Hello, John!
             Console.WriteLine();
 
-            // Using Predicate in a List
-            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            Console.WriteLine("Filtering even numbers using Predicate:");
-            List<int> evenNumbers = numbers.FindAll(isEven);
-            foreach (var num in evenNumbers)
-            {
-                Console.Write($"{num} ");
-            }
-            Console.WriteLine();
         }
     }
 }
