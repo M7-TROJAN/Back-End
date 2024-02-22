@@ -1,5 +1,7 @@
+
 using System;
 using System.Text; // Import StringBuilder
+using System.Collections.Generic;
 
 namespace GenericDelegate
 {
@@ -33,36 +35,37 @@ namespace GenericDelegate
             int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
             // Filter and print numbers greater than or equal to 7
-            PrintItems(numbers, (num) => num >= 7);
+            PrintFilteredItems(numbers, (num) => num >= 7);
 
             // Create an array of strings
             string[] names = { "mahmoud", "MAHMOUD" };
 
             // Filter and print names that are uppercase
-            PrintItems(names, (name) => name.Equals(name.ToUpper()));
+            PrintFilteredItems(names, (name) => name.Equals(name.ToUpper()));
 
             // Filter and print names that are lowercase
-            PrintItems(names, (name) => name.Equals(name.ToLower()));
+            PrintFilteredItems(names, (name) => name.Equals(name.ToLower()));
 
             // Create an array of booleans
             bool[] booleans = { true, false, true, false, false };
 
             // Filter and print boolean values that are true
-            PrintItems(booleans, (b) => b is true);
+            PrintFilteredItems(booleans, (b) => b is true);
 
             // Create an array of Person objects
-            Person[] people = new Person[]
+            var people = new List<Person>
             {
                 new Person("Mahmoud", "Mattar"),
+                new Person("Ali", "Emad"),
                 new Person("Rahma", "Yasser")
             };
 
             // Filter and print Person objects that match the specified condition
-            PrintItems(people, (p) => p.FirstName != "Mahmoud" && p.LastName != "Mattar");
+            PrintFilteredItems(people, (p) => p.FirstName != "Mahmoud" && p.LastName != "Mattar");
         }
 
         // Method to print items of an array based on a filter
-        public static void PrintItems<T>(T[] items, Filter<T> filter)
+        public static void PrintFilteredItems<T>(IEnumerable<T> items, Filter<T> filter)
         {
             StringBuilder result = new StringBuilder(); // Use StringBuilder for efficient string concatenation
             foreach (var item in items)
@@ -73,8 +76,10 @@ namespace GenericDelegate
                     result.Append($"{item}, ");
                 }
             }
+            string filteredItems = result.ToString().TrimEnd(' ', ',');
+
             // Print the result, trimming the trailing space and comma
-            Console.WriteLine(result.ToString().TrimEnd(' ', ','));
+            Console.WriteLine($"Filtered items: {{{filteredItems}}}");
         }
     }
 }
