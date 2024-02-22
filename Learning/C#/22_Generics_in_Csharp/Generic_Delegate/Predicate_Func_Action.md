@@ -89,10 +89,9 @@ namespace DelegateExample
 ```
 In the above example:
 1. We define a `Predicate<int>` delegate named `isEven` to check if a given integer is even.
-2. We define a `Func<int, int, int>` delegate named `add` to add two integers.
-3. We define an `Action<string>` delegate named `greet` to print a greeting message.
-4. We demonstrate each delegate's usage with examples.
-5. We use the `Predicate` delegate in a `List<int>` to filter even numbers.
+2. We use the `Predicate` delegate in a `List<int>` to filter even numbers.
+3. We define a `Func<int, int, int>` delegate named `add` to add two integers.
+4. We define an `Action<string>` delegate named `greet` to print a greeting message.
 This example showcases how `Predicate`, `Func`, and `Action` delegates can be used for various purposes, including conditional checks, method composition, and side-effect operations.
 
 
