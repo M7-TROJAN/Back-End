@@ -43,7 +43,7 @@ In C#, `Predicate`, `Func`, and `Action` are three different types of delegates 
      ```
 
 **Full Example**
-a full example that demonstrates the use of `Predicate`, `Func`, and `Action`:
+that demonstrates the use of `Predicate`, `Func`, and `Action`:
 ```csharp
 using System;
 using System.Collections.Generic;
