@@ -62,7 +62,7 @@ class Program
 
 ### Example 3: Trimming Characters
 
-Now, let's create a method that
+Now, let's create a method that trims specified characters from the end of a string.
 
 ```csharp
 using System;
