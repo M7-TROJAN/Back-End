@@ -94,6 +94,9 @@ namespace Events
         public Stock(string stockName)
         {
             this.name = stockName;
+            // Initialize the event with an empty delegate to ensure it's never null
+            OnPriceChanged = delegate { };
+
         }
 
         // Property to get the stock name
