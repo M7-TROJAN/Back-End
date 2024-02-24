@@ -47,4 +47,52 @@ Here are some key points about exceptions in C#:
 
 6. **Exception Propagation**: If an exception is not caught within a method, it propagates up the call stack until it is caught by an enclosing `try-catch` block or reaches the top-level of the application, causing the program to terminate.
 
+
+## Esample:
+ ```csharp
+using System;
+
+namespace Exceptions
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                // Attempt to execute the method that may throw an exception
+                int result = BadMethod();
+
+                // If no exception occurs, display the result
+                Console.WriteLine("Result: " + result);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception and display the error message
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                // Perform cleanup or finalization tasks, regardless of whether an exception occurred
+                Console.WriteLine("End of program");
+            }
+        }
+
+        // Method that may throw an exception
+        public static int BadMethod()
+        {
+            // Create a random number generator
+            Random rnd = new Random();
+
+            // Generate two random numbers
+            int x = rnd.Next(0, 2);
+            int y = rnd.Next(0, 2);
+
+            // Attempt to perform a division operation that may cause an exception
+            return x / y;
+        }
+    }
+}
+```
+
 Overall, exceptions are a fundamental aspect of error handling in C#, providing a mechanism for writing robust and reliable code by handling unexpected situations gracefully.
