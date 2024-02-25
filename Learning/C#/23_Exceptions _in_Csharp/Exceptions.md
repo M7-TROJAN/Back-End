@@ -48,6 +48,25 @@ Here are some key points about exceptions in C#:
 6. **Exception Propagation**: If an exception is not caught within a method, it propagates up the call stack until it is caught by an enclosing `try-catch` block or reaches the top-level of the application, causing the program to terminate.
 
 
+ you can specify a condition by using the keyword when:
+  ```csharp
+try
+{
+    // Some code that might throw an exception
+}
+ // Catch block that executes only when the exception has an inner exception
+catch (Exception ex) when (ex.InnerException != null)
+{
+    Console.WriteLine("An error occurred: " + ex.InnerException.Message);
+}
+catch (Exception ex)
+{
+     // Handle the exception without an inner exception
+     Console.WriteLine("Exception message: " + ex.Message);
+}
+ ```
+
+
 ## Esample:
  ```csharp
 using System;
