@@ -1,0 +1,14 @@
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\bin\Debug\net8.0\Exceptions.DeliveryExample.exe
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\bin\Debug\net8.0\Exceptions.DeliveryExample.deps.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\bin\Debug\net8.0\Exceptions.DeliveryExample.runtimeconfig.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\bin\Debug\net8.0\Exceptions.DeliveryExample.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\bin\Debug\net8.0\Exceptions.DeliveryExample.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.AssemblyInfoInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.AssemblyInfo.cs
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.csproj.CoreCompileInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\refint\Exceptions.DeliveryExample.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\Exceptions.DeliveryExample.genruntimeconfig.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\Exceptions\ConsoleApp1\obj\Debug\net8.0\ref\Exceptions.DeliveryExample.dll
