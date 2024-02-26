@@ -1,6 +1,6 @@
 `IComparable` is  interface that is used for comparing objects of a particular type. It's typically used when you want to define a default sort order for instances of your custom class or when you need to perform comparisons between instances of the same type.
 
-overview of `IComparable`:
+## overview of `IComparable`:
 
 1. **Interface Definition**: `IComparable` is defined in the `System` namespace as follows:
 
@@ -21,7 +21,7 @@ overview of `IComparable`:
 
 3. **Usage**: Once `IComparable` is implemented, you can use methods that rely on comparisons, such as sorting algorithms (`Array.Sort`, LINQ's `OrderBy`, `OrderByDescending`, etc.), to sort collections of your custom objects based on the defined comparison logic.
 
-Here's an example of implementing `IComparable`:
+## example of `IComparable`:
 
 ```csharp
 public class Person : IComparable<Person>
