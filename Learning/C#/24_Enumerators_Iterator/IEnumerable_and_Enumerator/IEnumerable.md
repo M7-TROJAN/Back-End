@@ -1,4 +1,4 @@
-In C#, `IEnumerable` is an interface defined in the `System.Collections` namespace. It represents a collection of objects that can be enumerated, allowing you to iterate over its elements sequentially. This interface defines a single method:
+ `IEnumerable` is an interface defined in the `System.Collections` namespace. It represents a collection of objects that can be enumerated, allowing you to iterate over its elements sequentially. This interface defines a single method:
 
 ```csharp
 IEnumerator GetEnumerator();
