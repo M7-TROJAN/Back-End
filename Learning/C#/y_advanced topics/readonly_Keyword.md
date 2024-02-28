@@ -1,8 +1,3 @@
-Got it! Here's a summary specifically focusing on the `readonly` keyword in C#:
-
-```markdown
-# Summary: Readonly in C#
-
 ## Readonly Keyword
 In C#, the `readonly` keyword is used to declare that a field or variable can only be assigned a value once, either when it's declared or in the class constructor. After initialization, the value cannot be modified.
 
@@ -68,4 +63,3 @@ public class MyClass
 - Readonly indexers restrict the reassignment of the indexer itself but do not prevent modifications to elements accessed through the indexer.
 
 Understanding `readonly` is crucial for creating immutable objects or ensuring certain data remains unchanged after initialization.
-```
