@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\Documentation.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>

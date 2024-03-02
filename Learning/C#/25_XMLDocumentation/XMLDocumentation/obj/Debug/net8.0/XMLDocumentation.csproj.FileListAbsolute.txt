@@ -1,0 +1,14 @@
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\bin\Debug\net8.0\XMLDocumentation.exe
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\bin\Debug\net8.0\XMLDocumentation.deps.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\bin\Debug\net8.0\XMLDocumentation.runtimeconfig.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\bin\Debug\net8.0\XMLDocumentation.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\bin\Debug\net8.0\XMLDocumentation.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.AssemblyInfoInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.AssemblyInfo.cs
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.csproj.CoreCompileInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\refint\XMLDocumentation.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\XMLDocumentation.genruntimeconfig.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\XMLDocumentation\obj\Debug\net8.0\ref\XMLDocumentation.dll

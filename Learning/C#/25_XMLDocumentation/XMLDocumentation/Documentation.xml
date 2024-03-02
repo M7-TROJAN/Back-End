@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<docs>
+	<members name="generator">
+		<Generator>
+			<summary>
+				The main <c>Generator</c> class.
+			</summary>
+			<remarks>
+				This class can Generate Employee Ids and random passwords.
+			</remarks>
+		</Generator>
+		<GenerateID>
+			<summary>
+				Generates an employee ID based on the provided <paramref name="firstName"/>, <paramref name="lastName"/>, and <paramref name="hireDate"/>.
+			</summary>
+			<remarks>
+				The employee ID format is as follows: IIYYMMDDHHMMSSmmmLI, where:
+				<list type ="bullet">
+					<item>
+						<term>II</term>
+						<description>
+							Initials of the employee's <paramref name="firstName"/> and <paramref name="lastName"/> (first two letters of each).
+						</description>
+					</item>
+					<item>
+						<term>YY</term>
+						<description>Year of the employee's hire date.</description>
+					</item>
+					<item>
+						<term>MM</term>
+						<description>Month of the employee's hire date.</description>
+					</item>
+					<item>
+						<term>DD</term>
+						<description>Day of the employee's hire date.</description>
+					</item>
+					<item>
+						<term>HH</term>
+						<description>Hour at the time of ID generation.</description>
+					</item>
+					<item>
+						<term>MM</term>
+						<description>Minute at the time of ID generation.</description>
+					</item>
+					<item>
+						<term>SS</term>
+						<description>Second at the time of ID generation.</description>
+					</item>
+					<item>
+						<term>mmm</term>
+						<description>Milliseconds at the time of ID generation.</description>
+					</item>
+					<item>
+						<term>LI</term>
+						<description>The LastIdSequence, representing the sequence number of generated IDs.</description>
+					</item>
+				</list>
+			</remarks>
+			<param name="firstName">The first name of the employee.</param>
+			<param name="lastName">The last name of the employee.</param>
+			<param name="hireDate">The hire date of the employee.</param>
+			<returns>The generated employee ID as a string.</returns>
+			<example>
+				<code>
+					var id = Generator.GenerateID("Mahmoud", "Mattar", new DateTime(2020, 7, 15));
+					Console.WriteLine(id);
+				</code>
+			</example>
+			<exception cref="T:System.ArgumentNullException">
+				Thrown when <paramref name="firstName"/>, <paramref name="lastName"/>, or <paramref name="hireDate"/> is null.
+			</exception>
+			<exception cref="T:System.ArgumentException">
+				Thrown when <paramref name="hireDate"/> is in the future.
+			</exception>
+			See <see cref="M:XMLDocumentation.Generator.GeneratePassword(System.Int32)"/> to generate random password.
+		</GenerateID>
+
+		<GeneratePassword>
+			<summary>
+				Generates a random strong password with the specified length <parmref name="passwordLength"/>
+			</summary>
+			<param name="passwordLength">The length of the password to generate. Default is 16.</param>
+			<returns>A randomly generated strong password.</returns>
+			<remarks>
+				The generated password contains a combination of uppercase letters, lowercase letters, digits, and special characters.
+			</remarks>
+			<example>
+				<code>
+					var password = Generator.GeneratePassword(20);
+					Console.WriteLine(password);
+				</code>
+			</example>
+		</GeneratePassword>
+
+		<VerifyPassword>
+			<summary>
+				Verifies the strength and validity of a password.
+			</summary>
+			<param name="password">The password to verify.</param>
+			<returns>True if the password is strong and valid; otherwise, false.</returns>
+			<remarks>
+				The password must meet the following criteria to be considered valid and strong:
+				<list type="bullet">
+					<item>
+						<term>Length:</term>
+						<description>It must have a minimum length of 8 characters.</description>
+					</item>
+					<item>
+						<term>Spaces:</term>
+						<description>It must not contain any spaces.</description>
+					</item>
+					<item>
+						<term>Characters:</term>
+						<description>It must contain at least one uppercase letter, one lowercase letter, one digit, and one special symbol (e.g., !@#$%^*()_+=).</description>
+					</item>
+				</list>
+			</remarks>
+			<example>
+				<code>
+					var isValidPassword = Generator.VerifyPassword("StrongPassword123!");
+					Console.WriteLine(isValidPassword);
+				</code>
+			</example>
+			<exception cref="T:System.ArgumentException">
+				Thrown when <paramref name="password"/> is null or empty.
+			</exception>
+		</VerifyPassword>
+	</members>
+</docs>
