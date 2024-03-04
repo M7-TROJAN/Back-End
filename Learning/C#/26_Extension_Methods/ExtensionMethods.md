@@ -95,15 +95,30 @@ namespace ExtensionMethods
     }
 
 
+    /// <summary>
+    /// Provides extension methods for working with dates and times.
+    /// </summary>
     public static class DateExtensions
     {
+        /// <summary>
+        /// Determines whether the specified date falls on a weekend (Friday).
+        /// </summary>
+        /// <param name="dt">The date to check.</param>
+        /// <returns>True if the date is a Friday (weekend); otherwise, false.</returns>
         public static bool IsWeekEnd(this DateTime dt) => dt.DayOfWeek == DayOfWeek.Friday;
+
+        /// <summary>
+        /// Determines whether the specified date falls on a weekday (not Friday).
+        /// </summary>
+        /// <param name="dt">The date to check.</param>
+        /// <returns>True if the date is not a Friday (weekday); otherwise, false.</returns>
         public static bool IsWeekDay(this DateTime dt) => !dt.IsWeekEnd();
     }
 
+
 }
 ```
-In this example, the `IsWeekEnd` method extends the `DateTime` type, allowing Us to call it on any DateTime instance. The `this` keyword in the method's parameter list indicates that it is an extension method for the `DateTime` type.
+In this example, the `IsWeekEnd` and `IsWeekDay` methods extend the `DateTime` type, allowing Us to call it on any DateTime instance. The `this` keyword in the method's parameter list indicates that it is an extension method for the `DateTime` type.
 
 ## some real-world scenarios for using extension methods in C#.
 
