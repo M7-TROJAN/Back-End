@@ -194,8 +194,11 @@ using System.Collections.Generic;
 public static class CollectionExtensions
 {
     /// <summary>
-    /// Checks if a list contains any duplicate elements.
+    /// Determines whether the specified collection contains any duplicate elements.
     /// </summary>
+    /// <typeparam name="T">The type of elements in the collection.</typeparam>
+    /// <param name="values">The collection to check for duplicates.</param>
+    /// <returns>True if the collection contains duplicates; otherwise, false.</returns>
     public static bool HasDuplicates<T>(this IEnumerable<T> source)
     {
         HashSet<T> set = new HashSet<T>();
