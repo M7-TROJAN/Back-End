@@ -27,7 +27,7 @@ class Program
         numbers.Add(30);
 
         // Trying to add a duplicate element
-        numbers.Add(10); // This will be ignored
+        numbers.Add(10); // This will be ignored and the Add method will return false
 
         // Check if an element exists in the HashSet
         bool containsTwenty = numbers.Contains(20);
