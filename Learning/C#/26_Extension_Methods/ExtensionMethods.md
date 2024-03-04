@@ -10,7 +10,7 @@ Here are some key points about extension methods:
 
 4. **Accessible via namespace**: To use extension methods, you need to include the namespace where the static class containing the extension methods is defined.
 
-a simple example of an extension method:
+## Simple examples of an extension method:
 ```csharp
 using System;
 
@@ -78,6 +78,32 @@ namespace ExtensionMethods
 ```
 In this example, the `IsBetween` method extends the `int` type, allowing Us to call it on any int instance. The `this` keyword in the method's parameter list indicates that it is an extension method for the `int` type.
 
+```csharp
+using System;
+using System.Text;
+namespace ExtensionMethods
+{ 
+    public class Program
+    {
+        public static void Main()
+        {
+            DateTime dt = DateTime.Now;
+
+            Console.WriteLine($"Is WeekEnd: {dt.IsWeekEnd()}");
+            Console.WriteLine($"Is WeekDay: {dt.IsWeekDay()}");
+        }
+    }
+
+
+    public static class DateExtensions
+    {
+        public static bool IsWeekEnd(this DateTime dt) => dt.DayOfWeek == DayOfWeek.Friday;
+        public static bool IsWeekDay(this DateTime dt) => !dt.IsWeekEnd();
+    }
+
+}
+```
+In this example, the `IsWeekEnd` method extends the `DateTime` type, allowing Us to call it on any DateTime instance. The `this` keyword in the method's parameter list indicates that it is an extension method for the `DateTime` type.
 
 ## some real-world scenarios for using extension methods in C#.
 
