@@ -23,6 +23,7 @@ namespace Assemblies
             var type = typeof(Employee);
             var assembly = type.Assembly;
             Console.WriteLine($"Assembly Information from Type: {assembly}\n");
+            Console.WriteLine($"Assembly Information from Type: {assembly.Location}\n");
 
             // Additional example: Accessing assembly information of DateTime
             Console.WriteLine($"Assembly Information of DateTime: {typeof(DateTime).Assembly}\n");
