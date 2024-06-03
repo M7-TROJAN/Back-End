@@ -26,7 +26,7 @@ class clsEmployee
         clsEmployee Employee1 = new clsEmployee();
        
         Employee1.ID = 7;
-        Employee1.Name = "Mohammed Abu-Hadhoud";
+        Employee1.Name = "Mahmoud Mattar";
 
         Console.WriteLine("Employee Id:={0}", Employee1.ID);
         Console.WriteLine("Employee Name:={0}", Employee1.Name);
