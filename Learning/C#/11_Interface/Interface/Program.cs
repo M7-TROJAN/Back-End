@@ -65,10 +65,10 @@ public class Program
        // IPerson Person1 = new IPerson();
 
         Employee employee = new Employee();
-        employee.FirstName = "Mohammed";
-        employee.LastName = "Abu-Hadhoud";
+        employee.FirstName = "Mahmoud";
+        employee.LastName = "Mattar";
         employee.EmployeeId = 123;
-        employee.Introduce(); // Output: "Hi, my name is John Doe, and my employee ID is 123."
+        employee.Introduce(); // Output: "Hi, my name is Mahmoud Mattar, and my employee ID is 123."
         employee.SayGoodbye(); // Output: "Goodbye!"
         employee.Print();
         employee.SedEmail();
