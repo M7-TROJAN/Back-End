@@ -35,6 +35,9 @@ class Program
         // Deconstructing the record
         var (firstName, lastName, age) = person1;
         Console.WriteLine($"First Name: {firstName}, Last Name: {lastName}, Age: {age}"); // Output: First Name: Mahmoud, Last Name: Mattar, Age: 30
+
+        // if you try to modify a property of a record, you will get a compile-time error
+        // modifiedPerson.Age = 30; // Error: Property or indexer 'Person.Age' cannot be assigned to -- it is read only
     }
 }
 ```
