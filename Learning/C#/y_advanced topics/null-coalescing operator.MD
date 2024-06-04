@@ -1,5 +1,12 @@
 The null-coalescing operator (`??`) in C# is used to provide a default value when a nullable type or reference type is null. This operator is especially useful for simplifying the handling of null values and providing fallback values.
 
+### Syntax
+
+```csharp
+variable = variable ?? defaultValue;
+```
+If `variable` is `null`, the `defaultValue` is assigned to `variable`. If `variable` is not `null`, it retains its value.
+
 ### Basic Syntax
 
 The null-coalescing operator takes the form:
@@ -66,7 +73,20 @@ Console.WriteLine(name); // Output: No Name
 ```
 Here, `GetName()` returns null, so `name` is assigned the fallback value "No Name".
 
-#### Example 7: Complex Object Properties
+#### 7. In a Method Call
+
+You can use the null-coalescing operator directly in method calls.
+
+```csharp
+void PrintMessage(string message)
+{
+    Console.WriteLine(message ?? "No message provided");
+}
+
+PrintMessage(null); // Output: No message provided
+PrintMessage("Hello, World!"); // Output: Hello, World!
+```
+#### Example 8: Complex Object Properties
 ```csharp
 class Person
 {
