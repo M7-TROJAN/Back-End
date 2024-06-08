@@ -1,4 +1,6 @@
-Reflection is a powerful feature in .NET that allows you to inspect and interact with metadata about types, members, and assemblies at runtime. Here’s an overview of what reflection is, why it's useful, and how to use it effectively in various scenarios:
+- Reflection in .NET allows you to inspect metadata and compiled code in the assembly at runtime
+(هي عملية فحص البيانات الوصفية والتعليمات البرمجية المترجمة في وقت تشغيل البرنامج)
+- Reflection is a powerful feature in .NET that allows you to inspect and interact with metadata about types, members, and assemblies at runtime. Here’s an overview of what reflection is, why it's useful, and how to use it effectively in various scenarios:
 
 ### What is Reflection?
 
