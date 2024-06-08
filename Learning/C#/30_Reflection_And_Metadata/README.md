@@ -359,3 +359,11 @@ Private Method: PrivateMethod
 In this example, the `BindingFlags` are used to search for different kinds of members in `MyClass`. The use of `BindingFlags.NonPublic` and `BindingFlags.Instance` is crucial for finding private fields and methods.
 
 Reflection is a powerful tool, but it should be used judiciously due to potential performance overhead and security considerations.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
