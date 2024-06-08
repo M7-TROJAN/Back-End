@@ -2,6 +2,9 @@
 (هي عملية فحص البيانات الوصفية والتعليمات البرمجية المترجمة في وقت تشغيل البرنامج)
 - Reflection is a powerful feature in .NET that allows you to inspect and interact with metadata about types, members, and assemblies at runtime. Here’s an overview of what reflection is, why it's useful, and how to use it effectively in various scenarios:
 
+- (يعني انا مثلا لما بعمل كلاس معين وعملتله كومبيليشن بقي عبارة عن اسيمبلي خلاص هل اقدر والبرنامج شغال اشوف التايبس هو ده بقي الريفليكشن)
+- "When I create a class and compile it into an assembly, can I then see the types while the program is running? That's what reflection is."
+
 ### What is Reflection?
 
 Reflection is the ability of a program to examine and modify its own structure and behavior at runtime. In .NET, reflection provides objects (of type `Type`) that describe assemblies, modules, and types. You can use reflection to dynamically create instances of types, bind to methods, and access fields and properties.
