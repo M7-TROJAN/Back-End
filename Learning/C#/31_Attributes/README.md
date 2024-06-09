@@ -232,4 +232,10 @@ public class ReflectionExample
 - **AttributeUsage**: Specifies how custom attributes can be applied.
 - **Reflection and Attributes**: Use reflection to inspect attributes at runtime.
 
-This comprehensive guide should help you understand and use attributes in C# effectively. You can now create an MD file for this content and upload it to your GitHub repository.
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
