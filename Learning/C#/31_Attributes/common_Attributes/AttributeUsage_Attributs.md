@@ -10,9 +10,8 @@ The `[AttributeUsage]` attribute accepts several parameters, but the most common
 
 1. **AttributeTargets**: This parameter specifies the kinds of elements to which the attribute can be applied, such as classes, methods, properties, etc. 
 
-### Example Explanation
+### Example 
 
-In the line:
 ```csharp
 [AttributeUsage(AttributeTargets.Property)]
 ```
@@ -41,9 +40,7 @@ Here are some possible values you can use with `AttributeTargets`:
 - `AttributeTargets.Property`: Attribute can be applied to a property.
 - `AttributeTargets.Struct`: Attribute can be applied to a struct.
 
-### Example in Context
-
-Let's see the full context in the `SkillAttribute`:
+### Example
 
 ```csharp
 [AttributeUsage(AttributeTargets.Property)]
@@ -73,30 +70,3 @@ public sealed class SkillAttribute : Attribute
 
 Here, `SkillAttribute` is a custom attribute that can only be applied to properties, thanks to the `[AttributeUsage(AttributeTargets.Property)]` declaration.
 
-### Practical Example
-
-Here's how `SkillAttribute` is applied to properties in the `Player` class:
-
-```csharp
-class Player
-{
-    public string Name { get; set; }
-
-    [Skill("Ball Control", 1, 10)]
-    public int BallControl { get; set; }
-
-    [Skill("Dribbling", 1, 20)]
-    public int Dribbling { get; set; }
-
-    [Skill("Power", 1, 1000)]
-    public int Power { get; set; }
-
-    [Skill("Speed", 1, 100)]
-    public int Speed { get; set; }
-
-    [Skill("Passing", 1, 5)]
-    public int Passing { get; set; }
-}
-```
-
-Each skill property has the `SkillAttribute`, which validates that the values are within the specified range. The `AttributeUsage` ensures this attribute is only used with properties.
