@@ -25,6 +25,17 @@ class Program
             }
         }
 
+        var method = type.GetMethod("SampleMethod");
+        var methodAttributes = method.GetCustomAttributes(false);
+
+        foreach (var attribute in methodAttributes)
+        {
+            if (attribute is AuthorAttribute authorAttribute)
+            {
+                Console.WriteLine($"Method Author: {authorAttribute.Name}, Date: {authorAttribute.Date}");
+            }
+        }
+
     }
 }
 
