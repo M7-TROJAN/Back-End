@@ -47,6 +47,32 @@ public override int GetHashCode()
 }
 ```
 
+## Example
+
+```csharp
+public class Program
+{
+    public static void Main()
+    {
+        int a = int.MaxValue;
+        int b = int.MaxValue;
+
+        try
+        {
+            int c = checked(a + b); // This will throw an OverflowException
+        }
+        catch (OverflowException)
+        {
+            Console.WriteLine("Overflow detected!");
+        }
+
+        int d = unchecked(a + b); // This will wrap around
+        Console.WriteLine(d); // Output: -2 (or some wrapped value)
+
+    }
+}
+```
+
 In this example, the `GetHashCode` method calculates a hash code by combining the hash codes of two properties (`ISOCode` and `Name`). The use of `unchecked` ensures that any overflow during the arithmetic operations wraps around silently, optimizing performance while maintaining correctness for hash code generation.
 
 ## Conclusion
