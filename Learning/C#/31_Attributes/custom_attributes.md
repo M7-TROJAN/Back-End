@@ -7,6 +7,28 @@ A basic custom attribute that adds metadata to classes or methods.
 ```csharp
 using System;
 
+class Program
+{
+    static void Main()
+    {
+        
+        SampleClass sample = new SampleClass();
+        
+        var type = sample.GetType();
+        var classAttributes = type.GetCustomAttributes(false);
+
+        foreach (var attribute in classAttributes)
+        {
+            if (attribute is AuthorAttribute authorAttribute)
+            {
+                Console.WriteLine($"Class Author: {authorAttribute.Name}, Date: {authorAttribute.Date}");
+            }
+        }
+
+    }
+}
+
+
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorAttribute : Attribute
 {
@@ -16,15 +38,23 @@ public class AuthorAttribute : Attribute
     public AuthorAttribute(string name, string date)
     {
         Name = name;
-        Date = DateTime.Parse(date);
+        
+        if (DateTime.TryParse(date, out var dateTime))
+        {
+            Date = dateTime;
+        }
+        else
+        {
+            Date = DateTime.Now;
+        }
     }
 }
 
 // Usage
-[Author("John Doe", "2023-01-01")]
+[Author("Mahmoud Mattar", "2024")]
 public class SampleClass
 {
-    [Author("Jane Smith", "2023-02-15")]
+    [Author("Mahmoud Mattar", "2023 -02-15")]
     public void SampleMethod()
     {
     }
