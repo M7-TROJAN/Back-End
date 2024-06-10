@@ -46,3 +46,11 @@ class Program
 ```
 
 In this example, we create a `HashSet<int>` called `numbers` and add some integers to it. We attempt to add a duplicate element (`10`), which is ignored because `HashSet` does not allow duplicates. We then check if the set contains the number `20`, remove `30` from the set, and finally iterate over the elements using a foreach loop.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
