@@ -151,3 +151,11 @@ public class Program
 ```
 
 This example demonstrates creating a dictionary, adding, accessing, updating, checking existence, removing key-value pairs, and converting a list to a dictionary.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
