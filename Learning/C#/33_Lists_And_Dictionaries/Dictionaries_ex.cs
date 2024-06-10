@@ -34,13 +34,14 @@ namespace Dictionaries
 
         public static void PrintDictionary<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary)
         {
-            
+
             if (dictionary == null || dictionary.Count == 0)
             {
                 Console.WriteLine("Dictionary is null.");
                 return;
             }
 
+            Console.WriteLine($"{dictionary.Count} items in the dictionary");
             foreach (var pair in dictionary)
             {
                 Console.WriteLine($"{pair.Key}: {string.Join(", ", pair.Value)}");
