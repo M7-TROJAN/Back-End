@@ -154,3 +154,11 @@ public class Program
 ```
 
 This example demonstrates adding, inserting, and removing elements from a list, as well as getting the count and capacity of the list. The output will vary depending on the initial capacity and how the list resizes itself.
+
+## Author
+
+- Mahmoud Mohamed
+- Email: mahmoud.abdalaziz@outlook.com
+- LinkedIn: [Mahmoud Mohamed Abdalaziz](https://www.linkedin.com/in/mahmoud-mohamed-abd/)
+
+Happy learning and coding! 🚀
