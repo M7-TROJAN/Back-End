@@ -85,6 +85,9 @@ public bool IsValid(string s)
     return stack.Count == 0;
 }
 ```
+This algorithm ensures that every opening parenthesis has a corresponding closing parenthesis and that they are correctly nested.
+
+This code checks if a given string `s` containing only the characters `(` and `)` has valid parentheses. The algorithm ensures that each opening parenthesis `(` is properly closed by a corresponding closing parenthesis `)` in the correct order.
 
 ## Queue
 
