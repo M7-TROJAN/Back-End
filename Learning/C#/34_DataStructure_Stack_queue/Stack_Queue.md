@@ -1,94 +1,5 @@
 **Stack** and **Queue** in detail, with comprehensive definitions, constructors, methods, properties, and examples of real-world scenarios.
 
-## Stack
-
-### Definition
-A **stack** is a collection of elements that operates on the Last-In-First-Out (LIFO) principle. The last element added to the stack is the first one to be removed. This data structure is useful in scenarios where you need to access the most recently added element quickly.
-
-### Stack Constructor
-In C#, the `Stack<T>` class is part of the `System.Collections.Generic` namespace. Here is how you can create a stack:
-```csharp
-Stack<int> stack = new Stack<int>();
-```
-
-### Stack Methods
-
-- **Push(T item)**: Adds an item to the top of the stack.
-  ```csharp
-  stack.Push(1);
-  stack.Push(2);
-  ```
-
-- **Pop()**: Removes and returns the item at the top of the stack.
-  ```csharp
-  int top = stack.Pop(); // top is 2
-  ```
-
-- **Peek()**: Returns the item at the top of the stack without removing it.
-  ```csharp
-  int top = stack.Peek(); // top is 1
-  ```
-
-- **Contains(T item)**: Checks if the stack contains a specific item.
-  ```csharp
-  bool containsOne = stack.Contains(1); // true
-  ```
-
-- **Clear()**: Removes all items from the stack.
-  ```csharp
-  stack.Clear();
-  ```
-
-- **ToArray()**: Copies the stack to a new array.
-  ```csharp
-  int[] stackArray = stack.ToArray();
-  ```
-
-### Stack Properties
-
-- **Count**: Gets the number of elements contained in the stack.
-  ```csharp
-  int count = stack.Count; // count is 0 after Clear()
-  ```
-
-### Real-World Scenarios
-
-1. **Undo Mechanism in Text Editors**:
-   - Each action (e.g., typing, deleting) is pushed onto the stack.
-   - When "Undo" is pressed, the last action is popped from the stack and undone.
-
-2. **Expression Evaluation**:
-   - Used in evaluating postfix expressions and in function call management (call stack).
-
-3. **Backtracking Algorithms**:
-   - In solving puzzles like maze or Sudoku, you can use a stack to store your path and backtrack when you hit a dead end.
-
-### Example: Balanced Parentheses
-```csharp
-public bool IsValid(string s)
-{
-    Stack<char> stack = new Stack<char>();
-    foreach (char c in s)
-    {
-        if (c == '(')
-        {
-            stack.Push(c);
-        }
-        else if (c == ')')
-        {
-            if (stack.Count == 0 || stack.Pop() != '(')
-            {
-                return false;
-            }
-        }
-    }
-    return stack.Count == 0;
-}
-```
-This algorithm ensures that every opening parenthesis has a corresponding closing parenthesis and that they are correctly nested.
-
-This code checks if a given string `s` containing only the characters `(` and `)` has valid parentheses. The algorithm ensures that each opening parenthesis `(` is properly closed by a corresponding closing parenthesis `)` in the correct order.
-
 ## Queue
 
 ### Definition
@@ -116,6 +27,30 @@ Queue<int> queue = new Queue<int>();
 - **Peek()**: Returns the item at the beginning of the queue without removing it.
   ```csharp
   int front = queue.Peek(); // front is 2
+  ```
+
+  - **TryDequeue(out T result)**: Attempts to remove and return the item at the beginning of the queue. Returns `false` if the queue is empty.
+  ```csharp
+  if(queue.TryDequeue(out int front)) 
+  {
+      Console.WriteLine($"Dequeued: {front}");
+  } 
+  else 
+  {
+      Console.WriteLine("Queue is empty.");
+  }
+  ```
+
+- **TryPeek(out T result)**: Attempts to return the item at the beginning of the queue without removing it. Returns `false` if the queue is empty.
+  ```csharp
+  if(queue.TryPeek(out int front))
+  {
+      Console.WriteLine($"Peeked: {front}");
+  }
+  else
+  {
+      Console.WriteLine("Queue is empty.");
+  }
   ```
 
 - **Contains(T item)**: Checks if the queue contains a specific item.
@@ -251,6 +186,139 @@ namespace BinaryTreeTraversal
     }
 }
 ```
+
+## Stack
+
+### Definition
+A **stack** is a collection of elements that operates on the Last-In-First-Out (LIFO) principle. The last element added to the stack is the first one to be removed. This data structure is useful in scenarios where you need to access the most recently added element quickly.
+
+### Stack Constructor
+In C#, the `Stack<T>` class is part of the `System.Collections.Generic` namespace. Here is how you can create a stack:
+```csharp
+Stack<int> stack = new Stack<int>();
+```
+
+### Stack Methods
+
+- **Push(T item)**: Adds an item to the top of the stack.
+  ```csharp
+  stack.Push(1);
+  stack.Push(2);
+  ```
+
+- **Pop()**: Removes and returns the item at the top of the stack.
+  ```csharp
+  int top = stack.Pop(); // top is 2
+  ```
+
+- **Peek()**: Returns the item at the top of the stack without removing it.
+  ```csharp
+  int top = stack.Peek(); // top is 1
+  ```
+
+- **Contains(T item)**: Checks if the stack contains a specific item.
+  ```csharp
+  bool containsOne = stack.Contains(1); // true
+  ```
+
+- **Clear()**: Removes all items from the stack.
+  ```csharp
+  stack.Clear();
+  ```
+
+- **ToArray()**: Copies the stack to a new array.
+  ```csharp
+  int[] stackArray = stack.ToArray();
+  ```
+
+### Stack Properties
+
+- **Count**: Gets the number of elements contained in the stack.
+  ```csharp
+  int count = stack.Count; // count is 0 after Clear()
+  ```
+
+In C#, the `Stack<T>` class does not have `TryPop` or `TryPeek` methods directly built into it, unlike the `Queue<T>` class. However, we can easily implement similar functionality. Below, I will show how we can add `TryPop` and `TryPeek` methods to our stack usage:
+
+### TryPop
+The `TryPop` method attempts to pop an item from the stack. If the stack is not empty, it returns `true` and the item; otherwise, it returns `false`.
+
+### TryPeek
+The `TryPeek` method attempts to peek at the top item of the stack. If the stack is not empty, it returns `true` and the item; otherwise, it returns `false`.
+
+### Implementation
+
+implement `TryPop` and `TryPeek` methods for the `Stack<T>` class in C#:
+
+```csharp
+namespace StackExtensions
+{
+    public static class StackExtensions
+    {
+        public static bool TryPop<T>(this Stack<T> stack, out T result)
+        {
+            if (stack.Count > 0)
+            {
+                result = stack.Pop();
+                return true;
+            }
+
+            result = default(T);
+            return false;
+        }
+
+        public static bool TryPeek<T>(this Stack<T> stack, out T result)
+        {
+            if (stack.Count > 0)
+            {
+                result = stack.Peek();
+                return true;
+            }
+
+            result = default(T);
+            return false;
+        }
+    }
+}
+```
+
+### Real-World Scenarios
+
+1. **Undo Mechanism in Text Editors**:
+   - Each action (e.g., typing, deleting) is pushed onto the stack.
+   - When "Undo" is pressed, the last action is popped from the stack and undone.
+
+2. **Expression Evaluation**:
+   - Used in evaluating postfix expressions and in function call management (call stack).
+
+3. **Backtracking Algorithms**:
+   - In solving puzzles like maze or Sudoku, you can use a stack to store your path and backtrack when you hit a dead end.
+
+### Example: Balanced Parentheses
+```csharp
+public bool IsValid(string s)
+{
+    Stack<char> stack = new Stack<char>();
+    foreach (char c in s)
+    {
+        if (c == '(')
+        {
+            stack.Push(c);
+        }
+        else if (c == ')')
+        {
+            if (stack.Count == 0 || stack.Pop() != '(')
+            {
+                return false;
+            }
+        }
+    }
+    return stack.Count == 0;
+}
+```
+This algorithm ensures that every opening parenthesis has a corresponding closing parenthesis and that they are correctly nested.
+
+This code checks if a given string `s` containing only the characters `(` and `)` has valid parentheses. The algorithm ensures that each opening parenthesis `(` is properly closed by a corresponding closing parenthesis `)` in the correct order.
 
 ## Summary
 
