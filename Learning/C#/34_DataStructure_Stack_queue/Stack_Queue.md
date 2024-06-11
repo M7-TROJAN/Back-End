@@ -179,6 +179,79 @@ public void LevelOrderTraversal(TreeNode root)
 ```
 The provided code performs a Level Order Traversal (also known as Breadth-First Search, BFS) on a binary tree. This traversal visits nodes level by level from left to right.
 
+### Full Example:
+```csharp
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+
+namespace BinaryTreeTraversal
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            // Create the binary tree
+            TreeNode root = new TreeNode(1)
+            {
+                Left = new TreeNode(2)
+                {
+                    Left = new TreeNode(4),
+                    Right = new TreeNode(5)
+                },
+                Right = new TreeNode(3)
+                {
+                    Right = new TreeNode(6)
+                }
+            };
+
+            // Perform level order traversal
+            LevelOrderTraversal(root);
+
+            Console.ReadKey();
+        }
+
+        public static void LevelOrderTraversal(TreeNode root)
+        {
+            if (root == null) return;
+
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                TreeNode current = queue.Dequeue();
+                Console.WriteLine(current.Value);
+
+                if (current.Left != null)
+                {
+                    queue.Enqueue(current.Left);
+                }
+
+                if (current.Right != null)
+                {
+                    queue.Enqueue(current.Right);
+                }
+            }
+        }
+    }
+
+    public class TreeNode
+    {
+        public int Value { get; set; }
+        public TreeNode Left { get; set; }
+        public TreeNode Right { get; set; }
+
+        public TreeNode(int value)
+        {
+            Value = value;
+            Left = null;
+            Right = null;
+        }
+    }
+}
+```
+
 ## Summary
 
 ### Stack vs. Queue
