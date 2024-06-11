@@ -177,6 +177,7 @@ public void LevelOrderTraversal(TreeNode root)
     }
 }
 ```
+The provided code performs a Level Order Traversal (also known as Breadth-First Search, BFS) on a binary tree. This traversal visits nodes level by level from left to right.
 
 ## Summary
 
