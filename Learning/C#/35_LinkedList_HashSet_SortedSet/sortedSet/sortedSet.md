@@ -249,6 +249,10 @@ namespace SortedSetExample
     }
 }
 ```
+### Very Important Note
+To ensure that a HashSet correctly identifies duplicates, follow these guidelines:
+- For primitive types, the HashSet can automatically detect duplicates.
+- For reference types, you need to override the `GetHashCode` and `Equals` methods to ensure proper comparison of objects.
 
 ### Real-World Scenarios
 
