@@ -270,4 +270,29 @@ namespace SortedSetExample
 |-------------------------|--------------------------------------|--------------------------------------|
 | **Order**               | Unordered                            | Ordered (ascending by default)       |
 | **Duplicates**          | Not allowed                          | Not allowed                          |
-| **Performance**         | O
+| **Performance**         | O(1) average for add, remove, and contains | O(log n) for add, remove, and contains |
+| **Underlying Structure**| Hash table                           | Binary search tree (e.g., red-black tree) |
+| **Use Case**            | Fast lookups and operations where order is not important | Ordered collections where operations need to maintain order |
+
+### Explanation
+
+1. **Order**:
+   - **HashSet**: Does not maintain any order of elements. The elements are stored in an unordered fashion.
+   - **SortedSet**: Maintains elements in ascending order by default. 
+
+2. **Duplicates**:
+   - Both **HashSet** and **SortedSet** do not allow duplicate elements.
+
+3. **Performance**:
+   - **HashSet**: Provides O(1) average time complexity for add, remove, and contains operations, meaning these operations are generally performed in constant time regardless of the number of elements.
+   - **SortedSet**: Provides O(log n) time complexity for add, remove, and contains operations, meaning the time required for these operations grows logarithmically with the number of elements.
+
+4. **Underlying Structure**:
+   - **HashSet**: Uses a hash table as the underlying data structure, which allows for fast access, addition, and removal of elements.
+   - **SortedSet**: Uses a binary search tree (like a red-black tree) as the underlying data structure, which keeps elements sorted and allows for efficient range queries.
+
+5. **Use Case**:
+   - **HashSet**: Ideal for scenarios where fast lookups, insertions, and deletions are needed without any concern for the order of elements.
+   - **SortedSet**: Ideal for scenarios where maintaining a sorted collection is necessary and order-based operations like range queries are required.
+
+By understanding these differences, you can choose the appropriate collection type based on your specific requirements, such as performance needs and whether element order is important.
