@@ -1,0 +1,11 @@
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\bin\Debug\net8.0\M7TROJAN.NumberSystem.deps.json
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\bin\Debug\net8.0\M7TROJAN.NumberSystem.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\bin\Debug\net8.0\M7TROJAN.NumberSystem.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.AssemblyInfoInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.AssemblyInfo.cs
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.csproj.CoreCompileInputs.cache
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\refint\M7TROJAN.NumberSystem.dll
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\M7TROJAN.NumberSystem.pdb
+C:\Users\matte\OneDrive\Desktop\pro_vs\Learning\M7TROJAN.NumberSystem\obj\Debug\net8.0\ref\M7TROJAN.NumberSystem.dll
