@@ -277,6 +277,89 @@ In this example:
 - We then wait for all tasks to complete using `Task.WhenAll`.
 - The results are printed accordingly.
 
+### Combining Task.WhenAll and Task.WhenAny
+
+```csharp
+using System;
+using System.Threading.Tasks;
+
+namespace CA11TaskCombinators
+{
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // TaskCombinators means combining multiple tasks together
+            // Task.WhenAll() and Task.WhenAny() are the two main task combinators
+            // Task.WhenAll() waits for all tasks to complete
+            // Task.WhenAny() waits for any task to complete
+
+            var has1000SubscribersTask = Has1000Subscribers();
+            var has4000ViewHoursTask = Has4000ViewHours();
+
+            // Using Task.WhenAny()
+            Console.WriteLine("Using Task.WhenAny()");
+            Console.WriteLine("---------------------");
+            var firstCompleted = await Task.WhenAny(has1000SubscribersTask, has4000ViewHoursTask);
+            Console.WriteLine(firstCompleted.Result);
+
+            // Using Task.WhenAll()
+            Console.WriteLine("\nUsing Task.WhenAll()");
+            Console.WriteLine("---------------------");
+            var allCompleted = await Task.WhenAll(has1000SubscribersTask, has4000ViewHoursTask);
+            foreach (var result in allCompleted)
+            {
+                Console.WriteLine(result);
+            }
+
+            Console.ReadKey();
+        }
+
+        // Simulating YouTube requirements to monetize the channel
+
+        static async Task<string> Has1000Subscribers()
+        {
+            await Task.Delay(4000); // Simulate delay
+            return "Congratulations! You have 1000 subscribers";
+        }
+
+        static async Task<string> Has4000ViewHours()
+        {
+            await Task.Delay(5000); // Simulate delay
+            return "Congratulations! You have 4000 view hours";
+        }
+    }
+}
+
+```
+
+### Explanation of Key Concepts
+
+1. **Task.WhenAny**:
+   - `Task.WhenAny` waits for any one of the provided tasks to complete. It returns the first task that completes.
+   - This is useful when you want to proceed as soon as one of the tasks is done.
+
+2. **Task.WhenAll**:
+   - `Task.WhenAll` waits for all the provided tasks to complete. It returns an array of the results of all the tasks.
+   - This is useful when you need all tasks to complete before proceeding.
+
+### Example Output
+
+When you run this code, you will see output similar to this:
+
+```
+Using Task.WhenAny()
+---------------------
+Congratulations! You have 1000 subscribers
+
+Using Task.WhenAll()
+---------------------
+Congratulations! You have 1000 subscribers
+Congratulations! You have 4000 view hours
+```
+
+This output shows that `Task.WhenAny` completed as soon as the first task (`Has1000Subscribers`) finished, while `Task.WhenAll` waited for both tasks to complete before proceeding.
+
 ### Summary
 
 - **`Task.WhenAll`**: Waits for all tasks to complete and aggregates their results.
