@@ -76,6 +76,111 @@ class Program
 }
 ```
 
+### Explanation
+
+1. **Creating Tasks**:
+    ```csharp
+    Task task1 = Task.Run(() => { throw new InvalidOperationException("Task 1 failed"); });
+    Task task2 = Task.Run(() => { Task.Delay(7000).Wait(); });
+    Task task3 = Task.Run(() => { throw new ArgumentNullException("Task 3 failed"); });
+    ```
+    - `task1` throws an `InvalidOperationException`.
+    - `task2` simulates work by delaying for 7 seconds.
+    - `task3` throws an `ArgumentNullException`.
+
+2. **Waiting for All Tasks to Complete**:
+    ```csharp
+    await Task.WhenAll(task1, task2, task3);
+    ```
+    - `Task.WhenAll` waits for all tasks to complete. If any task throws an exception, it will throw an `AggregateException`.
+
+3. **Handling Exceptions**:
+    ```csharp
+    catch (AggregateException ex)
+    {
+        foreach (var innerEx in ex.InnerExceptions)
+        {
+            Console.WriteLine(innerEx.Message);
+        }
+    }
+    ```
+    - The `try-catch` block catches the `AggregateException`.
+    - The `InnerExceptions` property of the `AggregateException` contains all the exceptions thrown by the individual tasks.
+    - We iterate through each inner exception and print its message.
+
+### Important Points
+
+- **AggregateException**: `Task.WhenAll` throws an `AggregateException` if any of the tasks fail. This exception contains all the individual exceptions in its `InnerExceptions` property.
+- **Task Continuation**: Even if some tasks throw exceptions, `Task.WhenAll` will still wait for all tasks to complete before propagating the exceptions. This ensures that all tasks have a chance to complete, even if some fail.
+- **Handling Multiple Exceptions**: When dealing with multiple tasks, it's important to handle all exceptions to ensure that you don't miss any errors.
+
+### Modified Example: Handling All Task Exceptions Individually
+
+You can also handle each task's exception individually if needed:
+
+```csharp
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        Task task1 = Task.Run(() => { throw new InvalidOperationException("Task 1 failed"); });
+        Task task2 = Task.Run(() => { Task.Delay(7000).Wait(); });
+        Task task3 = Task.Run(() => { throw new ArgumentNullException("Task 3 failed"); });
+
+        Task[] tasks = new Task[] { task1, task2, task3 };
+
+        try
+        {
+            await Task.WhenAll(tasks);
+        }
+        catch
+        {
+            foreach (var task in tasks)
+            {
+                if (task.IsFaulted)
+                {
+                    Console.WriteLine($"Task {Array.IndexOf(tasks, task) + 1} failed with: {task.Exception?.InnerException?.Message}");
+                }
+            }
+        }
+
+        Console.WriteLine("Task.WhenAll example completed.");
+    }
+}
+```
+
+### Explanation of the Modified Example
+
+1. **Task Array**:
+    ```csharp
+    Task[] tasks = new Task[] { task1, task2, task3 };
+    ```
+    - We create an array of tasks to iterate through them later easily.
+
+2. **Handling Individual Task Exceptions**:
+    ```csharp
+    catch
+    {
+        foreach (var task in tasks)
+        {
+            if (task.IsFaulted)
+            {
+                Console.WriteLine($"Task {Array.IndexOf(tasks, task) + 1} failed with: {task.Exception?.InnerException?.Message}");
+            }
+        }
+    }
+    ```
+    - In the `catch` block, we iterate through each task to check if it has faulted (`task.IsFaulted`).
+    - If a task has faulted, we print its exception message.
+
+This approach allows you to handle each task's exception individually, providing more detailed information about which task failed and why.
+
+By understanding and implementing these techniques, you can effectively manage and handle exceptions when using task combinators like `Task.WhenAll` and `Task.WhenAny` in your .NET applications.
+
+
 ### 2. Task.WhenAny
 
 `Task.WhenAny` is used when you have multiple tasks running concurrently, and you want to proceed as soon as any one of them completes. This method returns a single task that completes when any of the provided tasks have completed.
