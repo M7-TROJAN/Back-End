@@ -1,5 +1,7 @@
 ## Progress Reporting in .NET
 
+In modern applications, it's crucial to keep users informed about the progress of long-running operations. Progress reporting ensures that users are aware of the application's state, improving the user experience. .NET provides the `Progress<T>` class to facilitate progress reporting in a simple and efficient way.
+
 ### What is `Progress<T>`?
 
 `Progress<T>` is a class in .NET that allows you to report the progress of a task. It is often used to update the UI thread about the progress of a background operation. This is especially useful in applications where you want to keep the user informed about long-running operations.
@@ -13,13 +15,13 @@
 
 2. **IProgress<T> Interface**:
    - A simple interface with a `Report` method.
-   - Allows decoupling the progress reporting mechanism from the implementation.
+   - Allows decoupling the progress reporting mechanism from the implementation, making the code more modular and easier to maintain.
 
 ### How It Works
 
 1. **Creating a Progress Object**:
    - You create an instance of `Progress<T>` and pass a callback method to its constructor. This method is called whenever progress is reported.
-   
+
 2. **Reporting Progress**:
    - In the background task, you use the `Report` method of the `Progress<T>` object to report progress.
 
@@ -109,41 +111,48 @@ namespace CA10ReportProgress
 
         static async Task DownloadFileAsync(string url, string filePath, IProgress<int> progress)
         {
-            using (var client = new HttpClient())
-            using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+            try
             {
-                response.EnsureSuccessStatusCode();
-
-                var totalBytes = response.Content.Headers.ContentLength.HasValue ? response.Content.Headers.ContentLength.Value : -1L;
-                var canReportProgress = totalBytes != -1;
-
-                using (var contentStream = await response.Content.ReadAsStreamAsync())
-                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                using (var client = new HttpClient())
+                using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
                 {
-                    var totalRead = 0L;
-                    var buffer = new byte[8192];
-                    var isMoreToRead = true;
+                    response.EnsureSuccessStatusCode();
 
-                    do
+                    var totalBytes = response.Content.Headers.ContentLength.HasValue ? response.Content.Headers.ContentLength.Value : -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    using (var contentStream = await response.Content.ReadAsStreamAsync())
+                    using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
                     {
-                        var read = await contentStream.ReadAsync(buffer, 0, buffer.Length);
-                        if (read == 0)
-                        {
-                            isMoreToRead = false;
-                        }
-                        else
-                        {
-                            await fileStream.WriteAsync(buffer, 0, read);
-                            totalRead += read;
+                        var totalRead = 0L;
+                        var buffer = new byte[8192];
+                        var isMoreToRead = true;
 
-                            if (canReportProgress)
+                        do
+                        {
+                            var read = await contentStream.ReadAsync(buffer, 0, buffer.Length);
+                            if (read == 0)
                             {
-                                var percent = (int)((totalRead * 1d) / (totalBytes * 1d) * 100);
-                                progress.Report(percent);
+                                isMoreToRead = false;
                             }
-                        }
-                    } while (isMoreToRead);
+                            else
+                            {
+                                await fileStream.WriteAsync(buffer, 0, read);
+                                totalRead += read;
+
+                                if (canReportProgress)
+                                {
+                                    var percent = (int)((totalRead * 1d) / (totalBytes * 1d) * 100);
+                                    progress.Report(percent);
+                                }
+                            }
+                        } while (isMoreToRead);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
     }
@@ -163,9 +172,82 @@ namespace CA10ReportProgress
    - Inside the loop, we read chunks of data from the response stream and write them to the file.
    - We calculate the percentage of the file downloaded and report it using `progress.Report(percent);`.
 
+### Another Example: Using Action<int> and Progress<int>
+
+This example demonstrates two ways to report progress: using a simple `Action<int>` delegate and using the `Progress<T>` class.
+
+```csharp
+using System;
+using System.Threading.Tasks;
+
+namespace CA10ReportProgress
+{
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // Example 1: Using Action<int> for progress reporting
+            Action<int> progress1 = (p) => { Console.Clear(); Console.WriteLine($"{p}%"); };
+            await Download(progress1);
+
+            // Example 2: Using Progress<int> for progress reporting
+            Progress<int> progress2 = new Progress<int>(p => { Console.Clear(); Console.WriteLine($"{p}%"); });
+            await Download(progress2);
+
+            Console.WriteLine("Task completed. Press any key to exit...");
+            Console.ReadKey();
+        }
+
+        // Method to download with Action<int> for progress reporting
+        static Task Download(Action<int> onProgressPercentChanged)
+        {
+            return Task.Run(() =>
+            {
+                for (int i = 0; i <= 
+
+100; i++)
+                {
+                    Task.Delay(100).Wait(); // Simulate work
+                    if (i % 10 == 0)
+                    {
+                        onProgressPercentChanged(i); // Report progress
+                    }
+                }
+            });
+        }
+
+        // Method to download with IProgress<int> for progress reporting
+        static async Task Download(IProgress<int> progress)
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 0; i <= 100; i++)
+                {
+                    Task.Delay(100).Wait(); // Simulate work
+                    if (i % 10 == 0)
+                    {
+                        progress.Report(i); // Report progress
+                    }
+                }
+            });
+        }
+    }
+}
+```
+
+### Explanation
+
+1. **Using `Action<int>` for Progress Reporting**:
+   - We define an `Action<int>` delegate to handle progress updates.
+   - The `Download` method simulates a task and reports progress using the `Action<int>` delegate.
+
+2. **Using `Progress<int>` for Progress Reporting**:
+   - We create an instance of `Progress<int>` and pass a lambda expression to its constructor to handle progress updates.
+   - The `Download` method simulates a task and reports progress using the `IProgress<int>` interface.
+
 ### Summary
 
-- **Progress<T>** is a class used to report progress of a task, typically to the UI thread.
+- **Progress<T>** is a class used to report the progress of a task, typically to the UI thread.
 - **IProgress<T>** is an interface that defines the `Report` method for progress reporting.
 - You create an instance of `Progress<T>` and pass a callback to its constructor to handle progress updates.
 - The `Report` method is called to report progress from a background task.
@@ -173,8 +255,41 @@ namespace CA10ReportProgress
 
 ### Additional Tips
 
-- **Thread Safety**: The `Progress<T>` class automatically marshals the progress updates to the UI thread if it is created on the UI thread.
-- **Custom Progress Types**: You can create custom types to represent more complex progress information, such as a combination of percentage complete and status messages.
-- **Error Handling**: Make sure to handle exceptions in your background tasks to avoid crashing your application.
+- **Thread Safety**: The `Progress<T>` class automatically marshals the progress updates to the UI thread if it is created on the UI thread. This means you don't need to manually handle thread synchronization, making it safer and easier to update UI elements from background tasks.
+- **Custom Progress Types**: You can define custom types to represent more complex progress information. For example, you might want to report both the percentage complete and a status message.
+
+    ```csharp
+    public class ProgressInfo
+    {
+        public int PercentComplete { get; set; }
+        public string StatusMessage { get; set; }
+    }
+
+    var progress = new Progress<ProgressInfo>(info =>
+    {
+        Console.WriteLine($"{info.PercentComplete}% - {info.StatusMessage}");
+    });
+    ```
+
+- **Error Handling**: Ensure you handle exceptions in your background tasks to avoid crashes.
+
+    ```csharp
+    static async Task DownloadFileAsync(string url, string filePath, IProgress<int> progress)
+    {
+        try
+        {
+            using (var client = new HttpClient())
+            using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+            {
+                response.EnsureSuccessStatusCode();
+                // ... [rest of the code]
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+    ```
 
 By using `Progress<T>` and `IProgress<T>`, you can create responsive applications that provide real-time feedback to users about the progress of background operations.
