@@ -25,20 +25,20 @@ Deserialization => (الغاء التسلسل)
 - Example:
   ```xml
   <Person>
-    <Name>John Doe</Name>
-    <Age>30</Age>
+    <Name>Mahmoud Mattar</Name>
+    <Age>24</Age>
   </Person>
   ```
 
 **JSON (JavaScript Object Notation):**
-- A lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate.
+- A lightweight data-interchange format that is easy for humans to read and write and easy for machines to parse and generate.
 - Uses a key-value pair structure, with data enclosed in curly braces `{}`.
 - Commonly used in web APIs and modern web applications.
 - Example:
   ```json
   {
-    "Name": "John Doe",
-    "Age": 30
+    "Name": "Mahmoud Mattar",
+    "Age": 24
   }
   ```
 
@@ -68,7 +68,7 @@ class Program
 {
     static void Main()
     {
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize
         BinaryFormatter formatter = new BinaryFormatter();
@@ -113,7 +113,7 @@ class Program
 {
     static void Main()
     {
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize
         DataContractSerializer serializer = new DataContractSerializer(typeof(Person));
@@ -155,7 +155,7 @@ class Program
 {
     static void Main()
     {
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize
         string jsonString = JsonSerializer.Serialize(person);
@@ -168,6 +168,209 @@ class Program
     }
 }
 ```
+
+### DataContractSerializer with Multiple Objects
+
+**Example using `DataContractSerializer` to serialize and deserialize a list of `Person` objects:**
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Xml;
+
+[DataContract]
+public class Person
+{
+    [DataMember]
+    public string Name { get; set; }
+
+    [DataMember]
+    public int Age { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<Person> people = new List<Person>
+        {
+            new Person { Name = "Mahmoud Mattar", Age = 24 },
+            new Person { Name = "Ahmed Ali", Age = 30 },
+            new Person { Name = "Mohammad Ibrahem", Age = 28 }
+        };
+
+        // Serialize
+        DataContractSerializer serializer = new DataContractSerializer(typeof(List<Person>));
+        using (FileStream stream = new FileStream("people.xml", FileMode.Create))
+        {
+            using (XmlWriter writer = XmlWriter.Create(stream))
+            {
+                serializer.WriteObject(writer, people);
+            }
+        }
+
+        // Deserialize
+        using (FileStream stream = new FileStream("people.xml", FileMode.Open))
+        {
+            List<Person> deserializedPeople = (List<Person>)serializer.ReadObject(stream);
+            foreach (var person in deserializedPeople)
+            {
+                Console.WriteLine($"{person.Name}, {person.Age}");
+            }
+        }
+    }
+}
+```
+
+### System.Text.Json (JsonSerializer) with Multiple Objects
+
+**Example using `JsonSerializer` to serialize and deserialize a list of `Person` objects:**
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<Person> people = new List<Person>
+        {
+            new Person { Name = "Mahmoud Mattar", Age = 24 },
+            new Person { Name = "Ahmed Ali", Age = 30 },
+            new Person { Name = "Mohammad Ibrahem", Age = 28 }
+        };
+
+        // Serialize
+        string jsonString = JsonSerializer.Serialize(people);
+        File.WriteAllText("people.json", jsonString);
+
+        // Deserialize
+        string jsonFromFile = File.ReadAllText("people.json");
+        List<Person> deserializedPeople = JsonSerializer.Deserialize<List<Person>>(jsonFromFile);
+        foreach (var person in deserializedPeople)
+        {
+            Console.WriteLine($"{person.Name}, {person.Age}");
+        }
+    }
+}
+```
+
+In these examples, `DataContractSerializer` and `JsonSerializer` are used to serialize and deserialize a list of `Person` objects, demonstrating how to handle multiple objects with each serializer.
+
+### DataContractSerializer with Multiple Objects from XML File
+
+Assume we have an XML file `people.xml` that holds multiple `Person` objects:
+```xml
+<ArrayOfPerson xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/">
+  <Person>
+    <Age>24</Age>
+    <Name>Mahmoud Mattar</Name>
+  </Person>
+  <Person>
+    <Age>30</Age>
+    <Name>Mohammad Ali</Name>
+  </Person>
+  <Person>
+    <Age>28</Age>
+    <Name>Gamal Abdo</Name>
+  </Person>
+</ArrayOfPerson>
+```
+
+**Example using `DataContractSerializer` to deserialize multiple objects from an XML file:**
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Xml;
+
+[DataContract]
+public class Person
+{
+    [DataMember]
+    public string Name { get; set; }
+
+    [DataMember]
+    public int Age { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Deserialize
+        DataContractSerializer serializer = new DataContractSerializer(typeof(List<Person>));
+        using (FileStream stream = new FileStream("people.xml", FileMode.Open))
+        {
+            List<Person> deserializedPeople = (List<Person>)serializer.ReadObject(stream);
+            foreach (var person in deserializedPeople)
+            {
+                Console.WriteLine($"{person.Name}, {person.Age}");
+            }
+        }
+    }
+}
+```
+
+### System.Text.Json (JsonSerializer) with Multiple Objects from JSON File
+
+Assume we have a JSON file `people.json` that holds multiple `Person` objects:
+```json
+[
+  {
+    "Name": "Mahmoud Mattar",
+    "Age": 24
+  },
+  {
+    "Name": "Mohammad Ali",
+    "Age": 30
+  },
+  {
+    "Name": "Gamal Abdo",
+    "Age": 28
+  }
+]
+```
+
+**Example using `JsonSerializer` to deserialize multiple objects from a JSON file:**
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Deserialize
+        string jsonFromFile = File.ReadAllText("people.json");
+        List<Person> deserializedPeople = JsonSerializer.Deserialize<List<Person>>(jsonFromFile);
+        foreach (var person in deserializedPeople)
+        {
+            Console.WriteLine($"{person.Name}, {person.Age}");
+        }
+    }
+}
+```
+
+In these examples, we assume the existence of the `people.xml` and `people.json` files containing multiple `Person` objects. The code demonstrates how to deserialize these files into a list of `Person` objects using `DataContractSerializer` for XML and `JsonSerializer` for JSON.
 
 ### Why Use `DataContractSerializer` and `JsonSerializer`?
 
@@ -203,7 +406,7 @@ class Program
 {
     static void Main()
     {
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize
         XmlSerializer serializer = new XmlSerializer(typeof(Person));
@@ -247,7 +450,7 @@ class Program
 {
     static void Main()
     {
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize
         string jsonString = JsonSerializer.Serialize(person);
@@ -284,7 +487,7 @@ class Program
     static async Task Main(string[] args)
     {
         HttpClient client = new HttpClient();
-        Person person = new Person { Name = "John Doe", Age = 30 };
+        Person person = new Person { Name = "Mahmoud Mattar", Age = 24 };
 
         // Serialize Person to JSON and send a POST request
         string jsonString = JsonSerializer.Serialize(person);
