@@ -356,3 +356,52 @@ namespace L14.DefaultKeyword
     }
 }
 ```
+
+## Null-Forgiving Operator
+
+The `null-forgiving operator` (`!`) is a feature in C# that tells the compiler that you are sure a nullable reference type is not null, even if it can't determine that on its own. This is useful when you have information the compiler does not, and it helps to avoid unnecessary null checks.
+
+### Syntax
+
+```csharp
+string? nullableString = null;
+string nonNullableString = nullableString!; // Telling the compiler that nullableString is not null
+```
+
+### Use Case
+
+The null-forgiving operator is typically used when you're certain a variable isn't null at a specific point in your code, even if the compiler can't guarantee it.
+
+### Example
+
+```csharp
+public class Person
+{
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+
+    public void PrintName()
+    {
+        // Using the null-forgiving operator to tell the compiler that FirstName and LastName are not null
+        Console.WriteLine(FirstName!.Length);
+        Console.WriteLine(LastName!.Length);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person person = new Person { FirstName = "John", LastName = "Doe" };
+        person.PrintName();
+    }
+}
+```
+
+In this example, we know that `FirstName` and `LastName` are not null before calling `Length`, but the compiler doesn't. The `!` operator tells the compiler to treat them as non-nullable.
+
+### Caution
+
+- **Overuse**: Overusing the null-forgiving operator can lead to runtime null reference exceptions if you make a mistake.
+- **Safety**: Always ensure that the value is genuinely not null before using the null-forgiving operator to avoid potential errors.
+
