@@ -15,6 +15,7 @@
 12. [Struct and Array](#struct-and-array)
 13. [Nullable Context](#nullable-context)
 14. [Default Keyword](#default-keyword)
+15. [Null-Forgiving Operator](#Null-Forgiving-Operator)
 
 ## 1. Compile Time vs Run Time
 
@@ -357,7 +358,7 @@ namespace L14.DefaultKeyword
 }
 ```
 
-## Null-Forgiving Operator
+## 15. Null-Forgiving Operator
 
 The `null-forgiving operator` (`!`) is a feature in C# that tells the compiler that you are sure a nullable reference type is not null, even if it can't determine that on its own. This is useful when you have information the compiler does not, and it helps to avoid unnecessary null checks.
 
