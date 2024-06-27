@@ -116,6 +116,111 @@ GreetUser("Alice");
   MyNamespace.Greeter.Greet("Alice");
   ```
 
+### Types of Main Methods
+
+In traditional C#, there are multiple ways to define the `Main` method:
+```csharp
+static void Main()
+{
+}
+
+static void Main(string[] args)
+{
+}
+
+static int Main()
+{
+   return 0;
+}
+
+static async Task Main()
+{
+   await Task.Run(() => Console.WriteLine("Hello World!"));
+}
+
+static async Task<int> Main()
+{
+   await Task.Run(() => Console.WriteLine("Hello World!"));
+   return 0;
+}
+```
+
+### Compiler Behavior with Top-Level Statements
+
+When using top-level statements, the compiler determines the appropriate `Main` method signature based on the code you write:
+
+1. **Synchronous Code**: If your top-level code does not use `await` or return a value, the compiler generates a `void Main` method.
+```csharp
+using System;
+
+Console.WriteLine("Hello, World!");
+```
+  This translates to:
+```csharp
+public static class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}
+```
+
+2. **Asynchronous Code**: If your top-level code uses `await`, the compiler generates an `async Task Main` method.
+```csharp
+using System;
+using System.Threading.Tasks;
+
+await Task.Run(() => Console.WriteLine("Hello, World!"));
+```
+  This translates to:
+```csharp
+public static class Program
+{
+    public static async Task Main()
+    {
+        await Task.Run(() => Console.WriteLine("Hello, World!"));
+    }
+}
+```
+
+3. **Return Value**: If your top-level code returns a value, the compiler generates an `int Main` method.
+```csharp
+using System;
+
+return 0;
+```
+  This translates to:
+```csharp
+public static class Program
+{
+    public static int Main()
+    {
+        return 0;
+    }
+}
+```
+
+4. **Async with Return Value**: If your top-level code uses `await` and returns a value, the compiler generates an `async Task<int> Main` method.
+```csharp
+using System;
+using System.Threading.Tasks;
+
+await Task.Run(() => Console.WriteLine("Hello, World!"));
+return 0;
+```
+  This translates to:
+```csharp
+public static class Program
+{
+    public static async Task<int> Main()
+    {
+        await Task.Run(() => Console.WriteLine("Hello, World!"));
+        return 0;
+    }
+}
+```
+
 ### Use Cases
 Top-level statements are particularly useful for:
 - **Small Programs and Scripts**: Reducing the amount of boilerplate code makes it easier to write and read small programs.
