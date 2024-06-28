@@ -103,6 +103,101 @@ class Program
 3. **Reference Comparison**:
    - `Object.ReferenceEquals()` is used to check if two string variables refer to the same instance. If two strings are interned and identical, this method will return `true`.
 
+
+### Understanding String Literals vs. Non-Literals
+
+To fully understand string interning and the examples provided, it's important to distinguish between string literals and non-literals. Let's break down these concepts:
+
+#### String Literals
+
+**Definition**: A string literal is a string that is specified directly in the source code and enclosed in double quotes.
+
+**Characteristics**:
+- **Automatic Interning**: String literals are automatically interned by the CLR (Common Language Runtime). This means that the runtime ensures only one instance of each unique string literal is stored in memory.
+- **Syntax**: String literals are written directly in the code.
+- **Memory Efficiency**: Since string literals are interned, they help save memory by avoiding multiple instances of the same string.
+
+**Examples**:
+```csharp
+string str1 = "hello";
+string str2 = "world";
+string str3 = "hello"; // This will reference the same instance as str1
+```
+
+In the example above, `str1` and `str3` will point to the same memory location because the string literal `"hello"` is interned.
+
+#### Non-Literals (Dynamic Strings)
+
+**Definition**: A non-literal string is any string that is created at runtime, typically through operations or constructors that do not directly assign a literal string value.
+
+**Characteristics**:
+- **No Automatic Interning**: Non-literal strings are not automatically interned by the CLR. They are treated as distinct instances unless explicitly interned using the `String.Intern` method.
+- **Syntax**: Non-literal strings are usually created using constructors or operations that generate string values at runtime.
+- **Explicit Interning Needed**: To intern a non-literal string, you must use `String.Intern`.
+
+**Examples**:
+```csharp
+string str4 = new string(new char[] { 'h', 'e', 'l', 'l', 'o' }); // Non-literal string
+string str5 = string.Concat("hel", "lo"); // Non-literal string created by concatenation
+```
+
+In the example above, `str4` and `str5` are non-literal strings and will not be interned automatically.
+
+### Code Examples and Explanations
+
+Here’s the improved code with clear sections explaining string literals and non-literals:
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // String Literal Example
+        string str1 = "xyz"; // String literal, automatically interned
+        string str3 = "xyz"; // Another string literal, references the same interned instance
+
+        bool areLiteralsSame = Object.ReferenceEquals(str1, str3); // True
+        Console.WriteLine($"Are str1 and str3 the same instance? {areLiteralsSame}"); // True
+
+        // Non-Literal Example
+        string str4 = new string(new char[] { 'x', 'y', 'z' }); // Non-literal string, not interned by default
+        string str5 = string.Concat("xy", "z"); // Non-literal string created dynamically, not interned by default
+
+        bool areNonLiteralsSameBeforeIntern = Object.ReferenceEquals(str4, str5); // False
+        Console.WriteLine($"Are str4 and str5 the same instance before interning? {areNonLiteralsSameBeforeIntern}"); // False
+
+        // Manually intern the non-literal strings
+        str4 = String.Intern(str4);
+        str5 = String.Intern(str5);
+
+        bool areNonLiteralsSameAfterIntern = Object.ReferenceEquals(str4, str5); // True
+        Console.WriteLine($"Are str4 and str5 the same instance after interning? {areNonLiteralsSameAfterIntern}"); // True
+
+        // More Examples
+        string dynamicString1 = new string(new char[] { 'n', 'o', 'n', '-', 'l', 'i', 't', 'e', 'r', 'a', 'l' });
+        string dynamicString2 = new string(new char[] { 'n', 'o', 'n', '-', 'l', 'i', 't', 'e', 'r', 'a', 'l' });
+
+        bool areDynamicStringsSameBeforeIntern = Object.ReferenceEquals(dynamicString1, dynamicString2); // False
+        Console.WriteLine($"Are dynamicString1 and dynamicString2 the same instance before interning? {areDynamicStringsSameBeforeIntern}"); // False
+
+        dynamicString1 = String.Intern(dynamicString1);
+        dynamicString2 = String.Intern(dynamicString2);
+
+        bool areDynamicStringsSameAfterIntern = Object.ReferenceEquals(dynamicString1, dynamicString2); // True
+        Console.WriteLine($"Are dynamicString1 and dynamicString2 the same instance after interning? {areDynamicStringsSameAfterIntern}"); // True
+    }
+}
+```
+
+### Summary
+
+- **String Literals**: Directly written in the code, automatically interned, and help save memory by avoiding duplicates.
+- **Non-Literals**: Created dynamically at runtime, not automatically interned, and require explicit interning using `String.Intern` to benefit from memory optimization.
+- **Identifying Interned Strings**: Use `Object.ReferenceEquals` to compare string instances and determine if they refer to the same interned string.
+
+
 ### More Examples and Scenarios
 
 #### Example 1: Comparing Interned and Non-Interned Strings
