@@ -1,5 +1,5 @@
-﻿using System;
-using System.Text; 
+using System;
+using System.Text;
 namespace Metigator45.L02
 {
     internal class Program
@@ -8,7 +8,7 @@ namespace Metigator45.L02
         {
             // RunArrayOfCharacterConcept();
             // RunStringBuilderProperties();
-             RunStringBuilderHowItWorks();
+            RunStringBuilderHowItWorks();
 
             Console.ReadKey();
         }
@@ -19,25 +19,23 @@ namespace Metigator45.L02
             char[] characters;
             // Console.WriteLine(characters.Length);  // use of unassigned error
 
-            characters = new char[9];
+            characters = new char[7];
 
             characters[0] = 'M';
-            characters[1] = 'e';
-            characters[2] = 't';
-            characters[3] = 'i';
-            characters[4] = 'g';
-            characters[5] = 'a';
-            characters[6] = 't';
-            characters[7] = 'o';
-            characters[8] = 'r';
+            characters[1] = 'A';
+            characters[2] = 'H';
+            characters[3] = 'M';
+            characters[4] = 'O';
+            characters[5] = 'U';
+            characters[6] = 'D';
 
-          
+
 
             // or
-            characters = new char[9] { 'M', 'e', 't', 'i', 'g', 'a', 't', 'o', 'r' };
+            characters = new char[7] { 'M', 'A', 'H', 'M', 'O', 'U', 'D'};
 
             // or
-            characters = new char[] { 'M', 'e', 't', 'i', 'g', 'a', 't', 'o', 'r' };
+            characters = new char[] { 'M', 'A', 'H', 'M', 'O', 'U', 'D' };
 
             characters[0] = 'm'; // mutate
 
@@ -47,12 +45,12 @@ namespace Metigator45.L02
         static void RunStringBuilderProperties()
         {
 
-            var sb = new StringBuilder("Metigator");
+            var sb = new StringBuilder("Mahmoud");
 
-            Console.WriteLine(sb.ToString());              // Metigator
+            Console.WriteLine(sb.ToString()); // Mahmoud
 
             //the characters the object currently contains
-            Console.WriteLine($"Length: {sb.Length}");     // 9  
+            Console.WriteLine($"Length: {sb.Length}");     // 7
 
             //  the number of characters that the object can contain.
             Console.WriteLine($"Capacity: {sb.Capacity}"); // 16 (default)
@@ -86,6 +84,5 @@ namespace Metigator45.L02
 
     }
 }
-
 
 
