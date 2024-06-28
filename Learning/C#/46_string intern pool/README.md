@@ -39,4 +39,130 @@ In the image provided:
 - **Garbage Collection**: Interned strings are not garbage collected until the runtime itself unloads, meaning they can contribute to memory usage over the lifetime of the application.
 - **Appropriate Usage**: Overusing string interning can lead to increased memory consumption, so it should be used judiciously, especially for large or dynamically generated strings.
 
+
+### Code with Explanations
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // The string interning feature of the CLR is used to store only one copy of each unique string value in the heap.
+
+        // str1 is a string literal, which is automatically interned by the CLR.
+        string str1 = "xyz";
+
+        // String.Intern checks if the string "xyz" is already interned.
+        // If it is, it returns the reference to the existing interned string.
+        // If not, it adds it to the intern pool and then returns the reference.
+        string str2 = String.Intern(new string(new char[] { 'x', 'y', 'z' }));
+        
+        // Both str1 and str2 refer to the same interned string "xyz".
+        bool areSame = Object.ReferenceEquals(str1, str2); // True
+
+        // str3 is another string literal "xyz", which is interned.
+        string str3 = "xyz";
+        
+        // Both str1 and str3 refer to the same interned string "xyz".
+        bool areSame2 = Object.ReferenceEquals(str1, str3); // True
+
+        // str4 is a string literal "abc", which is interned.
+        string str4 = "abc";
+
+        // str5 is a new instance of the string "abc", created dynamically.
+        // This string is not interned unless explicitly done so.
+        string str5 = new string(new char[] { 'a', 'b', 'c' });
+
+        // str4 is interned, str5 is not, so they do not refer to the same instance.
+        bool areSame3 = Object.ReferenceEquals(str4, str5); // False
+
+        // Explicitly intern str5 to ensure it refers to the same interned string as str4.
+        str5 = String.Intern(str5);
+
+        // Now, str4 and str5 refer to the same interned string "abc".
+        bool areSame4 = Object.ReferenceEquals(str4, str5); // True
+
+        Console.WriteLine(areSame);   // True
+        Console.WriteLine(areSame2);  // True
+        Console.WriteLine(areSame3);  // False
+        Console.WriteLine(areSame4);  // True
+    }
+}
+```
+
+### Explanation
+
+1. **String Literals**:
+   - String literals like `"xyz"` and `"abc"` are automatically interned by the CLR. When these literals appear in the code, the runtime ensures that only one instance of each unique literal is stored in the intern pool.
+
+2. **Manual Interning**:
+   - Using `String.Intern()`, you can manually intern dynamically created strings. This method checks if the string is already in the intern pool. If it is, it returns the reference to the existing string; if not, it adds the string to the pool and returns the reference.
+
+3. **Reference Comparison**:
+   - `Object.ReferenceEquals()` is used to check if two string variables refer to the same instance. If two strings are interned and identical, this method will return `true`.
+
+### More Examples and Scenarios
+
+#### Example 1: Comparing Interned and Non-Interned Strings
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string literal = "example";
+        string dynamicString = new string(new char[] { 'e', 'x', 'a', 'm', 'p', 'l', 'e' });
+
+        bool areSame1 = Object.ReferenceEquals(literal, dynamicString); // False
+
+        dynamicString = String.Intern(dynamicString);
+        bool areSame2 = Object.ReferenceEquals(literal, dynamicString); // True
+
+        Console.WriteLine(areSame1); // False
+        Console.WriteLine(areSame2); // True
+    }
+}
+```
+
+#### Example 2: Non-Literal Strings
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string dynamicString1 = new string(new char[] { 'n', 'o', 'n', '-', 'l', 'i', 't', 'e', 'r', 'a', 'l' });
+        string dynamicString2 = new string(new char[] { 'n', 'o', 'n', '-', 'l', 'i', 't', 'e', 'r', 'a', 'l' });
+
+        bool areSame1 = Object.ReferenceEquals(dynamicString1, dynamicString2); // False
+
+        dynamicString1 = String.Intern(dynamicString1);
+        dynamicString2 = String.Intern(dynamicString2);
+        bool areSame2 = Object.ReferenceEquals(dynamicString1, dynamicString2); // True
+
+        Console.WriteLine(areSame1); // False
+        Console.WriteLine(areSame2); // True
+    }
+}
+```
+
+### Summary
+- **String literals** are automatically interned.
+- **Dynamic strings** are not interned by default but can be interned using `String.Intern()`.
+- **Reference comparison** using `Object.ReferenceEquals()` helps in determining if two string variables refer to the same interned string.
+- Interning helps in optimizing memory usage and improving performance by ensuring only one instance of each unique string is stored.
+
+By using these examples and explanations, you can better understand how to identify and use interned strings in your code.
+
+
+
+
+
+
 Understanding the intern pool and the string interning mechanism helps in writing memory-efficient and performant applications, especially when dealing with a large number of string operations.
