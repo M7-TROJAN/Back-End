@@ -18,7 +18,7 @@ This lesson demonstrates how to iterate over the ASCII character set and display
 ```csharp
 using System;
 
-namespace Metigator44.L01
+namespace Mah_Mattar
 {
     internal class Program
     {  
@@ -49,7 +49,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metigator44.L02
+namespace Mah_Mattar
 {
     internal class Program
     {
@@ -107,7 +107,7 @@ Different ways to instantiate strings in C# are demonstrated.
 ```csharp
 private static void UsingQuotedStringLiterals()
 {
-    string str = "Metigator";
+    string str = "Mahmoud";
     Console.WriteLine(str);
 }
 ```
@@ -116,7 +116,7 @@ private static void UsingQuotedStringLiterals()
 ```csharp
 private static void UsingStringConstructor()
 {
-    char[] letters = { 'M', 'e', 't', 'i', 'g', 'a', 't', 'o', 'r' };
+    char[] letters = { 'M', 'a', 'h', 'm', 'o', 'u', 'd' };
     string str = new string(letters);
     Console.WriteLine(str);
 }
@@ -152,7 +152,7 @@ private static void UsingPointerToSignedByte()
 ```csharp
 private static void UsingAPointerToCharacterArray()
 {
-    char[] letters = { 'M', 'e', 't', 'i', 'g', 'a', 't', 'o', 'r' };
+    char[] letters = { 'M', 'a', 'h', 'm', 'o', 'u', 'd' };
     string str = null;
     unsafe
     {
@@ -169,8 +169,8 @@ private static void UsingAPointerToCharacterArray()
 ```csharp
 private static void UsingConcatenation()
 {
-    string str1 = "Meti" + "gator";
-    string str2 = $"{"Meti"}{"gator"}"; // string interpolation
+    string str1 = "Mah" + "Moud";
+    string str2 = $"{"Mah"}{"Moud"}"; // string interpolation
 
     Console.WriteLine($"str1 = {str1}");
     Console.WriteLine($"str2 = {str2}");
@@ -192,7 +192,7 @@ private static void UsingCallingMethodThatReturnsString()
 ```csharp
 private static void UsingFormattedString()
 {
-    string customer = "Issam A";
+    string customer = "Mahmoud Mattar";
     DateTime shippingDate = DateTime.Now;
     DateTime expectedDelivery = shippingDate.AddDays(7);
     decimal shippingCost = 29.99m;
@@ -208,7 +208,7 @@ private static void UsingFormattedString()
 ```csharp
 private static void UsingVerbatimWithStringInterpolation()
 {
-    string customer = "Issam A";
+    string customer = "Mahmoud Mattar";
     DateTime shippingDate = DateTime.Now;
     DateTime expectedDelivery = shippingDate.AddDays(7);
     decimal shippingCost = 29.99m;
@@ -251,7 +251,7 @@ This lesson covers how to handle Unicode characters and compare strings with dif
 using System;
 using System.IO;
 
-namespace Metigator44.L04
+namespace Mah_Mattar
 {
     internal class Program
     {
@@ -297,7 +297,7 @@ This lesson demonstrates the concept of the string intern pool and how strings a
 ```csharp
 using System;
 
-namespace Metigator44.L05
+namespace Mah_Mattar
 {
     internal class Program
     {
@@ -324,7 +324,7 @@ This lesson covers various string methods, including comparison, searching, and 
 ```csharp
 using System;
 
-namespace Metigator44.L06
+namespace Mah_Mattar
 {
     internal class Program
     {
