@@ -1,30 +1,38 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Metigator45.L01
-{ 
+namespace Mah_Mattar.L01
+{
     internal class Program
     {
         public static void Main(string[] args)
-        { 
+        {
+
+            string s = GenerateWithString();
+            Console.WriteLine(s);
+            
+            string sb = GenerateWithStringBuilder();
+            Console.WriteLine(sb);
+
+
             Console.ReadKey();
         }
 
         static string GenerateWithString()
-        { 
+        {
             string str = null;
 
-            str += String.Concat(new char[] { 'E', 'T', 'I' }); // ETI
+            str += String.Concat(new char[] { 'A', 'H', 'M' }); // AHM
 
-            str += String.Format("GAT{0}{1}{2}", 'O', 'P', 'S'); // GATOPS
+            str += String.Format("OUD {0}{1}{2}{3}{4}{5}", 'M', 'A', 'T', 'T', 'S', 'R'); // AHMOUD MATTSR
 
-            str = "M" + str; // METIGATOPS
+            str = "M" + str; // MAHMOUD MATTSR
 
-            str = str.Replace('P',  'R'); //METIGATORS
+            str = str.Replace('S', 'A'); // MAHMOUD MATTAR
 
-            str = str.Remove(str.Length - 1); // METIGATOR 
+            str = str.Remove(str.Length - 1); // MAHMOUD MATTA
 
             return str;
         }
@@ -32,20 +40,19 @@ namespace Metigator45.L01
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(new char[] { 'E', 'T', 'I' }); // ETI
+            sb.Append(new char[] { 'A', 'H', 'M' }); // AHM
 
-            sb.AppendFormat("GAT{0}{1}{2}", 'O', 'P', 'S'); // ETIGATOPS
+            sb.AppendFormat("OUD {0}{1}{2}{3}{4}{5}", 'M', 'A', 'T', 'T', 'S', 'R'); // AHMOUD MATTSR
 
-            sb.Insert(0, "M"); // METIGATOPS
+            sb.Insert(0, "M"); // MAHMOUD MATTSR
 
-            sb.Replace('P', 'R'); //METIGATORS
+            sb.Replace('S', 'A'); // MAHMOUD MATTAR
 
-            sb.Remove(sb.Length - 1, 1); // METIGATOR 
+            sb.Remove(sb.Length - 1, 1); // MAHMOUD MATTA
 
-           return sb.ToString(); 
+            return sb.ToString();
         }
     }
 }
-
 
 
