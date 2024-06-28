@@ -1,5 +1,5 @@
 # Strings in C# - Deep Dive
-
+- ![data](./photo.png)
 ## Table of Contents
 - [Introduction](#introduction)
 - [L01. ASCII](#l01-ascii)
