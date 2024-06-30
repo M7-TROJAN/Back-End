@@ -79,6 +79,28 @@
    );
    ```
 
+   8. **MONEY**
+   - **Description**: Monetary data type.
+   - **Range**: -922,337,203,685,477.5808 to 922,337,203,685,477.5807.
+   - **Example**: Monetary values.
+   ```sql
+   CREATE TABLE Salaries (
+       EmployeeID INT PRIMARY KEY,
+       Salary MONEY
+   );
+   ```
+
+9. **SMALLMONEY**
+   - **Description**: Smaller monetary data type.
+   - **Range**: -214,748.3648 to 214,748.3647.
+   - **Example**: Smaller monetary values.
+   ```sql
+   CREATE TABLE Budget (
+       BudgetID INT PRIMARY KEY,
+       Amount SMALLMONEY
+   );
+   ```
+
 ### String Data Types
 
 1. **CHAR(n)**
@@ -275,5 +297,43 @@
        UserID UNIQUEIDENTIFIER PRIMARY KEY,
        Username VARCHAR(50)
    );
-  
 
+  
+3. **XML**
+   - **Description**: Stores XML data.
+   - **Example**: Structured data in XML format.
+   ```sql
+   CREATE TABLE Configurations (
+       ConfigID INT PRIMARY KEY,
+       ConfigData XML
+   );
+   ```
+
+4. **JSON** (SQL Server 2016 and later)
+   - **Description**: Stores JSON data.
+   - **Example**: Structured data in JSON format.
+   ```sql
+   CREATE TABLE JsonData (
+       DataID INT PRIMARY KEY,
+       JsonData NVARCHAR(MAX)
+   );
+   ```
+
+5. **CURSOR**
+   - **Description**: A reference to a cursor used for database operations.
+   - **Example**: Advanced data manipulation.
+   ```sql
+   DECLARE cursor_name CURSOR FOR 
+   SELECT column_name 
+   FROM table_name;
+   ```
+
+6. **TABLE**
+   - **Description**: Stores a result set for later processing.
+   - **Example**: Used with table-valued parameters and functions.
+   ```sql
+   DECLARE @MyTable TABLE (
+       Column1 INT,
+       Column2 NVARCHAR(50)
+   );
+   ```
