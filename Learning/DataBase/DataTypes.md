@@ -1,5 +1,7 @@
 ## SQL Data Types Cheat Sheet
-- ![Fundamentals_of_Programming](./1.png)
+
+- ![Data Types](./1.PNG)
+
 ### Numeric Data Types
 
 1. **INT**
