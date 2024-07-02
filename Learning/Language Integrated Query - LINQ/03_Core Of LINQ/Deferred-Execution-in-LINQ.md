@@ -1,4 +1,3 @@
-
 # Deferred Execution in LINQ
 
 ## Introduction
@@ -81,6 +80,56 @@ The output will include all even numbers in the list `ints` at the time of the q
 12
 14
 16
+```
+
+## Additional Example
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class DeferredExecutionAdditionalExample
+{
+    public static void Main()
+    {
+        List<int> ints = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
+        // Define a query to filter even numbers
+        var evens = ints.Where(i => i % 2 == 0);
+
+        // Add more items to the list
+        ints.Add(14);
+        ints.Add(16);
+
+        // Iterate over the query and print the results
+        foreach (var item in evens)
+        {
+            Console.Write(item + " ");
+        }
+
+        Console.WriteLine();
+
+        // Add more items to the list
+        ints.Add(18);
+        ints.Add(20);
+
+        // Iterate over the query again and print the results
+        foreach (var item in evens)
+        {
+            Console.Write(item + " ");
+        }
+    }
+}
+```
+
+## Output
+
+The output will include all even numbers in the list `ints` at the time of the query execution, including the newly added elements `14`, `16`, `18`, and `20`:
+
+```
+2 4 6 8 10 12 14 16
+2 4 6 8 10 12 14 16 18 20
 ```
 
 ## Benefits of Deferred Execution
