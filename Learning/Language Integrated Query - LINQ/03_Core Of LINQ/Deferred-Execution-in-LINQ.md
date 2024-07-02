@@ -1,4 +1,4 @@
-# Deferred Execution in LINQ
+# Deferred Execution in LINQ (التنفيذ المؤجل)
 
 ## Introduction
 
