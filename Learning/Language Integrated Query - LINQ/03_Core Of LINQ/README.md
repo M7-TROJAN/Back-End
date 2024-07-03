@@ -1,4 +1,4 @@
-```markdown
+
 # LINQ Tutorial: Filtering, Lazy Loading, and Immediate Execution
 
 ## Overview
