@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace LINQTut06.Pagination
+namespace PaginationEX
 {
     internal class Program
     {
