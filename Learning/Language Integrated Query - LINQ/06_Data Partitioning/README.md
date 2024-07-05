@@ -1,5 +1,6 @@
 ### Data Partitioning in LINQ
 
+Data partitioning refers to the process of dividing a large set of data into smaller, more manageable parts based on specific criteria. In LINQ, various methods are provided to achieve this, allowing for efficient data manipulation and retrieval.
 In this lesson, we'll explore various data partitioning methods in LINQ, such as `First`, `FirstOrDefault`, `Last`, `LastOrDefault`, `Skip`, `SkipLast`, `SkipWhile`, and more. We'll use the following sample data:
 
 #### Sample Data
