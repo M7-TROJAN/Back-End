@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQTut06.Pagination
+namespace PaginationEX
 {
     public static class Extensions
     {
