@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LINQTut07.Shared
+namespace Shared
 {
     public class Employee
     { 
