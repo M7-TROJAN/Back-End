@@ -1,8 +1,8 @@
-﻿using LINQTut07.Shared;
+﻿using Shared;
 using System;
 using System.Linq;
 
-namespace LINQTut07
+namespace Quantifiers
 {
     internal class Program
     {
