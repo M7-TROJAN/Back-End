@@ -5,6 +5,7 @@ Grouping data is a powerful feature in LINQ that allows you to organize elements
 We'll cover the following methods:
 - `GroupBy`
 - `Lookup`
+- `GroupJoin`
 
 #### Sample Data
 
@@ -140,3 +141,116 @@ Group: E
 ```
 
 These examples demonstrate how to group and lookup data using LINQ, enabling efficient data categorization and retrieval. You can use these methods to organize and analyze your data effectively.
+
+
+### 3. GroupJoin
+
+The `GroupJoin` method performs a group join, which correlates the elements of two sequences based on a key and groups the results. It's particularly useful for hierarchical data structures, where you want to group related data from one collection based on elements from another collection.
+
+#### Sample Data
+
+In addition to the employee data, let's add a collection of departments:
+
+```csharp
+public class Department
+{
+    public int DepartmentId { get; set; }
+    public string DepartmentName { get; set; }
+
+    public override string ToString()
+    {
+        return $"{DepartmentId.ToString().PadLeft(3, '0')}\t{DepartmentName}";
+    }
+}
+
+var departments = new List<Department>
+{
+    new Department { DepartmentId = 1, DepartmentName = "HR" },
+    new Department { DepartmentId = 2, DepartmentName = "IT" },
+    new Department { DepartmentId = 3, DepartmentName = "Finance" }
+};
+
+var emps = new List<Employee>
+{
+    new Employee { Index = 1, EmployeeNo = "EMP001", Name = "Alice", Email = "alice@example.com", Salary = 3000, Skills = new List<string>{"HR"}},
+    new Employee { Index = 2, EmployeeNo = "EMP002", Name = "Bob", Email = "bob@example.com", Salary = 4000, Skills = new List<string>{"IT"}},
+    new Employee { Index = 3, EmployeeNo = "EMP003", Name = "Charlie", Email = "charlie@example.com", Salary = 2500, Skills = new List<string>{"Finance"}},
+    new Employee { Index = 4, EmployeeNo = "EMP004", Name = "David", Email = "david@example.com", Salary = 5000, Skills = new List<string>{"IT"}},
+    new Employee { Index = 5, EmployeeNo = "EMP005", Name = "Eve", Email = "eve@example.com", Salary = 4500, Skills = new List<string>{"Finance"}}
+};
+```
+
+### Using GroupJoin
+
+**Example: Grouping employees by their departments**
+
+**Using Method Syntax**
+
+```csharp
+var groupJoin = departments.GroupJoin(emps,
+                                      dept => dept.DepartmentName,
+                                      emp => emp.Skills.FirstOrDefault(),
+                                      (dept, empsGroup) => new
+                                      {
+                                          Department = dept,
+                                          Employees = empsGroup
+                                      });
+
+foreach (var item in groupJoin)
+{
+    Console.WriteLine($"Department: {item.Department.DepartmentName}");
+    foreach (var emp in item.Employees)
+    {
+        Console.WriteLine($"  {emp}");
+    }
+}
+```
+
+**Using Query Syntax**
+
+```csharp
+var groupJoin = from dept in departments
+                join emp in emps on dept.DepartmentName equals emp.Skills.FirstOrDefault() into empGroup
+                select new
+                {
+                    Department = dept,
+                    Employees = empGroup
+                };
+
+foreach (var item in groupJoin)
+{
+    Console.WriteLine($"Department: {item.Department.DepartmentName}");
+    foreach (var emp in item.Employees)
+    {
+        Console.WriteLine($"  {emp}");
+    }
+}
+```
+
+**Output:**
+```
+Department: HR
+  001	EMP001        	Alice               	alice@example.com                	$3,000
+Department: IT
+  002	EMP002        	Bob                 	bob@example.com                  	$4,000
+  004	EMP004        	David               	david@example.com                	$5,000
+Department: Finance
+  003	EMP003        	Charlie             	charlie@example.com              	$2,500
+  005	EMP005        	Eve                 	eve@example.com                  	$4,500
+```
+
+In this example:
+- We grouped employees by their department.
+- Each department has a list of employees belonging to that department.
+- `GroupJoin` allows for hierarchical data organization, making it easy to navigate and present related data.
+
+### Explanation
+
+- **Outer sequence (departments):** The first collection (`departments`) represents the outer sequence.
+- **Inner sequence (employees):** The second collection (`emps`) represents the inner sequence.
+- **Outer key selector (dept.DepartmentName):** The key selector for the outer sequence to match elements from the inner sequence.
+- **Inner key selector (emp.Skills.FirstOrDefault()):** The key selector for the inner sequence to match elements from the outer sequence.
+- **Result selector ((dept, empsGroup) => new { ... }):** Defines how to project the results into a new form, in this case, an anonymous type with the department and its employees.
+
+This provides a comprehensive way to group and present related data efficiently.
+
