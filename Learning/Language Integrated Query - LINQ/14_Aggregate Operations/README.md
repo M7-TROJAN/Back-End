@@ -2,6 +2,8 @@
 
 LINQ (Language Integrated Query) provides powerful methods for performing aggregate operations on collections. These operations are used to perform calculations on a collection of data and return a single value.
 
+-  Aggregation operations compute a single value from a sequence of values.
+
 ## Count
 
 The `Count` method returns the number of elements in a collection.
