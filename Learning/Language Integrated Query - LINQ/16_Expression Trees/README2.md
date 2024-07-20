@@ -92,6 +92,35 @@ Console.WriteLine(isEven(10)); // True
 Console.WriteLine(isEven(9));  // False
 ```
 
+```csharp
+// convert the following lambda expression to an expression tree
+// (num) => num % 2 == 0
+
+// Step 1: Define the parameter for the expression (num)
+ParameterExpression numParam = Expression.Parameter(typeof(int), "num");
+
+// Step 2: Define the constants (0 and 2)
+ConstantExpression zeroConstant = Expression.Constant(0, typeof(int));
+ConstantExpression twoConstant = Expression.Constant(2, typeof(int));
+
+// Step 3: Create a modulo expression (num % 2)
+BinaryExpression moduloExpression = Expression.Modulo(numParam, twoConstant);
+
+// Step 4: Create an equality expression ((num % 2) == 0)
+BinaryExpression isEvenExpressionBody = Expression.Equal(moduloExpression, zeroConstant);
+
+// Step 5: Create a lambda expression from the body and parameter
+Expression<Func<int, bool>> isEvenExpression = Expression.Lambda<Func<int, bool>>(
+    isEvenExpressionBody, new ParameterExpression[] { numParam });
+
+// Step 6: Compile the expression to create a delegate
+Func<int, bool> isEvenDelegate = isEvenExpression.Compile();
+
+// Step 7: Test the compiled delegate with sample inputs
+Console.WriteLine($"Is 10 even? {isEvenDelegate(10)}"); // True
+Console.WriteLine($"Is 9 even? {isEvenDelegate(9)}"); // False
+```
+
 ### Explanation
 
 - **ParameterExpression**: Represents a parameter `num` of type `int`.
