@@ -1,6 +1,7 @@
 # Fluent API with LINQ
 
 This code demonstrates the use of Fluent API with LINQ in C#. Fluent API allows chaining of methods in a way that makes the code read like a sentence.
+(بتقرأ الكود من الشمال لليمين كأنك بتقرأ جملة انجليزية مفهومة)
 
 ## Code
 
