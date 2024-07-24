@@ -16,6 +16,61 @@ To use Entity Framework, you need to install the appropriate NuGet package in yo
    dotnet add package Microsoft.EntityFrameworkCore.Tools
    ```
 
+   ### How to Open .NET CLI
+   The .NET CLI (Command-Line Interface) is a cross-platform toolchain for developing, building, running, and publishing .NET applications. It provides a set of commands that you can use to perform various tasks related to .NET development from the command line.
+   You can access the .NET CLI through your terminal or command prompt. Here’s how to do it:
+   
+   1. **On Windows**:
+      - Open the Start menu and search for "Command Prompt" or "Windows Terminal".
+      - You can also open "PowerShell" by right-clicking on the Start menu and selecting "Windows PowerShell".
+   
+   2. **On macOS**:
+      - Open the "Terminal" application. You can find it in Applications > Utilities or search for it using Spotlight.
+   
+   3. **On Linux**:
+      - Open your preferred terminal application. This could be GNOME Terminal, Konsole, xterm, etc.
+   
+   ### Installing .NET SDK
+   
+   Before you can use the .NET CLI, you need to have the .NET SDK installed on your machine. You can download it from the [.NET download page](https://dotnet.microsoft.com/download).
+   
+   ### Using the .NET CLI to Add Packages
+   
+   Once you have the .NET SDK installed and your terminal or command prompt open, you can use the following commands to add the necessary packages to your project.
+   
+   1. Navigate to your project directory using the `cd` command. For example:
+      ```sh
+      cd path\to\your\project
+      ```
+   
+   2. Run the following commands to add the required Entity Framework Core packages:
+      ```sh
+      dotnet add package Microsoft.EntityFrameworkCore
+      dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+      dotnet add package Microsoft.EntityFrameworkCore.Tools
+      ```
+   
+   These commands will download and install the packages from NuGet, a package manager for .NET.
+   
+   ### Example
+   
+   Let’s assume your project is located in `C:\Projects\MyApp`:
+   
+   1. Open Command Prompt, Windows PowerShell, or Windows Terminal.
+   2. Navigate to your project directory:
+      ```sh
+      cd C:\Projects\MyApp
+      ```
+   3. Add the Entity Framework Core packages:
+      ```sh
+      dotnet add package Microsoft.EntityFrameworkCore
+      dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+      dotnet add package Microsoft.EntityFrameworkCore.Tools
+      ```
+   
+   After running these commands, the packages will be added to your project, and you'll be ready to use Entity Framework Core.
+
+
 2. **Using Visual Studio**:
    - Right-click on your project in Solution Explorer.
    - Select "Manage NuGet Packages."
