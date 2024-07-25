@@ -1,3 +1,15 @@
+
+## Illustrate
+1. **P1**
+   - ![p1](../photos/photo1.png)
+1. **P2**
+   - ![p2](../photos/photo2.png)
+1. **P3**
+   - ![p3](../photos/photo3.png)
+1. **P4**
+   - ![p4](../photos/photo4.png)
+
+
 ### Introduction to ADO.NET
 
 ADO.NET (ActiveX Data Objects .NET) is a set of classes in the .NET Framework that provides access to data sources such as databases and XML files. It is part of the .NET Framework and offers a rich set of components for creating distributed, data-sharing applications. 
