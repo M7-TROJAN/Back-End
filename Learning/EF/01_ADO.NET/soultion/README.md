@@ -1,4 +1,3 @@
-Sure! Below is a detailed Markdown (MD) file about `ExecuteRawSql` in ADO.NET.
 
 ---
 
