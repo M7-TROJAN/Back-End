@@ -1,13 +1,13 @@
 
 ## Illustrate
 1. **P1**
-   - ![p1](../photos/photo1.png)
+   - ![p1](./photos/photo1.png)
 1. **P2**
-   - ![p2](../photos/photo2.png)
+   - ![p2](./photos/photo2.png)
 1. **P3**
-   - ![p3](../photos/photo3.png)
+   - ![p3](./photos/photo3.png)
 1. **P4**
-   - ![p4](../photos/photo4.png)
+   - ![p4](./photos/photo4.png)
 
 
 ### Introduction to ADO.NET
