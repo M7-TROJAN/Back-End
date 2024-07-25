@@ -1,5 +1,5 @@
 
-## Illustrate
+## clarification
 1. **P1**
    - ![p1](./photos/photo1.png)
 1. **P2**
