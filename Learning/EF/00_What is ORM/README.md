@@ -3,6 +3,8 @@
 #### What is ORM?
 Object-Relational Mapping (ORM) is a programming technique used to convert data between incompatible type systems in object-oriented programming languages. It allows developers to interact with a database using objects instead of writing raw SQL queries. ORMs provide a high-level abstraction over the database, making it easier to manage and manipulate data.
 
+- in other words ORM is a technique that lets you query and manipulate data from a database using an object-oriented paradigm.
+
 #### Importance of ORM
 - **Productivity**: ORMs automate repetitive database operations, allowing developers to focus on writing business logic.
 - **Maintainability**: Using objects and classes makes the code more readable and maintainable.
