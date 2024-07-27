@@ -24,6 +24,12 @@ namespace _06_ExecuteMultipleQueries
 
                 using (var result = db.QueryMultiple(sqlQuery))
                 {
+                    // Using ReadSingle<T> method 
+                    //var minBalance = result.ReadSingle<decimal>();
+                    //var maxBalance = result.ReadSingle<decimal>();
+                    //var sumBalance = result.ReadSingle<decimal>();
+                    
+                    // Or using Read<T> method
                     var minBalance = result.Read<decimal>().Single();
                     var maxBalance = result.Read<decimal>().Single();
                     var sumBalance = result.Read<decimal>().Single();
