@@ -18,45 +18,71 @@ namespace _07_DapperAndTransactions
     {
         static void Main(string[] args)
         {
+            // Build the configuration to read from appsettings.json
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
+            // Retrieve the connection string from the configuration
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            // Transfer 2000
-            // From: 2 
-            // To:  4
+            // Transfer 2000 from wallet with Id 2 to wallet with Id 4
 
             // Using Dapper with manual transaction handling
             using (var connection = new SqlConnection(connectionString))
             {
-                connection.Open();
+                connection.Open(); // Open the connection to the database
 
-                using (var trans = connection.BeginTransaction())
+                using (var trans = connection.BeginTransaction()) // Begin a new transaction
                 {
                     try
                     {
-                        var walletFrom = connection.QueryFirstOrDefault<Wallet>("SELECT * FROM Wallets WHERE Id = @Id", new { Id = 2 }, transaction: trans);
-                        var walletTo = connection.QueryFirstOrDefault<Wallet>("SELECT * FROM Wallets WHERE Id = @Id", new { Id = 4 }, transaction: trans);
+                        // Retrieve the wallet with Id 2 within the transaction
+                        var walletFrom = connection.QueryFirstOrDefault<Wallet>(
+                            "SELECT * FROM Wallets WHERE Id = @Id",
+                            new { Id = 2 },
+                            transaction: trans
+                        );
 
+                        // Retrieve the wallet with Id 4 within the transaction
+                        var walletTo = connection.QueryFirstOrDefault<Wallet>(
+                            "SELECT * FROM Wallets WHERE Id = @Id",
+                            new { Id = 4 },
+                            transaction: trans
+                        );
+
+                        // Check if both wallets were found
                         if (walletFrom == null || walletTo == null)
                         {
                             throw new Exception("One or both wallets not found.");
                         }
 
+                        // Update balances
                         walletFrom.Balance -= 2000;
                         walletTo.Balance += 2000;
 
-                        connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletFrom.Id, Balance = walletFrom.Balance }, transaction: trans);
-                        connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletTo.Id, Balance = walletTo.Balance }, transaction: trans);
+                        // Update the wallet with Id 2
+                        connection.Execute(
+                            "UPDATE Wallets SET Balance = @Balance WHERE Id = @Id",
+                            new { Id = walletFrom.Id, Balance = walletFrom.Balance },
+                            transaction: trans
+                        );
 
+                        // Update the wallet with Id 4
+                        connection.Execute(
+                            "UPDATE Wallets SET Balance = @Balance WHERE Id = @Id",
+                            new { Id = walletTo.Id, Balance = walletTo.Balance },
+                            transaction: trans
+                        );
+
+                        // Commit the transaction
                         trans.Commit();
 
                         Console.WriteLine("Transaction committed successfully.");
                     }
                     catch (Exception ex)
                     {
+                        // Rollback the transaction in case of an error
                         trans.Rollback();
                         Console.WriteLine($"Transaction rolled back due to an error: {ex.Message}");
                     }
@@ -68,25 +94,45 @@ namespace _07_DapperAndTransactions
             {
                 using (var connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
+                    connection.Open(); // Open the connection to the database
 
                     try
                     {
-                        var walletFrom = connection.QueryFirstOrDefault<Wallet>("SELECT * FROM Wallets WHERE Id = @Id", new { Id = 2 });
-                        var walletTo = connection.QueryFirstOrDefault<Wallet>("SELECT * FROM Wallets WHERE Id = @Id", new { Id = 4 });
+                        // Retrieve the wallet with Id 2
+                        var walletFrom = connection.QueryFirstOrDefault<Wallet>(
+                            "SELECT * FROM Wallets WHERE Id = @Id",
+                            new { Id = 2 }
+                        );
 
+                        // Retrieve the wallet with Id 4
+                        var walletTo = connection.QueryFirstOrDefault<Wallet>(
+                            "SELECT * FROM Wallets WHERE Id = @Id",
+                            new { Id = 4 }
+                        );
+
+                        // Check if both wallets were found
                         if (walletFrom == null || walletTo == null)
                         {
                             throw new Exception("One or both wallets not found.");
                         }
 
+                        // Update balances
                         walletFrom.Balance -= 2000;
                         walletTo.Balance += 2000;
 
-                        connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletFrom.Id, Balance = walletFrom.Balance });
-                        connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletTo.Id, Balance = walletTo.Balance });
+                        // Update the wallet with Id 2
+                        connection.Execute(
+                            "UPDATE Wallets SET Balance = @Balance WHERE Id = @Id",
+                            new { Id = walletFrom.Id, Balance = walletFrom.Balance }
+                        );
 
-                        // Complete the transaction
+                        // Update the wallet with Id 4
+                        connection.Execute(
+                            "UPDATE Wallets SET Balance = @Balance WHERE Id = @Id",
+                            new { Id = walletTo.Id, Balance = walletTo.Balance }
+                        );
+
+                        // Complete the transaction scope
                         transactionScope.Complete();
 
                         Console.WriteLine("Transaction committed successfully using TransactionScope.");
@@ -100,12 +146,14 @@ namespace _07_DapperAndTransactions
         }
     }
 
+    // Class representing a wallet
     public class Wallet
     {
-        public int Id { get; set; }
-        public string? Holder { get; set; }
-        public decimal? Balance { get; set; }
+        public int Id { get; set; } // Wallet Id
+        public string? Holder { get; set; } // Wallet holder's name
+        public decimal? Balance { get; set; } // Wallet balance
 
+        // Override ToString method for easy printing
         public override string ToString()
         {
             return $"[{Id}] {Holder} ({Balance:C})";
@@ -169,10 +217,12 @@ using (var connection = new SqlConnection(connectionString))
     }
 }
 ```
-- **Open Connection**: Creates and opens a new `SqlConnection` object using the connection string.
+- **Open Connection**: Opens a new `SqlConnection` object to the database.
 - **Begin Transaction**: Starts a new transaction using `BeginTransaction()`.
-- **Execute Queries**: Fetches wallet records, adjusts balances, and updates them within the transaction.
-- **Commit/Rollback Transaction**: Commits the transaction if all operations succeed or rolls it back in case of an error.
+- **Retrieve Wallets**: Fetches wallet records within the transaction scope.
+- **Check Records**: Ensures both wallets are found before proceeding.
+- **Update Balances**: Adjusts balances and updates the records in the database.
+- **Commit/Rollback**: Commits the transaction if successful or rolls back in case of an error.
 
 ### 4. **Using TransactionScope**
 
@@ -199,7 +249,6 @@ using (var transactionScope = new TransactionScope())
             connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletFrom.Id, Balance = walletFrom.Balance });
             connection.Execute("UPDATE Wallets SET Balance = @Balance WHERE Id = @Id", new { Id = walletTo.Id, Balance = walletTo.Balance });
 
-            // Complete the transaction
             transactionScope.Complete();
 
             Console.WriteLine("Transaction committed successfully using TransactionScope.");
@@ -211,9 +260,11 @@ using (var transactionScope = new TransactionScope())
     }
 }
 ```
-- **TransactionScope**: Manages the transaction scope and ensures all operations succeed or fail together.
+- **TransactionScope**: Manages the transaction scope for operations that need to be atomic across multiple connections or resources.
 - **Open Connection**: Opens a new `SqlConnection` object.
-- **Execute Queries**: Fetches wallet records, adjusts balances, and updates them.
+- **Retrieve Wallets**: Fetches wallet records without an explicit transaction, relying on `TransactionScope` for transaction management.
+- **Check Records**: Ensures both wallets are found before proceeding.
+- **Update Balances**: Adjusts balances and updates the records.
 - **Complete Transaction**: Calls `Complete()` to commit the transaction if everything is successful.
 
 ## Best Practices
@@ -233,7 +284,9 @@ using (var transactionScope = new TransactionScope())
    catch (Exception ex)
    {
        Console.WriteLine($"An error occurred: {ex.Message}");
-   }
+  
+
+ }
    ```
 
 2. **Transaction Management**:
@@ -249,4 +302,3 @@ using (var transactionScope = new TransactionScope())
 
 3. **Testing**:
    Test transaction handling thoroughly to ensure that the rollback works as expected and that the application behaves correctly under various failure scenarios.
-```
