@@ -5,7 +5,7 @@
    - ![p1](photo1.png)
 
 ## Introduction
-
+ORM is a technique that lets you query and manipulate data from a database using an object-oriented paradigm.
 Dapper is a lightweight and fast Object-Relational Mapper (ORM) for .NET, designed to provide a simple and efficient way to work with databases. It sits on top of ADO.NET and offers a convenient API for performing CRUD (Create, Read, Update, Delete) operations and executing queries. Dapper is known for its performance and ease of use, making it a popular choice among .NET developers.
 
 ## Why Use Dapper?
