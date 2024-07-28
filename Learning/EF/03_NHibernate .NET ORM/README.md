@@ -1,5 +1,9 @@
 # NHibernate .NET
 
+## clarification
+1. **P1**
+   - ![p1](photo1.png)
+
 NHibernate is a mature, open-source object-relational mapper (ORM) for .NET. It facilitates the mapping of .NET objects to database tables, allowing developers to work with data in an object-oriented way. This document provides an in-depth look at NHibernate, including its setup, best practices, and real-world use cases.
 
 ## Table of Contents
