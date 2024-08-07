@@ -2,4 +2,4 @@
 ## Migration
 
 **CourseDetailsView**
-   - ![CourseDetailsView](.VIEW.png)
+   - ![CourseDetailsView](VIEW.png)
