@@ -191,4 +191,18 @@ modelBuilder.Entity<Participant>()
 - It simplifies the schema but can lead to sparsely populated tables.
 - Use the **OfType<>** method to filter for specific derived types.
 
-```
+
+في الـ `Entity Framework`، الـ `Discriminator` او `المُميز` بالعربي هو عمود خاص بينضاف في الجدول لما بنستخدم **Table Per Hierarchy (TPH)**، وهي استراتيجية تُستخدم لتخزين وراثة الكائنات (Inheritance) في قاعدة البيانات.
+
+خليني أوضح بمثال:
+
+افترض عندك كلاس رئيسي اسمه `Person`، واثنين كلاس يرثوا منه `Student` و`Teacher`.
+في طريقة ال TPH، هتخزن كل الكائنات في جدول واحد اسمه Persons. وهنا بيجي دور الـ `Discriminator`، وهو عمود بيحتوي على قيمة تميز كل نوع من الأنواع الموروثة. يعني لو كان عندك كائن `Student` هتكون قيمة الـ Discriminator هي "Student"، ولو كان Teacher هتكون "Teacher".
+
+علي سبيل المثال:
+| Id | Name  | Discriminator |
+|----|-------|---------------|
+| 1  | Ali   | Student       |
+| 2  | Sarah | Teacher       |
+
+في المثال ده، الـ `Discriminator` بيسمح لـ `EF Core` إنه يحدد نوع الكائن اللي بيرجعه لما تستعلم من الجدول.
