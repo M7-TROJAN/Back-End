@@ -160,6 +160,68 @@ using (var context = new AppDbContext())
 }
 ```
 
+In the above, I didn't mention the methods `UseTptMappingStrategy()` and `UseTphMappingStrategy<>()` because it was focused on the general concepts and manual configurations through the `OnModelCreating` method using `ToTable()`. However, these methods are indeed important when explicitly configuring the inheritance mapping strategy in Entity Framework Core.
+
+#### Configuring TPT Using `UseTptMappingStrategy()`
+
+Instead of manually specifying the table mapping for each entity, you can use the `UseTptMappingStrategy()` method to set up the Table per Type (TPT) strategy for the entire model. This method is part of the new mapping strategies introduced in EF Core 6.0+.
+
+Here’s how you can configure TPT using `UseTptMappingStrategy()`:
+
+```csharp
+public class AppDbContext : DbContext
+{
+    public DbSet<Participant> Participants { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Configuring TPT using UseTptMappingStrategy
+        modelBuilder.UseTptMappingStrategy();
+
+        // Applying additional configurations if necessary
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+}
+```
+
+#### How `UseTptMappingStrategy()` Affects the Database
+
+When you use `UseTptMappingStrategy()`, EF Core automatically configures the inheritance hierarchy so that:
+
+1. The base class (`Participant`) has its own table (`Participants`).
+2. Each derived class (`Individual`, `Corporate`) has its own table (`Individuals`, `Corporates`) with a foreign key referencing the base class table.
+
+This method simplifies the configuration process and ensures that your model follows the TPT strategy without manually configuring each table.
+
+#### Using `UseTphMappingStrategy<T>()`
+
+If you wanted to use a Table per Hierarchy (TPH) approach instead, you could use the `UseTphMappingStrategy<T>()` method, where `T` is the base entity type.
+
+Example:
+
+```csharp
+public class AppDbContext : DbContext
+{
+    public DbSet<Participant> Participants { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Configuring TPH using UseTphMappingStrategy
+        modelBuilder.UseTphMappingStrategy<Participant>();
+
+        // Applying additional configurations if necessary
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+}
+```
+
+### Summary
+
+- **`UseTptMappingStrategy()`**: Automatically configures the model to use the Table per Type (TPT) strategy, where each entity in the inheritance hierarchy has its own table.
+- **`UseTphMappingStrategy<T>()`**: Configures the model to use the Table per Hierarchy (TPH) strategy, where all entities in the inheritance hierarchy are stored in a single table with a discriminator column.
+
+These methods simplify the configuration process and ensure that your model adheres to the specified inheritance strategy.
+
 #### Key Points
 
 - **TPT Inheritance**: Each entity in the inheritance hierarchy has its own table.
