@@ -80,9 +80,9 @@ When querying the `Participants` table, Entity Framework Core will use the discr
 ```csharp
 using (var context = new AppDbContext())
 {
-    var participants = context.Participants.ToList(); // Retrieves base type properties only
-    var individuals = context.Participants.OfType<Individual>().ToList(); // Retrieves derived type properties
-    var corporates = context.Participants.OfType<Corporate>().ToList(); // Retrieves derived type properties
+    var participants = context.Participants.ToList(); // this will retrive just the base type properties (id, FName, LName, Gender)
+    var individuals = context.Participants.OfType<Individual>().ToList(); // this will retrive the base type properties and the derived type properties (University, YearOfGraduation, IsIntern)
+    var corporates = context.Participants.OfType<Corporate>().ToList(); // this will retrive the base type properties and the derived type properties (Company, JobTitle)
 }
 ```
 
