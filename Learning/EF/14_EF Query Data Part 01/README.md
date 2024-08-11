@@ -1,8 +1,6 @@
 ### M7TROJAN Academy  :school:
 
-![image](/images/image.png)
-
-
+![image](./images/image.png)
 
 ##### + Courses  :book:
 
@@ -161,7 +159,7 @@ END;
 ```sql
  sp_GetSectionDetails @SectionId = 22
 ```
-![image](/images/image2.png)
+![image](./images/image2.png)
 
 ##### + Function InstructorAvailable
 
@@ -211,5 +209,5 @@ END
 ```sql
 SELECT dbo.fn_InstructorAvailability(1, '2023-08-01', '2023-08-15', '10:00:00', '14:00:00') AS AvailabilityStatus;
 ```
-![image](/images/image3.png)
+![image](./images/image3.png)
 
