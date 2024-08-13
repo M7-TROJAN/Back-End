@@ -44,7 +44,7 @@ EF Core provides several methods to execute raw SQL queries:
 - **Performance**: Raw SQL can be more performant in certain cases, allowing you to write optimized queries that EF Core might not generate by default.
 - **Leverage Database Features**: Raw SQL lets you use specific database features or syntax that might not be supported directly in LINQ.
 
-### Refactored Explanation
+### Examples With Explanation
 
 Sometimes, it can be challenging to create a LINQ expression that accurately represents the SQL query you want to execute. In other cases, using LINQ can lead to performance issues. For these situations, EF Core provides several methods to execute raw SQL queries, allowing you to implement complex queries directly and optimize performance as needed.
 
