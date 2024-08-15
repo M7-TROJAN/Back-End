@@ -12,16 +12,22 @@ A **hard delete** refers to the permanent removal of a record from the database.
 
 #### Example: Hard Delete
 
+##### Sample table
+
+```csharp
+public class Book
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+}
+```
+
 Let's demonstrate a hard delete using the provided `Book` table.
 
 ```csharp
-DatabaseHelper.RecreateCleanDatabase();
-DatabaseHelper.PopulateDatabase();
-
-Console.WriteLine();
 Console.WriteLine("Before Delete");
-
-DatabaseHelper.ShowBooks();
+DatabaseHelper.ShowBooks(); // method to get Books from database and then print them 
 
 using (var context = new AppDbContext())
 {
@@ -29,10 +35,10 @@ using (var context = new AppDbContext())
     context.Books.Remove(book);
     context.SaveChanges();
 }
+
 Console.WriteLine();
 Console.WriteLine("After Delete Book Id = '1'");
-
-DatabaseHelper.ShowBooks();
+DatabaseHelper.ShowBooks(); // method to get Books from database and then print them 
 ```
 
 #### Output:
