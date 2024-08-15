@@ -1,4 +1,4 @@
-﻿# Interceptors in EF Core
+﻿# Interceptors in EF Core (ادوات الأعتراض)
 
 ## Overview
 
