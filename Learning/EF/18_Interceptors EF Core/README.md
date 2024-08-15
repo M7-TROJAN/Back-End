@@ -287,7 +287,7 @@ The `HasQueryFilter` method automatically applies a filter to all queries, ensur
 By using interceptors, you can easily implement advanced behaviors like soft delete, logging, or custom validations, making your application more flexible and maintainable.
 
 
-Now Let's break down the `SoftDeleteInterceptor` code step by step to understand how it works in EF Core.
+## Now Let's break down the `SoftDeleteInterceptor` code step by step to understand how it works in EF Core.
 
 ### Overview of Interceptors
 
