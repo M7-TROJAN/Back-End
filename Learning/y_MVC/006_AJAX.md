@@ -41,21 +41,44 @@ $.ajax({
 
 ---
 
+Certainly! Below is the jQuery code with comments explaining each part step by step:
+
 ```javascript
 $(document).ready(function () {
+    // This function will run once the DOM is fully loaded, ensuring that the elements you're trying to access exist.
+    
+    // Select all elements with the class 'js-toggle-status' and bind a click event to them.
     $(".js-toggle-status").on("click", function () {
-        var btn = $(this);
-        var id = btn.data("id");
+        // When the element is clicked, this function is triggered.
 
+        var btn = $(this); // Store the clicked button in a variable 'btn'.
+        var id = btn.data("id"); // Retrieve the value of the 'data-id' attribute from the clicked button.
+
+        // Make an AJAX request to the server to toggle the status of the category with the given 'id'.
         $.ajax({
-            url: `/Categories/ToggleStatus/${id}`,
-            type: "POST",
+            url: `/Categories/ToggleStatus/${id}`, // The URL for the AJAX request, dynamically including the category ID.
+            type: "POST", // This specifies that the request is of type POST (as you're updating data).
+            
+            // This function is executed when the server responds successfully.
             success: function (lastUpdatedOn) {
+                // Find the nearest 'tr' (table row) ancestor of the clicked button and look for the element with the class 'js-status'.
                 var status = btn.parents("tr").find(".js-status");
+                
+                // Check the current status text (either "Available" or "Deleted") and toggle between the two.
                 var newStatus = status.text().trim() === "Available" ? "Deleted" : "Available";
-                status.text(newStatus).toggleClass("badge-light-success badge-light-danger");
+                
+                // Update the status text with the new value.
+                status.text(newStatus);
+                
+                // Toggle classes to reflect the new status visually:
+                // - 'badge-light-success' might be for "Available"
+                // - 'badge-light-danger' might be for "Deleted"
+                status.toggleClass("badge-light-success badge-light-danger");
 
+                // Find the element within the same row (tr) that has the class 'js-updated-on' to update the last updated time.
                 var lastUpdatedOnElement = btn.parents("tr").find(".js-updated-on");
+                
+                // Update the text inside the 'js-updated-on' element with the server-provided 'lastUpdatedOn' timestamp.
                 lastUpdatedOnElement.text(lastUpdatedOn);
             },
         });
@@ -63,6 +86,18 @@ $(document).ready(function () {
 });
 ```
 
+### Explanation of key parts:
+1. **`$(document).ready(function () {...});`**: Ensures the code runs only after the HTML document is fully loaded.
+2. **`$(".js-toggle-status").on("click", function () {...});`**: Adds a click event listener to all elements with the class `.js-toggle-status`.
+3. **`var btn = $(this);`**: Refers to the clicked button, allowing you to interact with it.
+4. **`var id = btn.data("id");`**: Retrieves the `data-id` attribute from the clicked button, which is typically used to uniquely identify a category.
+5. **`$.ajax({...});`**: This initiates an asynchronous HTTP request to the server. The server responds with a value (in this case, the timestamp for when the category was last updated).
+6. **`success: function (lastUpdatedOn)`**: When the AJAX request succeeds, this function runs. It receives a parameter `lastUpdatedOn`, which is the updated timestamp returned by the server.
+7. **`status.text(newStatus);`**: Changes the status text (either "Available" or "Deleted").
+8. **`status.toggleClass(...)`**: Updates the CSS classes to change the visual styling based on the new status.
+9. **`lastUpdatedOnElement.text(lastUpdatedOn);`**: Updates the "last updated" field with the new timestamp.
+
+This code toggles the status of a category (like "Available" or "Deleted") and updates the interface with the new status and time when it was updated. The request to the server is done via AJAX, meaning it happens in the background without reloading the page.
 Let's break this code down step by step so you can understand it fully, even if you're not familiar with jQuery.
 
 ### Overview
