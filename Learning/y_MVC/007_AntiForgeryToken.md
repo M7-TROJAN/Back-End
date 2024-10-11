@@ -14,12 +14,12 @@
 
 خطوات عمل الـ Anti-Forgery Token:
 
-	1.	لما المستخدم يفتح الصفحة، بيتم إنشاء token وتضمينه في الصفحة (عادةً داخل نموذج - form).
-	2.	لما المستخدم يرسل البيانات من خلال POST request، الـ token بيتبعت مع الطلب.
-	3.	السيرفر بيتحقق من صحة الـ token. لو كان صحيح، بينفذ الطلب. لو مش صحيح، بيرفض الطلب لحمايته.
+1. لما المستخدم يفتح الصفحة، بيتم إنشاء token وتضمينه في الصفحة (عادةً داخل نموذج - form).
+2. لما المستخدم يرسل البيانات من خلال POST request، الـ token بيتبعت مع الطلب.
+3. السيرفر بيتحقق من صحة الـ token. لو كان صحيح، بينفذ الطلب. لو مش صحيح، بيرفض الطلب لحمايته.
 
 مثال عملي:
-
+```javascript
 [HttpPost]
 [ValidateAntiForgeryToken]
 public IActionResult SubmitForm(MyModel model)
@@ -30,7 +30,7 @@ public IActionResult SubmitForm(MyModel model)
     }
     return View(model);
 }
-
+```
 هنا، الـ ValidateAntiForgeryToken بيتحقق من صحة الـ token اللي جاي مع الطلب. لو الـ token سليم، الأكشن هيكمل تنفيذ الكود.
 
 
