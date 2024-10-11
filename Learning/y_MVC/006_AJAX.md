@@ -41,16 +41,6 @@ $.ajax({
 
 ---
 
-الآن النص منسق بشكل أفضل ويفصل بين الإنجليزية والعربية بصورة أوضح.
-
-
-
-
-
-
-
-
-
 ```javascript
 $(document).ready(function () {
     $(".js-toggle-status").on("click", function () {
