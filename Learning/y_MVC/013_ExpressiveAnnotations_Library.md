@@ -37,6 +37,19 @@ Once installed, you can start using the expressive validation attributes in your
 
 ---
 
+#### **Registering ExpressiveAnnotations in Program.cs**
+
+To use ExpressiveAnnotations in an ASP.NET Core project, it’s essential to register the library within **Program.cs**. Without this registration, ExpressiveAnnotations will not be activated for validation purposes, resulting in errors. To register, add the following line within your service configuration in **Program.cs**:
+
+```csharp
+// Add ExpressiveAnnotations
+builder.Services.AddExpressiveAnnotations();
+```
+
+This line should be placed in the **ConfigureServices** section, which sets up dependency injection and middleware for your application. Once added, ExpressiveAnnotations will be ready to handle validations specified in your models.
+
+--- 
+
 #### **Key Attributes**
 1. **[AssertThat]**: Validates a condition that must evaluate to `true` for the validation to pass.
 2. **[RequiredIf]**: Requires a field to be filled in if a certain condition evaluates to `true`.
