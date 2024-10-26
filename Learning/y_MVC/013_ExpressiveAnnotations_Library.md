@@ -174,25 +174,38 @@ ExpressiveAnnotations offers several built-in functions that can be used within 
 
 ---
 
-#### **Client-Side Validation**
+### **Client-Side Validation with ExpressiveAnnotations**
 
-ExpressiveAnnotations supports automatic **client-side validation**. When using the library in an ASP.NET Core MVC or ASP.NET MVC project, the validation logic written in C# is automatically translated into JavaScript, so it runs on the client side as well.
+ExpressiveAnnotations supports **automatic client-side validation** for ASP.NET Core MVC and ASP.NET MVC projects. This feature translates the validation logic written in C# into JavaScript, allowing the validation to run in the browser. Client-side validation gives users immediate feedback, reducing the need for server requests when data is invalid.
 
-To enable client-side validation:
+To set up client-side validation with ExpressiveAnnotations, follow these steps:
 
-1. **Ensure that jQuery and jQuery Unobtrusive Validation are loaded** on the page (these are already included in ASP.NET MVC projects).
-2. ExpressiveAnnotations' client-side validation scripts are required:
-   
-   Add the following script references in your `_Layout.cshtml` or in the specific view where you want validation:
+1. **Ensure jQuery and jQuery Unobtrusive Validation Libraries Are Loaded**
+
+   ASP.NET MVC typically includes these by default, as they’re required for client-side validation. Verify that the following libraries are referenced in your `_Layout.cshtml` or specific views where you want validation:
 
    ```html
    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
    <script src="~/Scripts/jquery.validate.min.js"></script>
    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-   <script src="~/Scripts/expressive.annotations.validate.js"></script>
    ```
 
-3. **Ensure validation is enabled** by adding the following in the view:
+2. **Add ExpressiveAnnotations Client-Side Validation Library**
+
+   - **Install the Library**: 
+     1. Right-click on the `wwwroot` folder (or the folder where your client-side libraries are stored), and choose **Add > Client-Side Library**.
+     2. In the **Library** field, search for `expressive-annotations-validate@2.7.0` and select it.
+     3. Click **Install** to add the library to your project’s `lib` folder within `wwwroot`.
+
+   - **Reference the Script**: After installation, add a reference to the ExpressiveAnnotations client-side validation script in `_Layout.cshtml` or the specific view that requires validation:
+
+     ```html
+     <script src="~/lib/expressive-annotations-validate/expressive.annotations.validate.min.js"></script>
+     ```
+
+3. **Enable Validation in Your View**
+
+   To ensure the validation scripts are enabled and functioning, include the following code in the view:
 
    ```html
    @Html.ValidationSummary(true)
@@ -200,7 +213,7 @@ To enable client-side validation:
    @Scripts.Render("~/bundles/jqueryval")
    ```
 
-Now, validation will occur both on the server and on the client side, reducing round trips for invalid data.
+After these steps, validation will run both on the client side (in the browser) and on the server side, reducing unnecessary server requests for invalid data and providing a smoother user experience.
 
 ---
 
