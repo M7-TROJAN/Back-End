@@ -52,6 +52,100 @@ static async Task Main(string[] args)
 }
 ```
 
+#### Simple Example: Making Tea Synchronously and Asynchronously
+
+```csharp
+using System;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            Console.WriteLine("Synchronous tea making:");
+            Kitchen.MakeTea();
+
+            Console.WriteLine("====================================");
+
+            Console.WriteLine("Asynchronous tea making:");
+            await Kitchen.MakeTeaAsync();
+
+            Console.ReadLine();
+        }
+    }
+
+    public class Kitchen
+    {
+        // Synchronous method for making tea
+        public static void MakeTea()
+        {
+            var water = BoilWater();
+            Console.WriteLine("Take the cup out.");
+            Console.WriteLine("Put the tea bag in the cup.");
+            Console.WriteLine("Put the sugar in the cup.");
+            Console.WriteLine($"Pour the {water} in the cup.");
+        }
+
+        public static string BoilWater()
+        {
+            Console.WriteLine("Start the kettle.");
+            Console.WriteLine("Waiting for the water to boil.");
+
+            System.Threading.Thread.Sleep(5000);
+
+            Console.WriteLine("Water is boiling.");
+
+            return "Boiled water";
+        }
+
+        // Asynchronous method for making tea
+        public static async Task MakeTeaAsync()
+        {
+            var boiledWaterTask = BoilWaterAsync();
+            Console.WriteLine("Take the cup out.");
+            Console.WriteLine("Put the tea bag in the cup.");
+            Console.WriteLine("Put the sugar in the cup.");
+
+            var water = await boiledWaterTask;
+
+            Console.WriteLine($"Pour the {water} in the cup.");
+        }
+
+        public static async Task<string> BoilWaterAsync()
+        {
+            Console.WriteLine("Start the kettle.");
+            Console.WriteLine("Waiting for the water to boil.");
+
+            await Task.Delay(5000);
+
+            Console.WriteLine("Water is boiling.");
+
+            return "Boiled water";
+        }
+    }
+}
+```
+
+### Explanation
+
+1. **Synchronous vs. Asynchronous Methods**:
+   - `MakeTea`: This is a synchronous method that waits for each step to complete before moving to the next. It calls `BoilWater`, which uses `Thread.Sleep(5000)` to simulate boiling water by blocking the thread for 5 seconds.
+   - `MakeTeaAsync`: This is an asynchronous method that calls `BoilWaterAsync`. The boiling water step and other preparation steps (like taking out a cup) run concurrently, thanks to asynchronous programming. This allows other parts of the program to run while waiting for the water to boil.
+
+2. **Marking Methods as `async`**:
+   - `static async Task Main(string[] args)`: The `Main` method is marked as `async` to support asynchronous operations, allowing `await Kitchen.MakeTeaAsync();` within it.
+   - `public static async Task MakeTeaAsync()`: `MakeTeaAsync` is marked as `async` to enable the use of `await` inside it, allowing the program to wait for boiling water to finish before pouring it.
+
+3. **Using `await`**:
+   - `var water = await boiledWaterTask;`: This line in `MakeTeaAsync` uses `await` to asynchronously wait for the `boiledWaterTask` to complete. The `await` keyword releases control to the caller until the task finishes, allowing other operations to proceed.
+   - `await Task.Delay(5000);`: This line in `BoilWaterAsync` uses `await` to simulate a non-blocking 5-second delay, representing the time needed to boil water.
+
+4. **Improvement in Asynchronous Pattern**:
+   - By using `async Task` in `MakeTeaAsync` instead of `async void`, it is possible to handle any exceptions and allow the method to be awaited, making it safer and more flexible.
+
+
 #### Simple Example: Fetching Data from a URL
 
 ```csharp
