@@ -17,6 +17,41 @@
 
 ### Examples
 
+```csharp
+static async Task Main(string[] args)
+{
+    Task<string> task = Task.Run(() =>
+    {
+        Thread.Sleep(9000);
+        return "Done";
+    });
+
+    task.GetAwaiter().OnCompleted(() =>
+    {
+        string result = task.Result;
+        Console.WriteLine(result);
+    });
+
+    for (int i = 0; i < 10; i++)
+    {
+        Console.WriteLine(i);
+    }
+
+    Console.WriteLine("the task is not completed yet");
+
+    Console.WriteLine("all lines will be printed before the task is completed because the task is running in the background");
+
+    
+
+    await task;
+
+    Console.WriteLine("the task is completed now because we are awaiting the task in the above line");
+
+    // awaiting the task will block the main thread until the task is completed
+    // it means that the main thread will not continue executing the code until the task is completed
+}
+```
+
 #### Simple Example: Fetching Data from a URL
 
 ```csharp
