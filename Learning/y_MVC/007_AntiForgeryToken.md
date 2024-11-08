@@ -119,7 +119,9 @@ $.ajax({
 - This combination helps to prevent **CSRF attacks**, a common security vulnerability in web applications.
 
 
-
+--- 
+هشرح لنفسي تاني برضو 
+---
 الـ AntiForgeryToken هو نوع من الحماية في تطبيقات الويب يستخدم لمنع هجمات تُسمى “Cross-Site Request Forgery” أو CSRF. دي نوع من الهجمات اللي فيها ممكن مهاجم يستغل تسجيل دخول المستخدم أو صلاحياته عشان ينفذ طلبات ضده بدون ما المستخدم يعرف.
 
 ازاي بيشتغل الـ AntiForgeryToken؟
