@@ -117,3 +117,71 @@ $.ajax({
 - **`@Html.AntiForgeryToken()`**: Generates the anti-forgery token and adds it to the form.
 - **`[ValidateAntiForgeryToken]`**: Validates the anti-forgery token on the server-side to ensure that the request is coming from a trusted source.
 - This combination helps to prevent **CSRF attacks**, a common security vulnerability in web applications.
+
+
+
+الـ AntiForgeryToken هو نوع من الحماية في تطبيقات الويب يستخدم لمنع هجمات تُسمى “Cross-Site Request Forgery” أو CSRF. دي نوع من الهجمات اللي فيها ممكن مهاجم يستغل تسجيل دخول المستخدم أو صلاحياته عشان ينفذ طلبات ضده بدون ما المستخدم يعرف.
+
+ازاي بيشتغل الـ AntiForgeryToken؟
+
+لما المستخدم يفتح صفحة فيها فورم (form)، الـ AntiForgeryToken بيضيف توكين سري (كود أو رمز عشوائي) في الـ HTML بتاع الصفحة. لما المستخدم يبعت الفورم للسيرفر، السيرفر بيقارن التوكين ده مع التوكين اللي عنده وبيتأكد إنهم متطابقين. لو التوكين مش موجود أو مش متطابق، السيرفر بيمنع الطلب ويعتبره غير آمن.
+
+مثال على الاستخدام
+
+في تطبيقات الـ ASP.NET MVC أو ASP.NET Core، ممكن تستخدم @Html.AntiForgeryToken() في الفيو (view) عشان تضيف التوكين ده تلقائيًا للفورم.
+
+مثال في كود الفيو:
+```cshtml
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="text" name="username" />
+    <button type="submit">Submit</button>
+</form>
+```
+وفي الكنترولر (controller)، ممكن تضيف [ValidateAntiForgeryToken] كديكور على الأكشن اللي بيعالج الطلب:
+```csharp
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult SubmitForm(UserModel model)
+{
+    // تنفيذ الكود الخاص بالفورم
+}
+```
+ليه هو مهم؟
+
+الـ AntiForgeryToken بيحمي المستخدمين من هجمات CSRF، وده بيساهم في رفع مستوى الأمان في التطبيق، لأنه بيتأكد إن الطلبات اللي بتيجي للسيرفر جاية من المستخدم نفسه مش من جهة خارجية بتحاول تستغل صلاحيته.
+
+وفي طريقة تانية برضو معروفة 
+
+```cshtml
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
+
+<form method="post">
+
+<input type="hidden" name="__RequestVerificationToken" value="@antiforgery.GetAndStoreTokens(Context).RequestToken" />
+    <input type="text" name="username" />
+    <button type="submit">Submit</button>
+</form>
+```
+
+الطريقتين اللي بيوصلوا لنفس الهدف وهو حماية الفورم من هجمات CSRF، ولكن في فرق بسيط بينهم في طريقة الاستخدام:
+
+الطريقة الأولى: @Html.AntiForgeryToken()
+
+دي طريقة مختصرة ومباشرة، بتضيف التوكين للفورم بشكل تلقائي بدون الحاجة لأي إعداد إضافي. لما تستخدم @Html.AntiForgeryToken()، ASP.NET Core بتتولى إضافة التوكين كـ <input type="hidden"> تلقائيًا في الفورم، وده بيسهّل الاستخدام ويقلل الأكواد المطلوبة.
+
+الطريقة الثانية: استخدام IAntiforgery مباشرة
+
+لما بتستخدم IAntiforgery وبتحقنه عن طريق @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery، بتحتاج تكتب كود عشان تجيب التوكين وتضيفه للفورم يدويًا:
+
+<input type="hidden" name="__RequestVerificationToken" value="@antiforgery.GetAndStoreTokens(Context).RequestToken" />
+
+ده ممكن يكون مفيد لو عندك احتياجات خاصة أو لو عايز تتحكم في كيفية توليد التوكين أو استخدامه.
+
+أيهما أفضل؟
+
+ • الطريقة الأولى (@Html.AntiForgeryToken()) هي الأفضل في معظم الحالات لأنها أسهل وأوضح وبتغنيك عن كتابة أكواد إضافية.
+ • الطريقة الثانية (باستخدام IAntiforgery) ممكن تكون مفيدة لو عندك احتياجات خاصة أو لو بتشتغل في سيناريو معقد مش بيتناسب مع الطريقة المختصرة.
+
+في العموم، لو مش محتاج تخصيص معين، يفضل استخدام @Html.AntiForgeryToken().
+
