@@ -168,16 +168,16 @@ public IActionResult SubmitForm(UserModel model)
 
 الطريقتين اللي بيوصلوا لنفس الهدف وهو حماية الفورم من هجمات CSRF، ولكن في فرق بسيط بينهم في طريقة الاستخدام:
 
-الطريقة الأولى: @Html.AntiForgeryToken()
+الطريقة الأولى: `@Html.AntiForgeryToken()`
 
-دي طريقة مختصرة ومباشرة، بتضيف التوكين للفورم بشكل تلقائي بدون الحاجة لأي إعداد إضافي. لما تستخدم @Html.AntiForgeryToken()، ASP.NET Core بتتولى إضافة التوكين كـ <input type="hidden"> تلقائيًا في الفورم، وده بيسهّل الاستخدام ويقلل الأكواد المطلوبة.
+دي طريقة مختصرة ومباشرة، بتضيف التوكين للفورم بشكل تلقائي بدون الحاجة لأي إعداد إضافي. لما تستخدم `@Html.AntiForgeryToken()` ال `ASP.NET Core` بتتولى إضافة التوكين كـ `<input type="hidden">` تلقائيًا في الفورم، وده بيسهّل الاستخدام ويقلل الأكواد المطلوبة.
 
-الطريقة الثانية: استخدام IAntiforgery مباشرة
+الطريقة الثانية: استخدام `IAntiforgery` مباشرة
 
-لما بتستخدم IAntiforgery وبتحقنه عن طريق @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery، بتحتاج تكتب كود عشان تجيب التوكين وتضيفه للفورم يدويًا:
-
+لما بتستخدم `IAntiforgery` وبتحقنه عن طريق `@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery` ، بتحتاج تكتب كود عشان تجيب التوكين وتضيفه للفورم يدويًا:
+```cshtml
 <input type="hidden" name="__RequestVerificationToken" value="@antiforgery.GetAndStoreTokens(Context).RequestToken" />
-
+```
 ده ممكن يكون مفيد لو عندك احتياجات خاصة أو لو عايز تتحكم في كيفية توليد التوكين أو استخدامه.
 
 أيهما أفضل؟
