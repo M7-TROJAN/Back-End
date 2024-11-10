@@ -325,7 +325,7 @@ Index.cshtml في View
     </script>
 </body>
 </html>
-
+```
 شرح الخطوات بالتفصيل
 
  1. كلاس `DataTableRequest`: الكلاس ده بيحتوي على البارامترات اللي بيبعتها `DataTables` زي `draw, start, length` إلخ.
