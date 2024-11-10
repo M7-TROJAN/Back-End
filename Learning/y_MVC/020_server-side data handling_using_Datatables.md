@@ -328,7 +328,7 @@ Index.cshtml في View
 
 شرح الخطوات بالتفصيل
 
- 1. كلاس DataTableRequest: الكلاس ده بيحتوي على البارامترات اللي بيبعتها DataTables زي draw, start, length, إلخ.
+ 1. كلاس `DataTableRequest`: الكلاس ده بيحتوي على البارامترات اللي بيبعتها `DataTables` زي `draw, start, length` إلخ.
  2. الـ UsersController:
 ال `GetUsers` دي بنسنقبل طلبات ال `Datatables` وبتتعامل معاها
 
