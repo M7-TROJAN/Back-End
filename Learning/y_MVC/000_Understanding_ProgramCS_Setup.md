@@ -1,4 +1,4 @@
-No worries—I’ll break this down into simpler parts so you can start understanding it from scratch!
+
 
 In ASP.NET Core, the `Program.cs` file is like the starting point of your application. This file sets up and configures the essential parts of your project, including things like connecting to the database, setting up services (like authentication), and preparing the app to handle HTTP requests. Let’s look at the key sections in your `Program.cs` file.
 
