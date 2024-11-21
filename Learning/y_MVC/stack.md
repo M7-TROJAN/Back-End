@@ -1,7 +1,7 @@
 ## Objective
 Given an of N integers array, print the Next Greater Element (NGE) for every element.
-• Please use the appropriate data structure that helps you to minimize the code
-Input: 
+• Please use the appropriate data structure that helps you to minimize the code.
+- Input: 
 ```
 arr[] = [ 13 , 7, 6 , 12 ]
 ```
