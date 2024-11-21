@@ -1,12 +1,17 @@
 ## Objective
 Given an of N integers array, print the Next Greater Element (NGE) for every element.
 • Please use the appropriate data structure that helps you to minimize the code
-Input: arr[] = [ 13 , 7, 6 , 12 ]
-Output: 
+Input: 
+```
+arr[] = [ 13 , 7, 6 , 12 ]
+```
+Output:
+```
     13 –> -1
     7 –> 12
     6 –> 12
     12 –> -1
+```
 Explanation: 
     13 and 12 don’t have any element greater than them
     present on the right side
