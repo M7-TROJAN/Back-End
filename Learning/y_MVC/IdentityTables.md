@@ -1,10 +1,10 @@
-Authentication & Authorization in ASP.NET Core Identity
+# Authentication & Authorization in ASP.NET Core Identity
 
 Authentication and authorization are two fundamental concepts in securing applications. In ASP.NET Core, we manage them using ASP.NET Core Identity, which provides a built-in system for handling user management, roles, and permissions.
 
 When you create a project and select Individual User Accounts, ASP.NET Core Identity automatically configures everything for you, including database tables and authentication logic.
 
-Understanding the Identity Tables in the Database
+## Understanding the Identity Tables in the Database
 
 When you set up ASP.NET Core Identity, it creates seven main tables in the database. Let’s go through each one, understand its purpose, and how they relate to each other.
 
@@ -66,7 +66,7 @@ When you set up ASP.NET Core Identity, it creates seven main tables in the datab
 	•	Stores authentication tokens for users.
 	•	Used for features like remember me, password resets, or two-factor authentication (2FA).
 
-Role-Based Authorization vs. Permission-Based Authorization
+## Role-Based Authorization vs. Permission-Based Authorization
 
 There are two main approaches to controlling access to resources:
 
@@ -77,7 +77,7 @@ There are two main approaches to controlling access to resources:
 	•	The Admin role can access Admin Dashboard.
 	•	The Manager role can access Employee Management.
 
-Implementation Example (Role-Based Authorization)
+## Implementation Example (Role-Based Authorization)
 
 Step 1: Assign a Role to a User
 
@@ -112,7 +112,7 @@ public IActionResult ManageEmployees()
 	•	Admin and Manager roles both have "CanViewReports" permission.
 	•	A user without the role but with the claim "CanViewReports" can also access reports.
 
-Implementation Example (Permission-Based Authorization)
+## Implementation Example (Permission-Based Authorization)
 
 Step 1: Assign a Claim to a User
 
@@ -167,9 +167,9 @@ Summary
 ✔ Permission-Based Authorization → Access granted based on user claims.
 ✔ Combining Roles & Claims → Provides maximum flexibility.
 
-Let’s build a real-world project to implement Authentication & Authorization in ASP.NET Core MVC using ASP.NET Core Identity.
+## Let’s build a real-world project to implement Authentication & Authorization in ASP.NET Core MVC using ASP.NET Core Identity.
 
-📌 Project Overview: Library Management System
+### 📌 Project Overview: Library Management System
 
 We will create a Library Management System where:
 	1.	Admins can manage books and users.
