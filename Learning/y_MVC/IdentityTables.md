@@ -12,7 +12,7 @@ When you set up ASP.NET Core Identity, it creates seven main tables in the datab
 	-	This is the main table where all users are stored.
 	-	It contains fields like:
 	-	Id (Primary Key)
-	-       UserName
+        -	UserName
 	-	NormalizedUserName
 	-	Email
 	-	PasswordHash
