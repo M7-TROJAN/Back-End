@@ -66,6 +66,98 @@ ASP.NET Core Identity creates seven main tables in the database. Below is an ove
 
 ---
 
+## explanation of each column in the seven ASP.NET Core Identity tables:
+---
+
+### 1️⃣ `AspNetUsers` (Users Table)  
+This table stores information about registered users.  
+
+| Column Name            | Description |
+|------------------------|-------------|
+| **Id** (PK)           | Unique identifier for the user. |
+| **UserName**          | The username for logging in. |
+| **NormalizedUserName** | A normalized (uppercase) version of the username for efficient lookups. |
+| **Email**             | User's email address. |
+| **NormalizedEmail**   | A normalized (uppercase) version of the email for efficient lookups. |
+| **EmailConfirmed**    | `true` if the email is verified; otherwise, `false`. |
+| **PasswordHash**      | Hashed version of the user's password. |
+| **PhoneNumber**       | User's phone number. |
+| **PhoneNumberConfirmed** | `true` if the phone number is verified. |
+| **TwoFactorEnabled**  | `true` if the user has enabled two-factor authentication (2FA). |
+| **LockoutEnd**        | The date/time when the lockout expires (null if not locked). |
+| **LockoutEnabled**    | `true` if the account can be locked after failed login attempts. |
+| **AccessFailedCount** | Number of failed login attempts before lockout. |
+
+---
+
+### 2️⃣ `AspNetRoles` (Roles Table)  
+Stores system roles used for role-based authorization.  
+
+| Column Name  | Description |
+|-------------|-------------|
+| **Id** (PK) | Unique identifier for the role. |
+| **Name**    | Name of the role (e.g., "Admin", "Manager", "User"). |
+| **NormalizedName** | Uppercase version of the role name for efficient lookups. |
+
+---
+
+### 3️⃣ `AspNetUserRoles` (User-Roles Relationship Table)  
+Manages the many-to-many relationship between users and roles.  
+
+| Column Name | Description |
+|------------|-------------|
+| **UserId** (FK) | Foreign key referencing `AspNetUsers` (assigns a user to a role). |
+| **RoleId** (FK) | Foreign key referencing `AspNetRoles` (assigns a role to a user). |
+
+---
+
+### 4️⃣ `AspNetRoleClaims` (Role-Based Permissions Table)  
+Stores permissions (claims) assigned to roles.  
+
+| Column Name | Description |
+|------------|-------------|
+| **Id** (PK) | Unique identifier for the claim. |
+| **RoleId** (FK) | Foreign key referencing `AspNetRoles`. |
+| **ClaimType** | Type of claim (e.g., "CanEditUsers"). |
+| **ClaimValue** | The value associated with the claim (e.g., "true"). |
+
+---
+
+### 5️⃣ `AspNetUserClaims` (User-Specific Claims Table)  
+Stores user-specific claims, allowing more fine-grained permission control.  
+
+| Column Name | Description |
+|------------|-------------|
+| **Id** (PK) | Unique identifier for the claim. |
+| **UserId** (FK) | Foreign key referencing `AspNetUsers`. |
+| **ClaimType** | Type of claim (e.g., "CanAccessReports"). |
+| **ClaimValue** | The value associated with the claim (e.g., "true"). |
+
+---
+
+### 6️⃣ `AspNetUserLogins` (External Logins Table)  
+Stores details of users who log in using external authentication providers (Google, Facebook, etc.).  
+
+| Column Name | Description |
+|------------|-------------|
+| **LoginProvider** | Name of the external provider (e.g., "Google", "Facebook"). |
+| **ProviderKey** | Unique identifier for the user in the external provider’s system. |
+| **UserId** (FK) | Foreign key referencing `AspNetUsers`. |
+
+---
+
+### 7️⃣ `AspNetUserTokens` (User Token Storage)  
+Stores authentication tokens, mainly used for two-factor authentication (2FA) and password resets.  
+
+| Column Name | Description |
+|------------|-------------|
+| **UserId** (FK) | Foreign key referencing `AspNetUsers`. |
+| **LoginProvider** | The authentication provider issuing the token (e.g., "Identity"). |
+| **Name** | The token name (e.g., "ResetPassword"). |
+| **Value** | The token value (encrypted or hashed). |
+
+---
+
 ## 🔐 Role-Based vs. Permission-Based Authorization
 
 ### 1️⃣ **Role-Based Authorization**
