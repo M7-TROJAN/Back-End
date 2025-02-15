@@ -9,17 +9,17 @@ When you create a project and select Individual User Accounts, ASP.NET Core Iden
 When you set up ASP.NET Core Identity, it creates seven main tables in the database. Let’s go through each one, understand its purpose, and how they relate to each other.
 
 1. AspNetUsers (Users Table)
-	•	This is the main table where all users are stored.
-	•	It contains fields like:
-	•	Id (Primary Key)
-	•	UserName
-	•	NormalizedUserName
-	•	Email
-	•	PasswordHash
-	•	PhoneNumber
-	•	TwoFactorEnabled
-	•	LockoutEnabled
-	•	You can customize this table by adding additional columns (e.g., Full Name, Profile Picture).
+	-	This is the main table where all users are stored.
+	-	It contains fields like:
+	-	Id (Primary Key)
+	-       UserName
+	-	NormalizedUserName
+	-	Email
+	-	PasswordHash
+	-	PhoneNumber
+	-	TwoFactorEnabled
+	-	LockoutEnabled
+	-	You can customize this table by adding additional columns (e.g., Full Name, Profile Picture).
 
 2. AspNetRoles (Roles Table)
 	•	Stores all the roles available in the system.
