@@ -287,11 +287,11 @@ await _userManager.AddClaimAsync(user, new Claim("CanManageBooks", "true"));
 ---
 
 ## 🎯 Summary
-✔ **Authentication** → Confirms identity (Login, Identity).
-✔ **Authorization** → Controls access (Roles, Claims, Policies).
-✔ **Role-Based** → Access via roles.
-✔ **Permission-Based** → Access via claims.
-✔ **Hybrid Approach** → Maximum flexibility.
+- ✔ **Authentication** → Confirms identity (Login, Identity).
+- ✔ **Authorization** → Controls access (Roles, Claims, Policies).
+- ✔ **Role-Based** → Access via roles.
+- ✔ **Permission-Based** → Access via claims.
+- ✔ **Hybrid Approach** → Maximum flexibility.
 
 ---
 
