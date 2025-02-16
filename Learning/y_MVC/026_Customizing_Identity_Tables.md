@@ -134,5 +134,67 @@ builder.Entity<IdentityUser>().Property(u => u.UserName).HasColumnType("varchar(
 ## Conclusion
 By following these steps, you can customize the schema and table names of ASP.NET Core Identity tables to better fit your application's needs. Additionally, you can modify individual columns to align with your specific requirements.
 
+## Extending IdentityUser
+If you want to extend the `IdentityUser` class by adding a new property, such as `FullName`, follow these steps:
 
+### Step 1: Create a Custom Model
+Create a new model that inherits from `IdentityUser`:
 
+```csharp
+using Microsoft.AspNetCore.Identity;
+
+namespace LitraLand.Web.Core.Models
+{
+    public class ApplicationUser : IdentityUser
+    {
+        [MaxLength(100)]
+        public string FullName { get; set; } = null!;
+        public bool IsDeleted { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime? LastUpdatedOn { get; set; }
+    }
+}
+```
+
+### Step 2: Update `ApplicationDbContext`
+Modify `ApplicationDbContext` to use `ApplicationUser` instead of `IdentityUser`:
+
+```csharp
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.HasSequence<int>("SerialNumber", schema: "shared")
+            .StartsAt(1000001)
+            .IncrementsBy(1);
+
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        base.OnModelCreating(builder);
+    }
+}
+```
+
+### Step 3: Update `Program.cs`
+Modify the service registration in `Program.cs`:
+
+```csharp
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+```
+
+### Step 4: Apply Migrations
+Run the following command in the Package Manager Console:
+
+```sh
+Add-Migration ExtendUsersTable
+Update-Database
+```
+
+## Conclusion
+By following these steps, you can customize the schema and table names of ASP.NET Core Identity tables to better fit your application's needs. Additionally, you can modify individual columns and extend the `IdentityUser` class to include custom properties.
