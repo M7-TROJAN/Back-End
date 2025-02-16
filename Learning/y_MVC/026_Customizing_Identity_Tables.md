@@ -99,6 +99,40 @@ Execute the migration using:
 Update-Database
 ```
 
+## Customizing Identity Table Columns
+You can also customize the columns of identity tables. Below are examples of different modifications you can apply.
+
+### Removing a Column
+If you want to remove the `Email` column from the `IdentityUser` table, use the following configuration:
+
+```csharp
+builder.Entity<IdentityUser>().Ignore(u => u.Email);
+```
+
+To remove multiple columns, for example, `PhoneNumber` and `PhoneNumberConfirmed`, use:
+
+```csharp
+builder.Entity<IdentityUser>()
+    .Ignore(u => u.PhoneNumber)
+    .Ignore(u => u.PhoneNumberConfirmed);
+```
+
+### Renaming a Column
+To rename the `UserName` column to `User_Name`, use:
+
+```csharp
+builder.Entity<IdentityUser>().Property(u => u.UserName).HasColumnName("User_Name");
+```
+
+### Changing Column Type
+To change the data type of the `UserName` column to `varchar(100)`, use:
+
+```csharp
+builder.Entity<IdentityUser>().Property(u => u.UserName).HasColumnType("varchar(100)");
+```
+
 ## Conclusion
-By following these steps, you can customize the schema and table names of ASP.NET Core Identity tables to better fit your application's needs. The same approach can be applied to other identity tables by specifying new names and schemas in the `OnModelCreating` method.
+By following these steps, you can customize the schema and table names of ASP.NET Core Identity tables to better fit your application's needs. Additionally, you can modify individual columns to align with your specific requirements.
+
+
 
