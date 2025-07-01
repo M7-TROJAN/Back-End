@@ -3,7 +3,8 @@
 
 ###  تعريف REST:
 
-**REST** اختصار لـ: **Representational State Transfer**
+
+ا **REST** اختصار لـ: **Representational State Transfer**
 وهو **نمط معماري** (Architectural Style) لتصميم الـ APIs، تم تقديمه سنة 2000 في رسالة دكتوراه لـ Roy Fielding.
 
 REST مش تكنولوجيا ولا بروتوكول، لكنه طريقة لتنظيم التواصل بين الأنظمة (مثل الويب) باستخدام بروتوكول HTTP.
