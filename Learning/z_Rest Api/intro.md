@@ -130,9 +130,9 @@ HTTP = **HyperText Transfer Protocol**
 GET /api/books/5 HTTP/1.1
 ```
 
-*ال **GET**: هو الـ HTTP Method (اللي بنسميه Verb).
-*ال **/api/books/5**: هو الـ URI (العنوان).
-*ال **HTTP/1.1**: نسخة البروتوكول.
+- *ال **GET**: هو الـ HTTP Method (اللي بنسميه Verb).
+- *ال **/api/books/5**: هو الـ URI (العنوان).
+- *ال **HTTP/1.1**: نسخة البروتوكول.
 
 ---
 
