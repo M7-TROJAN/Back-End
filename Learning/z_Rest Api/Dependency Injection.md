@@ -6,7 +6,7 @@
 1. **يجب ألا تعتمد الوحدات عالية المستوى (High-Level Modules) على الوحدات منخفضة المستوى (Low-Level Modules)، بل يجب أن تعتمدا كلتاهما على التجريد (Abstraction).**
 2. **يجب ألا يعتمد التجريد (Abstraction) على التفاصيل (Details)، بل يجب أن تعتمد التفاصيل على التجريد.**
 
-🔹 **تفسير المبدأ:**
+ **تفسير المبدأ:**
 بدلاً من أن يعتمد الكود بشكل مباشر على كائنات معينة، فإنه يعتمد على **واجهات (Interfaces) أو كائنات مجردة (Abstract Classes)**، مما يسمح بالتغيير بسهولة دون التأثير على الأجزاء الأخرى من التطبيق.
 
 #### **2. كيف يتم تطبيق Dependency Injection؟**
@@ -306,5 +306,244 @@ public class BookService : IBookService
 4. **هل Injected dependencies فيها Scoped؟** → لازم تبعد عن Singleton
 5. **هل محتاج تشارك البيانات بين أجزاء الـ Request؟** → Scoped
 6. **هل الأداء مهم جدًا والتكلفة عالية؟** → Singleton
+
+---
+
+## يعني إيه Dependency Injection؟
+
+** ال Dependency Injection** هو أسلوب (design pattern) بنستخدمه في البرمجة عشان نفصل الكلاسات عن بعض، ونخلي الكلاس يعتمد على **واجهات (Interfaces)** بدل ما ينشئ بنفسه كائنات من الكلاسات التانية.
+
+---
+
+### مثال بسيط جدًا:
+
+عندك كلاس اسمه `OrderService` محتاج يطبع فواتير. بدل ما يعمل `new Printer()` جواه، بنخلي الـ Printer يتبعتله من برّه:
+
+```csharp
+public interface IPrinter
+{
+    void Print(string message);
+}
+
+public class ConsolePrinter : IPrinter
+{
+    public void Print(string message)
+    {
+        Console.WriteLine(message);
+    }
+}
+
+public class OrderService
+{
+    private readonly IPrinter _printer;
+
+    public OrderService(IPrinter printer)
+    {
+        _printer = printer;
+    }
+
+    public void ProcessOrder()
+    {
+        // Process logic...
+        _printer.Print("Order processed successfully.");
+    }
+}
+```
+
+### تحليل الكود:
+
+| الكود                      | معناه                                                               |
+| -------------------------- | ------------------------------------------------------------------- |
+| `IPrinter`                 | واجهة تمثل الطابعة، مش شرط تكون Console ممكن تبقى Email أو PDF      |
+| `ConsolePrinter`           | تطبيق حقيقي للواجهة                                                 |
+| `OrderService`             | بيعتمد على `IPrinter` بدل ما ينشئه بنفسه                            |
+| `public OrderService(...)` | هنا بنطبق مفهوم **Constructor Injection** – أهم وأشهر نوع من الـ DI |
+
+---
+
+##  ليه نستخدم Dependency Injection؟
+
+| الفائدة                    | الشرح                                                                  |
+| -------------------------- | ---------------------------------------------------------------------- |
+| ❌ تفادي الـ tight coupling | الكلاسات مش مربوطة ببعض بشكل مباشر                                     |
+| ✅ سهولة الـ Testing        | تقدر تبعت Mock Objects بسهولة في الـ Unit Tests                        |
+| 🔁 سهولة التبديل           | ممكن تغيّر من `ConsolePrinter` لـ `EmailPrinter` من غير ما تغيّر الكود |
+| ♻️ إدارة عمر الكائنات      | باستخدام Service Lifetimes (هنتكلم عنها دلوقتي)                        |
+
+---
+
+## ثالثًا: تطبيق Dependency Injection في .NET Core
+
+في .NET Core، فيه built-in **Dependency Injection Container**.
+
+### هيكل التطبيق:
+
+```plaintext
+- Interfaces/
+   - IPrinter.cs
+- Services/
+   - ConsolePrinter.cs
+   - OrderService.cs
+- Program.cs
+```
+
+### Program.cs (.NET 6/7/8/9):
+
+```csharp
+builder.Services.AddScoped<IPrinter, ConsolePrinter>();
+builder.Services.AddScoped<OrderService>();
+```
+
+### استدعاء الخدمة في Controller:
+
+```csharp
+[ApiController]
+[Route("api/[controller]")]
+public class OrdersController : ControllerBase
+{
+    private readonly OrderService _orderService;
+
+    public OrdersController(OrderService orderService)
+    {
+        _orderService = orderService;
+    }
+
+    [HttpPost]
+    public IActionResult CreateOrder()
+    {
+        _orderService.ProcessOrder();
+        return Ok("Order created.");
+    }
+}
+```
+
+---
+
+## رابعًا: أنواع Service Lifetimes
+
+| النوع       | بيعيش قد إيه؟                          | الاستخدام الأنسب                                       |
+| ----------- | -------------------------------------- | ------------------------------------------------------ |
+| `Transient` | بيتعمل Instance جديد مع كل استخدام     | لو الخدمة خفيفة ومفيش state – زي Validation أو Logging |
+| `Scoped`    | بيعيش طول عمر الـ HTTP Request الواحد  | لو فيه عمليات مرتبطة بالـ Request زي الـ DbContext     |
+| `Singleton` | بيتعمل مرة واحدة ويعيش طول عمر التطبيق | لما يكون فيه Cache أو خدمة ثابتة لكل الـ Requests      |
+
+---
+
+### مثال تطبيقي عملي على الفرق بينهم:
+
+```csharp
+public interface IGuidService
+{
+    string GetGuid();
+}
+
+public class GuidService : IGuidService
+{
+    private readonly string _guid = Guid.NewGuid().ToString();
+    public string GetGuid() => _guid;
+}
+```
+
+وسجّل الخدمات:
+
+```csharp
+builder.Services.AddTransient<IGuidService, GuidService>();   // جربها مع Scoped و Singleton كمان
+```
+
+واستخدمها في كنترولر:
+
+```csharp
+[ApiController]
+[Route("api/[controller]")]
+public class DemoController : ControllerBase
+{
+    private readonly IGuidService _guidService1;
+    private readonly IGuidService _guidService2;
+
+    public DemoController(IGuidService guidService1, IGuidService guidService2)
+    {
+        _guidService1 = guidService1;
+        _guidService2 = guidService2;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(new
+        {
+            First = _guidService1.GetGuid(),
+            Second = _guidService2.GetGuid()
+        });
+    }
+}
+```
+
+### النتيجة هتبين فرق الـ Lifetime:
+
+| النوع     | النتيجة                                |
+| --------- | -------------------------------------- |
+| Transient | قيمتين مختلفتين كل مرة                 |
+| Scoped    | نفس القيمة داخل نفس الـ Request        |
+| Singleton | نفس القيمة حتى بعد إعادة تشغيل المتصفح |
+
+---
+
+## إمتى أستخدم كل نوع؟
+
+| الحالة                               | النوع المناسب        |
+| ------------------------------------ | -------------------- |
+| Logging, Lightweight Helper Classes  | `Transient`          |
+| Services بتتعامل مع البيانات (Db...) | `Scoped` ✅ الافتراضي |
+| Cache, Configuration, HttpClient     | `Singleton`          |
+
+---
+
+## خامسًا: أنواع Injection في .NET
+
+| النوع                     | الشرح                                                              |
+| ------------------------- | ------------------------------------------------------------------ |
+| **Constructor Injection** | أكثر الأنواع شيوعًا – بنمرر الـ dependency عن طريق الـ constructor |
+| **Method Injection**      | نمرر الـ dependency كـ parameter في ميثود معينة فقط                |
+| **Property Injection**    | نستخدم خاصية `public set` لإدخال الـ dependency                    |
+
+---
+
+## هل ممكن Inject خدمة جوه خدمة؟
+
+أكيد! وده بيحصل دايمًا:
+
+```csharp
+public class OrderService
+{
+    private readonly IPrinter _printer;
+    private readonly IEmailSender _emailSender;
+
+    public OrderService(IPrinter printer, IEmailSender emailSender)
+    {
+        _printer = printer;
+        _emailSender = emailSender;
+    }
+
+    public void ProcessOrder()
+    {
+        _printer.Print("Processing...");
+        _emailSender.Send("order@example.com", "Order processed.");
+    }
+}
+```
+
+بس لازم تسجل كل الخدمات في `Program.cs`.
+
+---
+
+## تلخيص سريع:
+
+| العنصر             | النقطة الرئيسية                                                      |
+| ------------------ | -------------------------------------------------------------------- |
+| DI                 | بيفصل الكلاسات عن بعض – بنحقن Dependencies بدل ما نعملها جوه الكلاس  |
+| Lifetimes          | Transient = جديد كل مرة، Scoped = جديد لكل Request، Singleton = ثابت |
+| Injection Methods  | الأفضل دايمًا Constructor Injection                                  |
+| Service to Service | ممكن Inject أي خدمة جوه التانية بسهولة                               |
+| Testing            | تسهّل الـ Unit Testing جدًا باستخدام Mocks                           |
 
 ---
