@@ -144,7 +144,7 @@ public class Notifier
 }
 ```
 
-👎 كل ما تضيف وسيلة جديدة مثلا (WhatsApp, Push...) لازم تعدّل الكلاس الي اسمه `Notifier`.
+ كل ما تضيف وسيلة جديدة مثلا (WhatsApp, Push...) لازم تعدّل الكلاس الي اسمه `Notifier`.
 
 ### الحل: OCP via interface:
 
@@ -199,5 +199,332 @@ public class NotificationManager
 | التوسعة | صعبة وبتكسر كود قديم | سهلة عن طريق إضافة Classes جديدة |
 | الصيانة | عالية المخاطر        | آمنة                             |
 | التستنج | معقدة                | سهلة                             |
+
+---
+
+
+
+## طب إزاي نطبّق مبدأ OCP في ASP.NET Core Web باستخدام Dependency Injection؟
+
+---
+
+### الفكرة الأساسية:
+
+في ال Web App، بنحدد في ملف `Program.cs`:
+
+* **الـ Interface** اللي عايزين نستخدمه.
+* **والـ Implementation** (يعني أنهي كلاس فعلي يتنفذ).
+
+---
+
+## مثال عملي: Notification System في Web App
+
+### أولًا: بنكتب الـ Interface والـ Implementations:
+
+```csharp
+public interface INotificationService
+{
+    void Send(string message);
+}
+
+public class EmailNotifier : INotificationService
+{
+    public void Send(string message)
+    {
+        Console.WriteLine("Email: " + message);
+    }
+}
+
+public class SMSNotifier : INotificationService
+{
+    public void Send(string message)
+    {
+        Console.WriteLine("SMS: " + message);
+    }
+}
+```
+
+---
+
+##  دلوقتي نروح لـ `Program.cs`
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// تسجيل ال Service في ال Dependency Injection Container
+builder.Services.AddScoped<INotificationService, EmailNotifier>();
+```
+
+ هنا بتقول للـ framework:
+
+> "لما أي Controller أو Class يطلب `INotificationService`، ابعت له نسخة من `EmailNotifier`."
+
+لو غيرت السطر ده إلى:
+
+```csharp
+builder.Services.AddScoped<INotificationService, SMSNotifier>();
+```
+
+يبقى كده التطبيق هيشتغل بـ **SMSNotifier** بدل الـ Email، من **غير ما تعدّل سطر واحد في الكود الأساسي**.
+
+وده هو **مبدأ OCP بالضبط**.
+
+---
+
+## مثال عن استخدامه في ال Controller:
+
+```csharp
+public class HomeController : Controller
+{
+    private readonly INotificationService _notifier;
+
+    public HomeController(INotificationService notifier)
+    {
+        _notifier = notifier;
+    }
+
+    public IActionResult Index()
+    {
+        _notifier.Send("Hello Mahmoud!");
+        return View();
+    }
+}
+```
+
+ هنا:
+
+* ال ASP.NET Core عملت inject ل `INotificationService` تلقائيًا.
+* بناءً على اللي سجلته في `Program.cs`، هيتبعت Email أو SMS.
+
+---
+
+## تلخيص:
+
+| الملف                      | دوره                                                         |
+| -------------------------- | ------------------------------------------------------------ |
+| `Program.cs`               | بيحدد أنهي Implementation يشتغل مع الأنترفيس                 |
+| `Controller` أو `Service`  | بيشتغل مع الأنترفيس فقط، ومش بيهتم أنهي كلاس اللي وراه       |
+| التوسعة                    | ببساطة: تضيف كلاس جديد، وتغير سطر التسجيل في `Program.cs` بس |
+| التعديل على الكود الأساسي؟ | ❌ لا يحصل إطلاقًا، وده هو جوهر OCP                           |
+
+---
+
+##  كأنك بتقول للـ ASP.NET Core:
+
+> "أنا هتعامل دايمًا مع `INotificationService`، وإنت شوف أنهي implementation تبعته، وخليني مرن!"
+
+---
+
+
+طب إزاي نتعامل مع **أكتر من Implementation لنفس Interface** **في نفس الـ Controller أو Service؟**
+
+هنا فيه **3 طرق احترافية** نقدر تستخدمهم علشان نبعت **Email و WhatsApp (أو SMS أو غيرهم)** في نفس الوقت:
+
+---
+
+## الطريقة الاولي : استخدام **عدة Interfaces مختلفة** (سهلة ولذيذة لو عندك عدد محدود وثابت من الأنواع)
+
+### مثال:
+
+```csharp
+public interface IEmailSender
+{
+    void Send(string message);
+}
+
+public interface IWhatsAppSender
+{
+    void Send(string message);
+}
+```
+
+### بعد كدة نعمل ال Implementations:
+
+```csharp
+public class EmailSender : IEmailSender
+{
+    public void Send(string message)
+    {
+        Console.WriteLine("Sending Email: " + message);
+    }
+}
+
+public class WhatsAppSender : IWhatsAppSender
+{
+    public void Send(string message)
+    {
+        Console.WriteLine("Sending WhatsApp: " + message);
+    }
+}
+```
+
+###  نسجّلهم في `Program.cs`:
+
+```csharp
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IWhatsAppSender, WhatsAppSender>();
+```
+
+### وأخيرًا تستخدمهم في الـ Controller:
+
+```csharp
+public class NotificationController : Controller
+{
+    private readonly IEmailSender _emailSender;
+    private readonly IWhatsAppSender _whatsAppSender;
+
+    public NotificationController(IEmailSender emailSender, IWhatsAppSender whatsAppSender)
+    {
+        _emailSender = emailSender;
+        _whatsAppSender = whatsAppSender;
+    }
+
+    public IActionResult NotifyUser()
+    {
+        _emailSender.Send("Welcome Email");
+        _whatsAppSender.Send("WhatsApp Message");
+
+        return Ok();
+    }
+}
+```
+
+ بسيطة وواضحة... لكن مش مرنة لو عندك أنواع كتير من الوسائل.
+
+---
+
+##  الطريقة التانية : استخدام **نفس ال Interface** مع `IEnumerable<INotificationService>`
+
+لو عندك Interface موحّد:
+
+```csharp
+public interface INotificationService
+{
+    string Channel { get; }
+    void Send(string message);
+}
+```
+
+### ونعمل أكتر من Implementation:
+
+```csharp
+public class EmailNotifier : INotificationService
+{
+    public string Channel => "Email";
+
+    public void Send(string message)
+    {
+        Console.WriteLine("Sending Email: " + message);
+    }
+}
+
+public class WhatsAppNotifier : INotificationService
+{
+    public string Channel => "WhatsApp";
+
+    public void Send(string message)
+    {
+        Console.WriteLine("Sending WhatsApp: " + message);
+    }
+}
+```
+
+###  نسجّلهم في `program.cs`:
+
+```csharp
+builder.Services.AddScoped<INotificationService, EmailNotifier>();
+builder.Services.AddScoped<INotificationService, WhatsAppNotifier>();
+```
+
+### ونستخدمهم كـ `IEnumerable<INotificationService>`:
+
+```csharp
+public class NotificationController : Controller
+{
+    private readonly IEnumerable<INotificationService> _notifiers;
+
+    public NotificationController(IEnumerable<INotificationService> notifiers)
+    {
+        _notifiers = notifiers;
+    }
+
+    public IActionResult NotifyUser()
+    {
+        foreach (var notifier in _notifiers)
+        {
+            notifier.Send("Message to user");
+        }
+
+        return Ok();
+    }
+}
+```
+
+ كده هيتبعت Email و WhatsApp تلقائيًا.
+
+---
+
+##  الطريقة التالتة: باستخدام Factory (لو عايز تختار حسب شرط معين)
+
+```csharp
+public interface INotificationFactory
+{
+    INotificationService GetNotifier(string channel);
+}
+```
+
+###  تنفيذ الـ Factory:
+
+```csharp
+public class NotificationFactory : INotificationFactory
+{
+    private readonly IEnumerable<INotificationService> _notifiers;
+
+    public NotificationFactory(IEnumerable<INotificationService> notifiers)
+    {
+        _notifiers = notifiers;
+    }
+
+    public INotificationService GetNotifier(string channel)
+    {
+        return _notifiers.FirstOrDefault(n => n.Channel == channel);
+    }
+}
+```
+
+### نسجّلها:
+
+```csharp
+builder.Services.AddScoped<INotificationService, EmailNotifier>();
+builder.Services.AddScoped<INotificationService, WhatsAppNotifier>();
+builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
+```
+
+### ونستخدمها كده:
+
+```csharp
+public class NotificationController : Controller
+{
+    private readonly INotificationFactory _factory;
+
+    public NotificationController(INotificationFactory factory)
+    {
+        _factory = factory;
+    }
+
+    public IActionResult NotifyUser()
+    {
+        var email = _factory.GetNotifier("Email");
+        var whatsapp = _factory.GetNotifier("WhatsApp");
+
+        email?.Send("Welcome Email");
+        whatsapp?.Send("WhatsApp Message");
+
+        return Ok();
+    }
+}
+```
+
+ كده بتختار الـ Implementation حسب اسم أو شرط runtime.
 
 ---
