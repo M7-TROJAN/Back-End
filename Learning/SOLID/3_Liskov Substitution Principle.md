@@ -1,5 +1,5 @@
 
-# ✅ **L — Liskov Substitution Principle (LSP)**
+# **L — Liskov Substitution Principle (LSP)**
 
 ### "مبدأ استبدال ليسكوف"
 وهو من أهم المبادئ اللي بتمنع الكوارث البرمجية اللي بتحصل لما تشتغل بـ Inheritance من غير ما تكون فاهم كويس.
@@ -217,3 +217,157 @@ public interface IPaymentStrategy
     void Pay(decimal amount);
 }
 ```
+---
+
+
+
+
+** طب هو فين الخرق في مبدأ Liskov Substitution Principle (LSP)** في المثال ده ؟.
+
+---
+```csharp
+public abstract class PaymentMethod
+{
+    public abstract void Pay(decimal amount);
+}
+```
+
+```csharp
+public class Visa : PaymentMethod
+{
+    public override void Pay(decimal amount) => Console.WriteLine("Paid with Visa");
+}
+
+public class Cash : PaymentMethod
+{
+    public override void Pay(decimal amount) => Console.WriteLine("Paid with Cash");
+}
+
+public class Installment : PaymentMethod
+{
+    public override void Pay(decimal amount)
+    {
+        throw new NotSupportedException("Installments not supported yet");
+    }
+}
+```
+---
+
+## نراجع مع بعض تعريف مبدأ LSP تاني:
+
+> **"You should be able to replace an instance of the base class with any of its derived classes without altering the correctness of the program."**
+
+يعني:
+
+> أي كائن من الكلاس الفرعي (مثل `Visa`, `Cash`, `Installment`) المفروض يشتغل **بنفس طريقة الكلاس الأساسي `PaymentMethod`** ومن غير ما يكسر أو يغير سلوك التطبيق أو يرمي Exception غير متوقع.
+
+---
+
+##  إيه اللي حصل في الكود بتاعنا ؟:
+
+أنت عامل كلاس `Installment` بيورّث من `PaymentMethod`.
+
+بس جوّا `Installment`:
+
+```csharp
+public override void Pay(decimal amount)
+{
+    throw new NotSupportedException("Installments not supported yet");
+}
+```
+
+يعني أنت **كأنك بتقول: "أنا ورّثت من الأب، لكن مش قادر أحقق وظيفته".**
+
+---
+
+## طيب فين المشكلة عمليًا؟
+
+تخيل إن عندك كود بيشتغل مع `PaymentMethod`:
+
+```csharp
+public void ProcessPayment(PaymentMethod payment, decimal amount)
+{
+    payment.Pay(amount);
+}
+```
+
+وانت متوقع إنه هيشتغل مع **أي نوع من أنواع الدفع**.
+
+بس لو استدعيت الكود كده:
+
+```csharp
+PaymentMethod payment = new Installment();
+ProcessPayment(payment, 100);
+```
+
+ يحصل إيه؟
+ يرمي Exception لأن `Installment.Pay()` مش مدعومة.
+
+يعني دلوقتي:
+
+* كودك ما بقاش آمن.
+* مبدأ **Polymorphism** اتكسر.
+* المبدأ نفسه (LSP) اتكسر، لأنك ماعدتش تقدر تستبدل `PaymentMethod` بـ `Installment`.
+
+---
+
+## إزاي نحل ده ونلتزم بـ LSP؟
+
+### الحل 1: ما تورّثش من الكلاس لو مش قادر تنفّذ وظيفته بالكامل
+
+لو `Installment` مش قادر ينفّذ `Pay()`، يبقى ماينفعش يكون `PaymentMethod`.
+
+### الحل 2: فصل الوظائف باستخدام Interfaces (وده الأفضل):
+
+```csharp
+public interface IPaymentMethod
+{
+    void Pay(decimal amount);
+}
+```
+
+وبعدين:
+
+```csharp
+public class Visa : IPaymentMethod
+{
+    public void Pay(decimal amount) => Console.WriteLine("Paid with Visa");
+}
+
+public class Cash : IPaymentMethod
+{
+    public void Pay(decimal amount) => Console.WriteLine("Paid with Cash");
+}
+```
+
+وبدل ما تعمل كلاس `Installment` دلوقتي، ممكن تستناه لما تكون جاهز تطبّق `Pay()` فعلاً.
+
+أو تعمل كلاس مستقل مالوش علاقة بالـ Interface:
+
+```csharp
+public class InstallmentProposal
+{
+    public void CreateProposal(decimal amount)
+    {
+        // Generate a plan, but no actual payment
+    }
+}
+```
+
+---
+
+## طيب، لو في المستقبل حبيت تدعم الأقساط؟
+
+وقتها تقدر تخلي `Installment` يورّث من `IPaymentMethod` **بس بعد ما تطبّق `Pay()` بشكل حقيقي.**
+
+---
+
+## خلاصة:
+
+| ❌ الكود الحالي فيه                                                    | ✅ الحل                                     |
+| --------------------------------------------------------------------- | ------------------------------------------ |
+| كائن فرعي (`Installment`) بيكسر وعود الكلاس الأساسي (`PaymentMethod`) | ما تورّثش لو مش هتطبّق الوظيفة بالكامل     |
+| كودك بيرمي استثناء في سيناريو متوقع يشتغل فيه                         | استخدم Interface منفصل لكل سلوك            |
+| خرق واضح لمبدأ LSP                                                    | طبّق مبادئ الـ Interface Segregation + LSP |
+
+---
