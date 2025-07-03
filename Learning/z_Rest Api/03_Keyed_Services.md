@@ -340,10 +340,10 @@ POST /api/notifications?channel=sms&message=Your code is 1234
 
 | نقطة                    | شرح                                                                  |
 | ----------------------- | -------------------------------------------------------------------- |
-| `AddKeyedScoped`        | بتسجل نسخة مختلفة لكل Key                                            |
-| `IKeyedServiceProvider` | بيسمح لك تطلب الـ service حسب الـ Key وقت التشغيل                    |
-| الأداء                  | فعال جدًا لما يكون عندك أكتر من نسخة من service واحدة وعايز تحكم مرن |
-| الآمان                  | لو الـ key غلط → `GetRequiredKeyedService` هيعمل Exception           |
+| `AddKeyedScoped`        | بتسجل نسخة مختلفة لكل كي                                            |
+| `IKeyedServiceProvider` | بيسمح لك تطلب الـ السيلرفيس حسب الـ كي وقت التشغيل                    |
+| الأداء                  | فعال جدًا لما يكون عندك أكتر من نسخة من سيرفيس واحدة وعايز تحكم مرن |
+| الآمان                  | لو الـ كي غلط → `GetRequiredKeyedService` هيعمل اكسبشن           |
 
 ---
 
