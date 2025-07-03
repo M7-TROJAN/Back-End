@@ -1,9 +1,7 @@
 
-من أول **.NET 8** ظهر مفهوم جديد في الـ Dependency Injection اسمه `Keyed Services`:
+من أول **.NET 8** ظهر مفهوم جديد في الـ Dependency Injection اسمه **Keyed Services**:
 
 >  `AddKeyedScoped` / `AddKeyedSingleton` / `AddKeyedTransient`
-
-وده بيُستخدم مع حاجة جديدة اسمها **Keyed Services**.
 
 ---
 
