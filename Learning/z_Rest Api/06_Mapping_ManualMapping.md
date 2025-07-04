@@ -393,3 +393,78 @@ public IActionResult GetAll()
 ## الخلاصة:
 
 > ال Implicit Mapping هو أسلوب أنيق لتحويل الكائنات بين الطبقات تلقائيًا، عن طريق تعريف `implicit operator` جوه الكلاس نفسه. بيخلي الكود أنظف وأقصر، لكن لازم تستخدمه بحكمة، خصوصًا لو فيه منطق معقد أو أنواع متعددة من التحويل.
+---
+
+
+# Explicit Conversion Operator in Csharp
+
+---
+
+ال `Explicit operator` هو طريقة بتحوّل كائن من نوع معين (SourceType) إلى نوع تاني (TargetType) **لكن لازم تطلب التحويل صراحة (explicitly)** باستخدام كاست (Cast) بالشكل ده:
+
+```csharp
+TargetType result = (TargetType)sourceObject;
+```
+
+---
+
+
+## مثال:
+
+### `Poll` Model:
+
+```csharp
+public class Poll
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+
+    // explicit mapping to PollResponse
+    public static explicit operator PollResponse(Poll poll)
+    {
+        return new PollResponse
+        {
+            Id = poll.Id,
+            Title = poll.Title,
+            Description = poll.Description
+        };
+    }
+}
+```
+
+### `PollResponse` DTO:
+
+```csharp
+public class PollResponse
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+}
+```
+
+---
+
+## 🧪 استخدام التحويل الصريح (Explicit Conversion):
+
+```csharp
+Poll poll = _pollService.Get(id);
+
+PollResponse response = (PollResponse)poll; // لازم تستخدم Cast
+```
+
+---
+
+## (Syntax):
+
+```csharp
+public static explicit operator TargetType(SourceType value)
+{
+    return new TargetType
+    {
+        Property1 = value.Property1,
+        Property2 = value.Property2
+    };
+}
+```
