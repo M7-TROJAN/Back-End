@@ -264,7 +264,134 @@ public IActionResult Get(int id)
 
 ---
 
-## 🧩 ملخص الجدول:
+
+## استقبال Arrays باستخدام `[FromQuery]`
+
+### الفكرة:
+
+ال ASP.NET Core بيسمحلك تستقبل **مجموعة من القيم** (Array أو List) من الـ Query String، بنفس اسم البراميتر.
+
+---
+
+### مثال:
+
+```csharp
+[HttpGet("filter")]
+public IActionResult FilterPolls([FromQuery] List<int> ids)
+{
+    return Ok($"Received Poll IDs: {string.Join(", ", ids)}");
+}
+```
+
+Request:
+
+```
+GET /api/polls/filter?ids=1&ids=2&ids=3
+```
+
+النتيجة:
+
+```json
+"Received Poll IDs: 1, 2, 3"
+```
+
+ **ليه ده بيشتغل؟**
+لأن ال ASP.NET Core من جواه internally بيـ **bind** القيم المتكررة في الكويري لنفس الاسم (`ids=1&ids=2&ids=3`) ويجمعها في List.
+
+---
+
+### أنواع ممكن نستخدمها:
+
+* ال `List<string>`
+* ال `List<int>`
+* ال `int[]`
+* ال `string[]`
+
+كل دول شغالين بنفس الطريقة.
+
+---
+
+## استقبال أكثر من براميتر بـ `[FromQuery]`
+
+أنت مش لازم تكتب `[FromQuery]` على كل باراميتر، ASP.NET Core هيـ infer تلقائيًا من الكويري، لكن نكتبه عشان يكون واضح.
+
+---
+
+### مثال:
+
+```csharp
+[HttpGet("search")]
+public IActionResult Search(
+    [FromQuery] string name,
+    [FromQuery] int age)
+{
+    return Ok($"Name: {name}, Age: {age}");
+}
+```
+
+Request:
+
+```
+GET /api/polls/search?name=Mahmoud&age=26
+```
+
+النتيجة:
+
+```json
+"Name: Mahmoud, Age: 26"
+```
+
+---
+
+### مثال واقعي أكتر (Combo بين array و single params):
+
+```csharp
+[HttpGet("advanced-search")]
+public IActionResult AdvancedSearch(
+    [FromQuery] string keyword,
+    [FromQuery] List<int> categoryIds,
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
+{
+    return Ok(new
+    {
+        Keyword = keyword,
+        Categories = categoryIds,
+        Page = page,
+        PageSize = pageSize
+    });
+}
+```
+
+Request:
+
+```
+GET /api/polls/advanced-search?keyword=tech&categoryIds=1&categoryIds=4&categoryIds=7&page=2&pageSize=5
+```
+
+النتيجة:
+
+```json
+{
+  "Keyword": "tech",
+  "Categories": [1, 4, 7],
+  "Page": 2,
+  "PageSize": 5
+}
+```
+
+---
+
+## توضيح مهم:
+
+في الحالة دي ASP.NET Core بيربط كل اسم باراميتر بالاسم اللي جاي من الكويري، ويحوّله تلقائيًا للنوع المطلوب (بـ `ModelBinder`) باستخدام built-in converters.
+
+لو فيه array → بيستخدم repeated keys.
+لو فيه single value → بياخد أول قيمة مطابقة.
+
+---
+
+## ملخص:
 
 | المصدر         | Attribute      | النوع المناسب          | مثال على الإرسال                       |
 | -------------- | -------------- | ---------------------- | -------------------------------------- |
