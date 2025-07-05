@@ -65,7 +65,7 @@ UserDto dto = user.Adapt<UserDto>(); // ready to use
 
 ---
 
-## Mapping داخل الـ Controller أو Service:
+## عمل Mapping داخل الـ Controller أو Service:
 
 ```csharp
 [HttpPost]
