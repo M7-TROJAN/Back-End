@@ -88,7 +88,20 @@ public IActionResult Create([FromBody] CreateUserRequest request)
 ### 1. في `Program.cs`:
 
 ```csharp
-builder.Services.AddMapster();
+using Mapster;
+using MapsterMapper;
+using System.Reflection;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Scan configuration classes that implement IRegister
+var config = TypeAdapterConfig.GlobalSettings;
+config.Scan(Assembly.GetExecutingAssembly());
+
+// Register IMapper as Singleton
+var mapper = new Mapper(config);
+builder.Services.AddSingleton<IMapper>(mapper);
+
 ```
 
 ### 2. تقدر تستخدم الـ `IMapper` Interface في أي مكان:
@@ -205,7 +218,7 @@ public class User { ... }
 ## Create Custom Mapper Profile (في مشاريع كبيرة)
 
 ```csharp
-public class MappingConfigurations : IRegister
+public class MappingRegistration : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
@@ -218,10 +231,51 @@ public class MappingConfigurations : IRegister
 وسجلها تلقائيًا:
 
 ```csharp
-builder.Services.AddMapster(typeof(MappingConfigurations).Assembly);
+// Scan configuration classes that implement IRegister
+var config = TypeAdapterConfig.GlobalSettings;
+config.Scan(Assembly.GetExecutingAssembly());
+
+// Register IMapper as Singleton
+var mapper = new Mapper(config);
+builder.Services.AddSingleton<IMapper>(mapper);
 ```
 
 ---
+
+## complex Example
+```csharp
+public class Student
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string MiddelName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public DateTime? DateOfBirth { get; set; }
+}
+
+public class StudentResponse
+{
+    public int Id { get; set; }
+    public string FullName { get; set; } = string.Empty;
+    public int? Age { get; set; }
+}
+```
+
+And in MappingRegistration:
+
+```csharp
+public class MappingRegistration : IRegister
+{
+    public void Register(TypeAdapterConfig config)
+    {
+        // Map CreatePollRequest to Poll
+        config.NewConfig<Student, StudentResponse>()
+            .Map(dest => dest.FullName, src => $"{src.FirstName} {src.MiddelName} {src.LastName}")
+            .Map(dest => dest.Age, src => DateTime.Now.Year - src.DateOfBirth.Value.Year,
+                srcCondition => srcCondition.DateOfBirth.HasValue);
+    }
+}
+```
 
 ## 📦 Summary
 
