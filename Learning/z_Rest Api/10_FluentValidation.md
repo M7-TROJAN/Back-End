@@ -189,7 +189,7 @@ RuleForEach(x => x.Questions)
 
 ---
 
-##  إمتى بنحتاج `RuleForEach`؟
+##  إمتى بنحتاج ال `Validate child collection` و `RuleForEach`؟
 
 بنحتاج `RuleForEach` لما يكون عندنا **Property عبارة عن Collection (قائمة)** جوا الـ DTO أو الـ Model، وكل عنصر جوا الـ Collection دي محتاج **Validation خاص بيه**.
 
