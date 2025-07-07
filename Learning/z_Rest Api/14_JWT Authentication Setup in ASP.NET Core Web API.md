@@ -1,6 +1,6 @@
-## ✅ JWT Authentication Setup in ASP.NET Core Web API
+## JWT Authentication Setup in ASP.NET Core Web API
 
-### 📌 Goal
+### Goal
 
 Implement a secure login system using **JWT (JSON Web Token)** where:
 
@@ -13,7 +13,7 @@ Implement a secure login system using **JWT (JSON Web Token)** where:
 
 ---
 
-### 🛠 Prerequisites
+### Prerequisites
 
 Install NuGet package:
 
@@ -29,7 +29,7 @@ Or use `.csproj`:
 
 ---
 
-## 1️⃣ Define `LoginRequest` and `AuthResponse`
+## Define `LoginRequest` and `AuthResponse`
 
 ```csharp
 public record LoginRequest(
@@ -55,7 +55,7 @@ public record AuthResponse(
 
 ---
 
-## 2️⃣ Create the `IJwtProvider` Interface
+## Create the `IJwtProvider` Interface
 
 ```csharp
 public interface IJwtProvider
@@ -68,7 +68,7 @@ public interface IJwtProvider
 
 ---
 
-## 3️⃣ Implement `JwtProvider`
+## Implement `JwtProvider`
 
 ```csharp
 public class JwtProvider : IJwtProvider
@@ -105,7 +105,7 @@ public class JwtProvider : IJwtProvider
 
 ---
 
-## 4️⃣ Register Identity and JWT in `Program.cs`
+## Register Identity and JWT in `Program.cs`
 
 ```csharp
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
@@ -136,7 +136,7 @@ builder.Services.AddAuthentication(options =>
 
 ---
 
-## 5️⃣ Create `IAuthService`
+## Create `IAuthService`
 
 ```csharp
 public interface IAuthService
@@ -149,7 +149,7 @@ public interface IAuthService
 
 ---
 
-## 6️⃣ Implement `AuthService`
+## Implement `AuthService`
 
 ```csharp
 public class AuthService(UserManager<ApplicationUser> userManager, IJwtProvider jwtProvider) : IAuthService
@@ -181,7 +181,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, IJwtProvider 
 
 ---
 
-## 7️⃣ Register AuthService in `Program.cs`
+## Register AuthService in `Program.cs`
 
 ```csharp
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -189,7 +189,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 ---
 
-## 8️⃣ Create `AuthController`
+## Create `AuthController`
 
 ```csharp
 [Route("[controller]")]
@@ -219,7 +219,7 @@ public class AuthController(IAuthService authService) : ControllerBase
 
 ---
 
-## ✅ Testing
+## Testing
 
 * Open Postman.
 * Make a POST request to: `http://localhost:xxxx/auth`
@@ -232,7 +232,7 @@ public class AuthController(IAuthService authService) : ControllerBase
 }
 ```
 
-### 🔄 Response (Success)
+### Response (Success)
 
 ```json
 {
@@ -258,5 +258,3 @@ public class AuthController(IAuthService authService) : ControllerBase
 | 5. Program.cs     | Configure DI + Auth schemes    |
 
 ---
-
-لو مستعد دلوقتي نكمل على ازاي نستخدم الـ JWT دي في حماية الـ Endpoints (Authorization) قولي نبدأ ✌️
