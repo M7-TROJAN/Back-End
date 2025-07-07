@@ -1,4 +1,4 @@
-# ✅ Microsoft Identity with Minimal APIs – From .NET 8+
+# Microsoft Identity with Minimal APIs – From .NET 8+
 
 الحوار ده ظهر بداية من `.Net 8`
 
