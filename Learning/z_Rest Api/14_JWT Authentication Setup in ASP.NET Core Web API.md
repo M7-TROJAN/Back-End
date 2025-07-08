@@ -275,6 +275,127 @@ builder.Services.AddAuthentication(options =>
 
 ---
 
+## أولاً: تسجيل `JwtProvider` كسيرفيس
+
+```csharp
+builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
+```
+
+### طب السطر ده معناه إيه؟
+
+* بنقول للـ **Dependency Injection container** إنه لما حد يطلب `IJwtProvider`، إديله نسخة من `JwtProvider`.
+* ال `AddSingleton` معناها: نسخة واحدة بس (Singleton) هتتعمل وتُعاد استخدامها طول عمر التطبيق.
+
+### ليه نستخدم Singleton هنا؟
+
+* لأن `JwtProvider`:
+  * هو **Stateless** (مش بيحتفظ بحالة).
+  * مفيهوش `DbContext` أو حاجة بتحتاج إدارة عمر.
+  * ممكن استخدامه آمن من كذا مكان بدون تعارض.
+
+---
+
+##  ثانياً: تفعيل Microsoft Identity
+
+```csharp
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+```
+
+### بنعمل إيه هنا؟
+
+* بنقول للـ ASP.NET Core نستخدم **نظام الهوية (Identity)** لإدارة المستخدمين (Users) والأدوار (Roles).
+* ال `ApplicationUser`: هو الكلاس اللي انت عامله، وبيمثّل المستخدم وبيحتوي على خصائص إضافية زي `FirstName`.
+* ال `IdentityRole`: هو ال default class الي عملاه مايكروسوفت وبيمثّل ال Roles (زي Admin, User) وتقدر تعمل واحد غيره وتورث منه زي ما عملنا مع ال `IdentityUser` وخلينا `ApplicationUser` يورث منه وضيفنا علي الخصائص بتاعته .
+
+* ال `AddEntityFrameworkStores<ApplicationDbContext>()`: يعني خزن البيانات دي في قاعدة البيانات باستخدام `ApplicationDbContext`.
+
+---
+
+## ثالثاً: إعداد Authentication Scheme
+
+```csharp
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+```
+
+### بنعمل إيه هنا؟
+
+* بنقول للتطبيق:
+
+  *  الطريقة اللي هيتحقق بيها من الهوية (Authentication) هي **JWT**.
+  *  الطريقة اللي هيتحدى بيها المستخدم غير المصرّح له هي **JWT برضو**.
+
+> ببساطة: لما حد يحاول يدخل على Endpoint محمية، السيستم هيشوف إذا كان معاه JWT، ويتحقق منه بناءً على الإعدادات اللي هنعملها تحت.
+
+---
+
+##  رابعاً: إعداد JWT Bearer Options
+
+```csharp
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+```
+
+* ال `SaveToken = true`: بيخزن التوكن داخل الـ HttpContext لو احتجته لاحقًا.
+
+  * مش ضروري قوي في Web APIs، بس مفيش ضرر من تفعيله.
+
+---
+
+## إعداد `TokenValidationParameters`
+
+```csharp
+options.TokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true,
+```
+
+| الخيار                     | معناه                                                                  |
+| -------------------------- | ---------------------------------------------------------------------- |
+| `ValidateIssuer`           | اتحقق إن الـ JWT جه من مصدر موثوق (مثلاً تطبيقك نفسه).                 |
+| `ValidateAudience`         | اتحقق إن الـ JWT موجه فعلاً للـ Audience الصح (مثلاً الويب أو موبايل). |
+| `ValidateLifetime`         | اتحقق إن التوكن منتهيش.                                                |
+| `ValidateIssuerSigningKey` | اتحقق إن التوقيع على التوكن تم بالمفتاح الصح.                          |
+
+---
+
+## إعداد القيم الفعلية للتحقق
+
+```csharp
+ValidIssuer = "SurveyBasketApp",
+ValidAudience = "SurveyBasketApp users",
+IssuerSigningKey = new SymmetricSecurityKey(
+    Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIepIILOVJEjAcB")
+)
+```
+
+| العنصر             | وظيفته                                                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `ValidIssuer`      | هو اسم الـ "مصدر" اللي أصدر التوكن. لازم يطابق القيمة اللي اتحطت وقت إنشاء التوكن في `JwtSecurityToken`.              |
+| `ValidAudience`    | هو الجمهور المستهدف. نفس الفكرة. لازم يطابق القيمة اللي في التوكن.                                                    |
+| `IssuerSigningKey` | هو نفس المفتاح اللي استخدمته في التوقيع وقت إنشاء التوكن (`JwtProvider`). ولازم يكون **نفسه بالظبط** عشان يتم التحقق. |
+
+ لو أي من القيم دي مش متطابقة، التوكن هيتعتبر **غير صالح**.
+
+---
+
+| الخطوة                           | معناها                                                |
+| -------------------------------- | ----------------------------------------------------- |
+| 1️⃣ `AddSingleton<IJwtProvider>` | تسجّل مصنع التوكنات                                   |
+| 2️⃣ `AddIdentity<>()`            | إعداد الهوية وإدارة المستخدمين                        |
+| 3️⃣ `AddAuthentication()`        | نحدد إننا هنستخدم JWT كطريقة تحقق                     |
+| 4️⃣ `AddJwtBearer()`             | نحدد إعدادات تحقق JWT: من أصدره؟ لمن؟ ومفتاح التوقيع؟ |
+
+---
+
 ## Create `IAuthService`
 
 ```csharp
