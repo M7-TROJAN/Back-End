@@ -105,6 +105,145 @@ public class JwtProvider : IJwtProvider
 
 ---
 
+###  إيه الهدف من الكلاس ده؟
+```csharp
+public class JwtProvider : IJwtProvider
+```
+
+الكلاس ده مسؤول عن **توليد (Generate) الـ JWT Token**.
+هو اللي بياخد بيانات اليوزر (المستخدم) و**يبني منها JSON Web Token** يحتوي على معلومات المستخدم، ويوقّع التوكن عشان يبقى موثوق.
+
+### ليه بنستخدم Interface `IJwtProvider`؟
+
+عشان نقدر نعمل Dependency Injection ونفصل ما بين منطق توليد التوكن (implementation) وبين استخدامه في الخدمات.
+فبالتالي، `IJwtProvider` هو **Contract (اتفاق)**، و`JwtProvider` هو **اللي بيحقق الاتفاق ده**.
+
+---
+
+## Method: `GenerateToken`
+
+```csharp
+public (string token, int expiresIn) GenerateToken(ApplicationUser user)
+```
+
+* بيستقبل باراماتر الي هو `ApplicationUser user`: ده هو المستخدم اللي اتعمله login.
+* بيرجع Tuple:
+  * ال `token`: النص المشفّر الخاص بالـ JWT.
+  * ال `expiresIn`: عدد الثواني اللي التوكن هيبقى صالح خلالها.
+
+---
+
+## Claims
+
+```csharp
+Claim[] claims =
+[
+    new(JwtRegisteredClaimNames.Sub, user.Id),
+    new(JwtRegisteredClaimNames.Email, user.Email!),
+    new(JwtRegisteredClaimNames.GivenName, user.FirstName),
+    new(JwtRegisteredClaimNames.FamilyName, user.LastName),
+    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+];
+```
+
+### يعني إيه Claim؟
+
+الـ **Claim** هو معلومة بتحطها جوا الـ Token بتوضح مين المستخدم وإيه بياناته.
+الـ JWT هو عبارة عن Header + Payload + Signature.
+الـ Payload ده بقي هو المكان اللي بنحط فيه الـ Claims دي.
+
+
+| Claim Type      | معناها             | محتواها                     |
+| --------------- | ------------------ | --------------------------- |
+| `Sub` (Subject) | رقم تعريف المستخدم | `user.Id`                   |
+| `Email`         | الإيميل            | `user.Email!`               |
+| `GivenName`     | الاسم الأول        | `user.FirstName`            |
+| `FamilyName`    | الاسم الأخير       | `user.LastName`             |
+| `Jti` (JWT ID)  | رقم مميز للتوكن    | `Guid.NewGuid().ToString()` |
+
+> مهم جدًا تحط `Jti` عشان تبقى كل توكن ليه بصمة مميزة. ده ممكن تستخدمه في blacklisting أو منع التكرار.
+
+---
+
+## إنشاء مفتاح التوقيع
+
+```csharp
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIepIILOVJEjAcB"));
+```
+
+* ده هو المفتاح السري اللي **بنستخدمه عشان نوقع التوكن**.
+* ال `SymmetricSecurityKey`: يعني نفس المفتاح اللي عملنا بيه التوقيع، هو اللي هيتم التحقق بيه وقت الاستقبال (Symmetric Key Encryption).
+* بنستخدم `Encoding.UTF8.GetBytes(...)` عشان نحول النص لمصفوفة بايتس.
+
+ ملاحظة:
+
+> المفتاح ده لازم يكون طويل ومعقد، ومتخزن في مكان آمن زي `appsettings.json` أو Secret Manager أو Azure Key Vault.
+
+---
+
+## Signing Credentials
+
+```csharp
+var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+```
+
+* هنا بنقول "أنا هوقّع التوكن باستخدام المفتاح `key` وبالخوارزمية `HMAC SHA256`".
+* ده بيمنع أي حد من تعديل محتوى التوكن، لأنه لازم يكون التوقيع صحيح.
+
+---
+
+## زمن انتهاء التوكن
+
+```csharp
+var expiresIn = 30; // in minutes
+```
+
+* التوكن هينتهي بعد 30 دقيقة.
+
+---
+
+## إنشاء التوكن نفسه
+
+```csharp
+var token = new JwtSecurityToken(
+    issuer: "SurveyBasketApp",
+    audience: "SurveyBasketApp users",
+    claims: claims,
+    expires: DateTime.UtcNow.AddMinutes(expiresIn),
+    signingCredentials: credentials
+);
+```
+
+### كل بارامتر بيعمل إيه؟
+
+| اسم البارامتر        | وظيفته                                                  |
+| -------------------- | ------------------------------------------------------- |
+| `issuer`             | الجهة اللي أصدرت التوكن. (مثلاً اسم الأبلكيشن بتاعك)    |
+| `audience`           | مين المفروض يستخدم التوكن ده؟ (مثلاً الويب أو الموبايل) |
+| `claims`             | البيانات الخاصة بالمستخدم اللي هتكون جوا التوكن         |
+| `expires`            | وقت انتهاء صلاحية التوكن                                |
+| `signingCredentials` | التوقيع الرقمي لضمان سلامة التوكن                       |
+
+---
+
+## تحويل التوكن لنص
+
+```csharp
+return (new JwtSecurityTokenHandler().WriteToken(token), expiresIn * 60);
+```
+
+* ال `WriteToken(token)` بيرجع string يمثل الـ JWT.
+* ال `expiresIn * 60`: بنحول من دقائق لثواني.
+
+---
+
+* ال `JwtProvider` هو المصنع (factory) اللي بيبني التوكن.
+* بيأخد معلومات المستخدم ← يركب جواها claims ← يوقع التوكن ← يرجعه كنص + زمن انتهاء.
+* بنعتمد عليه في أي خدمة عاوزة تعمل توليد للتوكن.
+
+
+---
+
 ## Register Identity and JWT in `Program.cs`
 
 ```csharp
