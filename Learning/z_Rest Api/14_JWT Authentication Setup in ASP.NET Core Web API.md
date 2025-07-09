@@ -192,6 +192,119 @@ var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 ---
 
+## تعالي نشوف الكلاسات دي بتاعت ايه `SymmetricSecurityKey` و `SigningCredentials`
+
+## أولاً: `SymmetricSecurityKey`
+```csharp
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIepIILOVJEjAcB"));
+```
+
+###  إيه هو الكلاس ده؟
+
+ال `SymmetricSecurityKey` هو كلاس موجود في مكتبة:
+
+```
+Microsoft.IdentityModel.Tokens
+```
+
+وده النوع اللي بنستخدمه لما نشتغل بـ **تشفير متماثل (Symmetric Encryption)**، يعني:
+
+> **نفس المفتاح اللي بيعمل ال `Signature` بتاعت التوكن ← هو نفسه اللي بيتم استخدامه للتحقق من صحة التوكن.**
+
+---
+
+### ليه استخدمناه؟
+
+لأننا لما بنبني JWT Token، لازم يكون عليه توقيع رقمي (Digital Signature)، علشان اللي يستقبله يقدر يتأكد إنه:
+
+* **مش اتعدّل.**
+* **صادر من جهة موثوقة (إحنا).**
+
+وعلشان نوقّع التوكن ده، بنحتاج مفتاح سري ← وده هو اللي بيمثله `SymmetricSecurityKey`.
+
+---
+
+### مكونات السطر:
+
+```csharp
+Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIepIILOVJEjAcB")
+```
+
+ده بيحوّل الـ string اللي هو المفتاح `"J7MfAb4..."` إلى `byte[]`، لأن الكلاس `SymmetricSecurityKey` بيشتغل على الـ bytes، مش string.
+
+---
+
+### ملاحظات مهمة:
+
+1. المفتاح لازم يكون **طويل ومعقّد** (على الأقل 32 character).
+2. ماينفعش تسيبه كده في الكود — الأفضل تحطه في:
+
+   * `appsettings.json`
+   * Secret Manager
+   * Azure Key Vault (in production)
+
+---
+
+## ثانياً: `SigningCredentials`
+
+```csharp
+var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+```
+
+### إيه هو `SigningCredentials`؟
+
+ده كائن بيحتوي على **معلومات التوقيع (Signing Info)** اللي هنستخدمها في التوكن.
+
+يعني هو اللي بيقول:
+
+* **هستخدم أي مفتاح؟**
+* **وهستخدم أي خوارزمية توقيع؟**
+
+---
+
+### البارامترز اللي بياخدها:
+
+#### `key`:
+
+المفتاح اللي هنوقع بيه التوكن — وده اللي عملناه بالسطر اللي قبله باستخدام `SymmetricSecurityKey`.
+
+#### `SecurityAlgorithms.HmacSha256`:
+
+دي اسم الخوارزمية اللي هنستخدمها للتوقيع.
+
+> ال `HmacSha256` بتتقسم لحاجتين:
+>
+> *ا **HMAC**: خوارزمية توقيع تعتمد على مفتاح سري.
+> * ا**SHA256**: خوارزمية الـ hashing المستخدمة.
+
+ودي واحدة من أكتر الخوارزميات استخدامًا مع JWT بسبب أمانها وسرعتها.
+
+---
+
+## خلاصة الاثنين مع بعض:
+
+| عنصر                   | المعنى                                     | الاستخدام                           |
+| ---------------------- | ------------------------------------------ | ----------------------------------- |
+| `SymmetricSecurityKey` | المفتاح السري المستخدم في التوقيع          | بيتم توليده من string (طويل ومعقّد) |
+| `SigningCredentials`   | بيانات التوقيع: مين المفتاح؟ وأي خوارزمية؟ | بيتم تمريرها للـ JWT أثناء الإنشاء  |
+
+---
+
+## مثال عملي تاني:
+
+
+```csharp
+var keyAsString = "MySuperSecretKeyThatShouldBeInConfig";
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyAsString));
+
+var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+// credentials.SigningKey => the key
+// credentials.Algorithm => "HS256"
+```
+
+---
+
 ## زمن انتهاء التوكن
 
 ```csharp
