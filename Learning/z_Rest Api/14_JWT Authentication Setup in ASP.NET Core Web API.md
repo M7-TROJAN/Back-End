@@ -446,6 +446,17 @@ builder.Services.AddAuthentication(options =>
 
 ---
 
+### من الاخر الجزء ده 
+```csharp
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+```
+* ببساطه علشان لما نيجي نستخدم الاتربيوت الخاص ب ال  `Authorization` مع ال `controller` او ال `Action` منضطرش في كل مرة نقوله ان احنا بنستخدم ال `Bearer` او ان ال tokens بتاعتنا نوعها `Bearer` ف انا هنا خلاص عرفته اني ال default بتاعي هو `Bearer` 
+---
+
 ##  رابعاً: إعداد JWT Bearer Options
 
 ```csharp
