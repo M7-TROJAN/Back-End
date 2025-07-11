@@ -174,6 +174,7 @@ var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIep
 * ده هو المفتاح السري اللي **بنستخدمه عشان نوقع التوكن**.
 * ال `SymmetricSecurityKey`: يعني نفس المفتاح اللي عملنا بيه التوقيع، هو اللي هيتم التحقق بيه وقت الاستقبال (Symmetric Key Encryption).
 * بنستخدم `Encoding.UTF8.GetBytes(...)` عشان نحول النص لمصفوفة بايتس.
+* ال Key ده في مواقع كتير بتعمله Generate وبيكون نوعه `SHA256` ممكن تروح علي سايت زي ده مثلا `https://acte.ltd/utils/randomkeygen` وتخليه يعمل Generate وتاخد منه `Encryption key 256`
 
  ملاحظة:
 
