@@ -1,53 +1,32 @@
-## Options pattern
+## Options Pattern
 
-The options pattern uses classes to provide strongly typed access to groups of related settings. 
-When configuration settings are isolated by scenario into separate classes, the app adheres to two important software engineering principles
+The Options Pattern uses classes to provide strongly typed access to groups of related settings.  
+When configuration settings are isolated by scenario into separate classes, the app adheres to two important software engineering principles:
 
-## principles:
+## Principles
 
-1. Encapsulation:
-Classes that depend on configuration settings depend only on the configuration
-settings that they use.
+1. **Encapsulation**  
+   Classes that depend on configuration settings depend only on the configuration settings that they use.
 
-2. Separation of Concerns:
-Settings for different parts of the app aren't dependent or coupled to one another.
+2. **Separation of Concerns**  
+   Settings for different parts of the app aren't dependent or coupled to one another.
 
+---
 
 ## Options Class
 
-> Must be non-abstract.
+- Must be **non-abstract**.
+- Has public **read-write properties** of types that have corresponding items in configuration files.
 
-> Has public read-write properties of the type that have
-corresponding items in config are bound.`
+---
 
-## Options Interfaces:
+## Options Interfaces
 
-### 1- IOptions<TOptions>
-- Reading configurations once with
-application start
-
-- Registered as a Singleton
-
-- Can be injected into any service
-lifetime
-
-### 2- IOptionsSnapshot<TOptions>
-- Reading configurations with each
-request
-
-- Registered as a Scoped
-
-- Can't be injected into a Singleten
-service
-
-### 3- IOptionsMonitor<TOptions>
-- Reading configurations with each file
-update
-
-- Registered as a Singleton
-
-- Can be injected into any service
-lifetime
+| Interface                  | Reading Behavior                      | Registration Lifetime | Can Be Injected Into       |
+|---------------------------|----------------------------------------|------------------------|-----------------------------|
+| `IOptions<TOptions>`      | Once, at **application start**         | Singleton              | Any service lifetime        |
+| `IOptionsSnapshot<TOptions>` | On **each request**                    | Scoped                 | **Not** into Singleton      |
+| `IOptionsMonitor<TOptions>`  | On **each config file update**        | Singleton              | Any service lifetime        |
 
 ---
 
