@@ -1,5 +1,5 @@
 
-> **Options Pattern Validations**
+> ال **Options Pattern Validations**
 > هو ضمان إن الإعدادات اللي جاية من `appsettings.json` (أو أي مصدر) تكون سليمة قبل ما الابليكيشن يشتغل.
 
 ---
