@@ -23,11 +23,11 @@
 
 ## 5️⃣ خطوات عملية الدمج (Integration Steps)
 
-ا 1. **Sign up with Payment Provider** (Stripe, PayPal, Paymob, Fawry).
-ا 2. **Get API Keys** (Public Key, Secret Key).
-ا 3. **Test Environment (Sandbox)**: الأول بتجرب على بيئة تجريبية.
-ا 4. **Frontend**: تبني الفورم أو تدمج الـ SDK.
-ا 5. **Backend**:
+1. **Sign up with Payment Provider** (Stripe, PayPal, Paymob, Fawry).
+2. **Get API Keys** (Public Key, Secret Key).
+3. **Test Environment (Sandbox)**: الأول بتجرب على بيئة تجريبية.
+4. **Frontend**: تبني الفورم أو تدمج الـ SDK.
+5. **Backend**:
 
    * تبعت بيانات العملية للـ Gateway API.
    * تستقبل الـ response (approved/declined).
