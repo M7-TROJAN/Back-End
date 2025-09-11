@@ -272,6 +272,101 @@ bool VerifySignature(string payload, string signature, string secret)
 > "أنا بعمل Verify للـ Webhook إما عن طريق Signature (HMAC using secret key) أو Token أو IP Whitelist حسب اللي بيوفره الـ Gateway. كده أتأكد إن الريكوست جاي من مصدر رسمي مش حد بيعمل Fake POST."
 
 ---
+
+تمام، ركز معايا 👌
+
+الـ **Webhook** هو في الآخر مجرد **HTTP Request (عادة POST)** بيجيلك من الـ Payment Gateway على Endpoint إنت عامله عندك في الـ API.
+
+### 1- شكل الـ Request بيكون إزاي؟
+
+* بيجيلك **POST Request** على الـ URL اللي إنت مسجله عند الـ Gateway (مثلاً: `https://myapp.com/api/webhooks/payment`).
+* الـ Body بيكون غالبًا **JSON** فيه تفاصيل الحدث (Event) اللي حصل، مثال:
+
+```json
+{
+  "id": "evt_12345",
+  "type": "payment_success",
+  "data": {
+    "transactionId": "tx_98765",
+    "amount": 5000,
+    "currency": "USD",
+    "status": "succeeded",
+    "customerEmail": "user@example.com"
+  }
+}
+```
+
+ممكن النوع يكون مختلف حسب الـ Gateway: زي `payment_failed`, `refund_issued`, إلخ.
+
+---
+
+### 2- إزاي أتأكد إن الريكويست ده جاي من المصدر الصح مش حد بيهكرني؟
+
+فيه طرق مختلفة والـ Gateways عادة بتوفر واحدة أو أكتر:
+
+#### ✅ أ- **Secret Key / Signature Verification** (الأشهر):
+
+* مع كل Webhook، الـ Gateway بيبعت Header فيه توقيع (Signature).
+* إنت بتاخد الـ Body زي ما هو + Secret Key (اللي عندك) وتعمل Hash بنفس الخوارزمية (عادة HMAC-SHA256).
+* لو التوقيع اللي إنت طلعته = اللي في الـ Header → يبقى الريكويست أصلي.
+* مثال Header من Stripe:
+
+  ```
+  Stripe-Signature: t=1234567890,v1=abcdef123456
+  ```
+
+#### ✅ ب- **IP Whitelisting**:
+
+* بعض Gateways بتقولك: "الـ Webhook هيجيلك من IP ranges معينة"، فإنت تتحقق إن الـ Request جاي من IP ضمن اللي قايلين عليه.
+
+#### ✅ ج- **Basic Authentication / API Key in Header**:
+
+* أحيانًا بيبعتوا مع كل Webhook API Key أو Token في الـ Header وإنت تتحقق إنه صحيح.
+
+---
+
+### 3- إزاي تتعامل عمليًا؟
+
+* تعمل Controller أو Endpoint مخصص زي:
+
+```csharp
+[ApiController]
+[Route("api/webhooks")]
+public class WebhookController : ControllerBase
+{
+    [HttpPost("payment")]
+    public IActionResult HandlePaymentWebhook([FromBody] JsonElement payload)
+    {
+        // Step 1: Verify Signature (depends on gateway)
+        var signature = Request.Headers["X-Signature"];
+        bool isValid = VerifySignature(payload, signature);
+
+        if (!isValid)
+            return Unauthorized();
+
+        // Step 2: Process Event
+        var eventType = payload.GetProperty("type").GetString();
+        if (eventType == "payment_success")
+        {
+            var transactionId = payload.GetProperty("data").GetProperty("transactionId").GetString();
+            // Update Order status in DB
+        }
+
+        // Step 3: Return 200 OK عشان الـ Gateway يعرف إنك استقبلت الحدث
+        return Ok();
+    }
+}
+```
+
+---
+
+### 4- ليه Webhook مهم؟
+
+لأنه بيحل المشكلة اللي إنت سألت عنها قبل كده:
+لو النت قطع والمستخدم ما وصلش لـ Order Confirmation Page → الـ Webhook هيوصلك و تعرف إن الدفع تم وتحدث قاعدة البيانات حتى لو العميل مشافش.
+
+---
+
 ## 1️⃣ يعني إيه Callback / Webhook؟
 
 * ال **Callback** = عملية استدعاء بيرجعلك فيها السيرفر بتاع بوابة الدفع بالنتيجة (نجح الدفع / فشل / ملغي).
