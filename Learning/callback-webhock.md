@@ -172,6 +172,105 @@
 🔹 *إيه فوايد Webhooks؟*
 → تعرف تحديث حالة الدفع (success/fail/refund) من غير ما تعتمد بس على response أولي.
 
+
+---
+
+## 🟢 أولاً: الريكوست بيجي إزاي؟
+
+* الـ **Webhook** في الأساس مجرد **HTTP POST Request** الجيتواي بيبعتلك على URL إنت محدده.
+* بيبعت في الـ Body بتاع الريكوست **JSON Payload** فيه تفاصيل الحدث (Event).
+
+### مثال عام (JSON جاي من Payment Gateway):
+
+```json
+{
+  "event": "payment_succeeded",
+  "transaction_id": "tx_123456789",
+  "order_id": "ord_987654321",
+  "amount": 5000,
+  "currency": "EGP",
+  "status": "succeeded",
+  "timestamp": "2025-09-11T09:30:00Z"
+}
+```
+
+* `event` → نوع الحدث (نجاح، فشل، Pending، Refund…).
+* `transaction_id` → رقم العملية عند الـ Gateway.
+* `order_id` → الأوردر عندك اللي اتربط بيها.
+* `status` → الحالة النهائية.
+
+إنت من ناحيتك تستقبل ده في **Endpoint** عندك (مثلاً `/api/payment/webhook`).
+
+---
+
+## 🟢 ثانياً: إزاي تتأكد إن الريكوست فعلاً من الـ Gateway مش Fake؟
+
+أي Payment Gateway محترم بيديك وسيلة تحقق، غالبًا واحدة من دول:
+
+### 1. **Signature Header** (الأكثر شيوعًا)
+
+* الجيتواي بيضيف Header في الريكوست زي:
+  `X-Signature` أو `Stripe-Signature` أو `Paymob-Signature`.
+* هو بيعمل HMAC (تشفير) للـ Body باستخدام Secret Key.
+* إنت من ناحيتك تعيد حساب الـ HMAC وتقارن باللي جالك.
+
+```csharp
+using System.Security.Cryptography;
+using System.Text;
+
+bool VerifySignature(string payload, string signature, string secret)
+{
+    var keyBytes = Encoding.UTF8.GetBytes(secret);
+    using var hmac = new HMACSHA256(keyBytes);
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    var computed = BitConverter.ToString(hash).Replace("-", "").ToLower();
+    return computed == signature.ToLower();
+}
+```
+
+### 2. **IP Whitelisting**
+
+* بعض Gateways بيقولك: "إحنا بنبعت Webhooks بس من IP ranges معينة".
+* فتتأكد إن الريكوست جاي من IP مصرح بيه.
+  (مش كفاية لوحدها، بس بيزود أمان).
+
+### 3. **Secret Token**
+
+* أحيانًا يطلبوا منك تحط "Secret Token" في URL أو Header.
+* مثلاً:
+  `https://mydomain.com/api/payment/webhook?token=XYZ123`
+* فالـ Gateway يبعته كل مرة وإنت تتحقق منه.
+
+---
+
+## 🟢 ثالثاً: إزاي تتعامل مع الـ Webhook بعد ما تتأكد؟
+
+اول حاجة Parse JSON.
+تاني حاجة Verify signature (أو الطريقة اللي بيوفرها الـ Gateway).
+3. بناءً على `event` أو `status`:
+
+   * لو `payment_succeeded` → تحدث Order في DB إلى "Paid".
+   * لو `payment_failed` → تحدث Order إلى "Failed".
+   * لو `refund` → تحدث Order إلى "Refunded".
+4. ترجع Response بـ **200 OK** للجيتواي → كده هو عارف إنك استقبلت.
+
+---
+
+## 🟢 السيناريو الصح
+
+* الـ **Webhook هو الـ Source of Truth**.
+* الـ Redirect URL (success/fail page) مجرد **User Experience**.
+* يعني لو المستخدم ماوصلش Success page، عندك برضه Webhook يثبت نجاح الدفع.
+
+---
+
+## 🟢 إجابة في الانترفيو:
+
+لو سألك: "إزاي تضمن إن الـ Webhook اللي جالك حقيقي؟"
+تقول:
+
+> "أنا بعمل Verify للـ Webhook إما عن طريق Signature (HMAC using secret key) أو Token أو IP Whitelist حسب اللي بيوفره الـ Gateway. كده أتأكد إن الريكوست جاي من مصدر رسمي مش حد بيعمل Fake POST."
+
 ---
 ## 1️⃣ يعني إيه Callback / Webhook؟
 
