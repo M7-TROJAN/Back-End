@@ -134,19 +134,19 @@
 ## 8️⃣ إجابات سريعة ممكن تيجي في الانترفيو
 
 - *ليه بنستخدم Payment Gateway؟*
-→ علشان يوفر أمان (Encryption, PCI DSS)، يسهل الدمج (API/SDK)، ويعمل كوسيط بين التاجر والبنوك.
+> علشان يوفر أمان (Encryption, PCI DSS)، يسهل الدمج (API/SDK)، ويعمل كوسيط بين التاجر والبنوك.
 
 - *إيه الفرق بين Authorization و Capture؟*
-→ا Authorization بيعمل hold للفلوس. Capture بيخصمها فعليًا.
+> ا Authorization بيعمل hold للفلوس. Capture بيخصمها فعليًا.
 
 - *إيه الفرق بين Refund و Chargeback؟*
-ا → Refund بيرجّع فلوس من التاجر للعميل. Chargeback العميل نفسه يعترض عند البنك، والبنك يسحب الفلوس بالقوة.
+> ا Refund بيرجّع فلوس من التاجر للعميل. Chargeback العميل نفسه يعترض عند البنك، والبنك يسحب الفلوس بالقوة.
 
 - *إيه فوايد الـ Tokenization؟*
-→ بدل ما تخزن card number، بتخزن token. ده بيقلل مخاطر الاختراق.
+> بدل ما تخزن card number، بتخزن token. ده بيقلل مخاطر الاختراق.
 
 - *إيه فوايد Webhooks؟*
-→ تعرف تحديث حالة الدفع (success/fail/refund) من غير ما تعتمد بس على response أولي.
+> تعرف تحديث حالة الدفع (success/fail/refund) من غير ما تعتمد بس على response أولي.
 
 
 ---
